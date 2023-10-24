@@ -1,24 +1,265 @@
-{% block title %}Главная{% endblock %}
+{% load static %}
 
 {% block content %}
-    <h1>
-        {{user.username}}
-    </h1>
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="author" content="Марат Маур">
+      <meta name="description" content="Тестовая страница">
+      <meta name="keywords" content="тест,проверка,html">
+      <title>HTML + CSS</title>
+      <link rel="stylesheet" href="{% static 'main/lib/bootstrap-5.3.1-dist/css/bootstrap.min.css' %}">
+      <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"/>
+    </head>
+    <body>
+      <noscript>Включите JavaScript!</noscript>
+      <div class="app">
+          {% include "accounts/header_fragment.html" %}
+      <section>
+          <div class="container-slider">
+            <div class="slider-wrapper">
+              <button id="prev-slide" class="slide-button material-symbols-rounded">
+                chevron_left
+              </button>
+              <ul class="image-list">
+                <div class="image-container">
+                  <img class="image-item" src="{% static 'main/images/img-1.jpg' %}" alt="img-1" />
+                  <button class="overlay-button">Купить Билет</button>
+                </div>
+                <div class="image-container">
+                  <img class="image-item" src="{% static 'main/images/img-2.jpg' %}" alt="img-2" />
+                  <button class="overlay-button">Купить Билет</button>
+                </div>
+                <div class="image-container">
+                  <img class="image-item" src="{% static 'main/images/img-3.jpg' %}" alt="img-3" />
+                  <button class="overlay-button">Купить Билет</button>
+                </div>
+                <div class="image-container">
+                  <img class="image-item" src="{% static 'main/images/img-4.jpg' %}" alt="img-4" />
+                  <button class="overlay-button">Купить Билет</button>
+                </div>
+                <div class="image-container">
+                  <img class="image-item" src="{% static 'main/images/img-5.jpg' %}" alt="img-5" />
+                  <button class="overlay-button">Купить Билет</button>
+                </div>
+                <div class="image-container">
+                  <img class="image-item" src="{% static 'main/images/img-6.jpg' %}" alt="img-6" />
+                  <button class="overlay-button">Купить Билет</button>
+                </div>
+                <div class="image-container">
+                  <img class="image-item" src="{% static 'main/images/img-7.jpg' %}" alt="img-7" />
+                  <button class="overlay-button">Купить Билет</button>
+                </div>
+              </ul>
+              <button id="next-slide" class="slide-button material-symbols-rounded">
+                chevron_right
+              </button>
+            </div>
+            <div class="slider-scrollbar">
+              <div class="scrollbar-track">
+                <div class="scrollbar-thumb"></div>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+              <h5 class="popular">ПОПУЛЯРНЫЕ СОБЫТИЯ</h5>
+          </div>
+          <div class="container">
+              <div class="album py-5">
+                  <div class="containers">
+                  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                      <div class="col">
+                          <div class="card shadow-sm">
+                              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect></svg>
+                              <div class="card-body">
+                                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                      <div class="btn-group">
+                                          <button type="button" class="btn btn-sm">Подробнее</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col">
+                          <div class="card shadow-sm">
+                              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect></svg>
+                              <div class="card-body">
+                                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                      <div class="btn-group">
+                                          <button type="button" class="btn btn-sm">Подробнее</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col">
+                          <div class="card shadow-sm">
+                              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect></svg>
+                              <div class="card-body">
+                                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                      <div class="btn-group">
+                                          <button type="button" class="btn btn-sm">Подробнее</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
 
-    <a href={% url 'signin' %}>login</a>
-    <a href={% url 'signup' %}>reg</a>
-    <a href={% url 'logout' %}>logout</a>
+                      <div class="col">
+                          <div class="card shadow-sm">
+                              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect></svg>
+                              <div class="card-body">
+                                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                      <div class="btn-group">
+                                          <button type="button" class="btn btn-sm">Подробнее</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col">
+                          <div class="card shadow-sm">
+                              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect></svg>
+                              <div class="card-body">
+                                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                      <div class="btn-group">
+                                          <button type="button" class="btn btn-sm">Подробнее</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col">
+                          <div class="card shadow-sm">
+                              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect></svg>
+                              <div class="card-body">
+                                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                      <div class="btn-group">
+                                          <button type="button" class="btn btn-sm">Подробнее</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
 
-    {% with profile=user.profile %}
-        {% if profile %}
-        <h1>34klfdg</h1>
-            Возраст: {{profile.age}}
-        <h2>
-            Бонус: {{profile.bonus}}%
-        </h2>
-        <div>
-            Баланс: {{profile.balance}} р.
-        </div>
-        {%endif%}
-    {% endwith %}
+                      <div class="col">
+                          <div class="card shadow-sm">
+                              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect></svg>
+                              <div class="card-body">
+                                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                      <div class="btn-group">
+                                          <button type="button" class="btn btn-sm">Подробнее</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col">
+                          <div class="card shadow-sm">
+                              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect></svg>
+                              <div class="card-body">
+                                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                      <div class="btn-group">
+                                          <button type="button" class="btn btn-sm">Подробнее</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col">
+                          <div class="card shadow-sm">
+                              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect></svg>
+                              <div class="card-body">
+                                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                      <div class="btn-group">
+                                          <button type="button" class="btn btn-sm">Подробнее</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+      <footer id="footer" class="py-5">
+          <div class="container">
+              <div class="row">
+                  <div class="col-6 col-md-2 mb-3">
+                      <h5>Section</h5>
+                      <ul class="nav flex-column">
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+                      </ul>
+                  </div>
+
+                  <div class="col-6 col-md-2 mb-3">
+                      <h5>Section</h5>
+                      <ul class="nav flex-column">
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+                      </ul>
+                  </div>
+
+                  <div class="col-6 col-md-2 mb-3">
+                      <h5>Section</h5>
+                      <ul class="nav flex-column">
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+                      </ul>
+                  </div>
+
+                  <div class="col-md-5 offset-md-1 mb-3">
+                      <form>
+                      <h5>Subscribe to our newsletter</h5>
+                      <p>Monthly digest of what's new and exciting from us.</p>
+                      <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+                          <label for="newsletter1" class="visually-hidden">Email address</label>
+                          <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
+                          <button class="btn" type="button">Subscribe</button>
+                      </div>
+                      </form>
+                  </div>
+              </div>
+
+              <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+                  <p>© 2023 Company, Inc. All rights reserved.</p>
+                  <ul class="list-unstyled d-flex">
+                      <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
+                      <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
+                      <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
+                  </ul>
+              </div>
+          </div>
+        </footer>
+
+    </div>
+    <script src="{% static 'main/lib/bootstrap-5.3.1-dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'main/js/main.js' %}"></script>
+    </body>
+  </html>
+
+
 {% endblock %}

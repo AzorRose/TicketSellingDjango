@@ -1,0 +1,94 @@
+{% load static %}
+<header id="header">
+              <div class="top-line">
+                  <div class="container">
+                      <div class="selected-city" onmouseover="showPopup()" onmouseout="hidePopup()">
+                          <img class="cursor" src="{% static 'main/images/pin.png' %}">
+                          <div class="title">Астрахань</div>
+                          <img class="icon-down" src="{% static 'main/images/down-arrow.png' %}">
+                          <div class="popup" style="display: none;">
+                          <ul>
+                              <li class="topline-top-city">
+                                  <a class="topline-top-city_link" href="">Москва</a>
+                              </li>
+                              <li class="topline-top-city">
+                                  <a class="topline-top-city_link" href="">Санкт-Петербург</a>
+                              </li>
+                              <li class="topline-top-city">
+                                  <a class="topline-top-city_link" href="">Астрахань</a>
+                              </li>
+                          </ul>
+                          </div>
+                      </div>
+                      <nav class="top-menu">
+                          <div class="about">О нас</div>
+                          <div class="bonus">Бонусная система</div>
+                          <div class="news">Новости</div>
+                          <div class="cooperation">Сотрудничество</div>
+                          <div class="contacts">Контакты</div>
+                      </nav>
+                  </div>
+
+              </div>
+              <div class="middle-line">
+                  <div class="container">
+                      <a class="logo" href="#">
+                          <img src="{% static 'main/images/logo.png' %}" height="40" alt="TicketWave - Ваш билет в мир развлечений.">
+                      </a>
+                      <div class="search-block">
+                          <img class="icon-search" src="{% static 'main/images/search.png' %}">
+                          <input type="text" autocomplete="false" placeholder="Поиск мероприятия">
+                      </div>
+                      <div class="select-date">
+                          <div class="select-date-btn">
+                              <img class="calendar-img" src="{% static 'main/images/calendar.png' %}" height="20">
+                              <p class="select-date-text">Выбрать дату мероприятия</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="bottom-line">
+                  <div class="container">
+                      <nav class="genres-menu">
+                          <ul class="lvl-1">
+                              <li class="lvl-1 active exact-active">
+                                  <a href="/events">
+                                      <span class="menu-link">Все события</span>
+                                  </a>
+                              </li>
+                              <li class="lvl-1">
+                                  <a href="/events/theater" class="menu-link">
+                                      <span>Театр</span>
+                                  </a>
+                              </li>
+                              <li class="lvl-1">
+                                  <a href="/events/sport" class="menu-link">
+                                      <span>Спорт</span>
+                                  </a>
+                              </li>
+                              <li class="lvl-1">
+                                  <a href="/events/concerts" class="menu-link">
+                                      <span>Концерты</span>
+                                  </a>
+                              </li>
+                              <li class="lvl-1">
+                                  <a href="/events/festivals" class="menu-link">
+                                      <span>Фестивали</span>
+                                  </a>
+                              </li>
+                              <li class="lvl-1">
+                                  <a href="/events/children" class="menu-link">
+                                      <span>Детям</span>
+                                  </a>
+                              </li>
+                          </ul>
+                      </nav>
+                  <a href="login.html" class="authorization">
+                      Войти/Регистрация
+                  <div class="circle">
+                      <img class="auth-img" src="{% static 'main/images/user.png' %}" alt="" >
+                  </div>
+                  </a>
+              </div>
+          </div>
+      </header>
