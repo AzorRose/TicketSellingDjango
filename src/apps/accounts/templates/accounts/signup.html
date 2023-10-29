@@ -1,31 +1,66 @@
-{% block title %}Регистрация{% endblock %}
+{% load static %}
 
 {% block content %}
-    <div class="text-center">
-        {% if form.errors %}
-            {% for field in form %}
-                {% for error in field.errors %}
+    <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta name="author" content="Марат Маур">
+          <meta name="description" content="Тестовая страница">
+          <meta name="keywords" content="тест,проверка,html">
+          <title>Регистрация</title>
+          <link rel="stylesheet" href="{% static 'main/lib/bootstrap-5.3.1-dist/css/bootstrap.min.css' %}">
+          <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"/>
+        </head>
+        <body>
+            {% include "accounts/header_fragment.html" %}
+            <section id="auth-section">
+                {% if form.errors %}
+                <div id="danger-message">
+                    {% for field in form %}
+                    {% for error in field.errors %}
                     <div class="alert alert-danger">
                         <strong>{{ error|escape }}</strong>
                     </div>
-                {% endfor %}
-            {% endfor %}
-            {% for error in form.non_field_errors %}
-                <div class="alert alert-danger">
-                    <strong>{{ error|escape }}</strong>
+                    {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
-        {% endif %}
-        <form class="form-signin" method="post" action="{% url 'signup' %}">
-            {% csrf_token %}
-            <h1 class="h3 mb-3 mt-3 font-weight-normal">Для регистрации укажите имя пользователя и пароль</h1>
-            <label for="inputUsername" class="sr-only">Имя пользователя</label>
-            {{ form.username }}
-            <label for="inputPassword" class="sr-only">Пароль</label>
-            {{ form.password }}
-            <label for="ReInputPassword" class="sr-only">Повторите пароль</label>
-            {{ form.repeat_password }}
-            <button class="btn mt-2 btn-lg btn-primary btn-block" type="submit">Регистрация</button>
-        </form>
-    </div>
+                {% endif %}
+                <div class="container" id="auth">
+                    <h1 class="auth-h1">РЕГИСТРАЦИЯ</h1>
+                    <form class="auth-form" method="post" action="{% url 'signup' %}">
+                        {% csrf_token %}
+                        <small class="small-text">E-mail</small>
+                        <input type="text" class="input" placeholder="Введите Email">
+                        <small class="small-text">Ваше имя</small>
+                        {{ form.username }}
+                        <small class="small-text">Ваша фамилия</small>
+                        <input type="text" class="input" placeholder="Иванов">
+                        <small class="small-text">Пароль</small>
+                        {{ form.password }}
+                        <small class="small-text">Повторите пароль</small>
+                        {{ form.repeat_password }}
+                        <small class="small-text">Дата рождения</small>
+                        <input type="date" class="input">
+                        <div class="female-container">
+                            <input type="radio" name="gender" value="male" class="radio_input">
+                            <label class="male">Мужской</label>
+                            <input type="radio" name="gender" value="male" class="radio_input">
+                            <label class="male">Женский</label>
+                        </div>
+                        <button class="auth-btn" id="fst-auth-btn" type="submit">СОЗДАТЬ АККАУНТ</button>
+                    </form>
+                </div>
+            </section>
+            {% include "accounts/footer_fragment.html" %}
+        <script src="{% static 'main/js/header.js' %}"></script>
+        </body>
+      </html>
 {% endblock %}
