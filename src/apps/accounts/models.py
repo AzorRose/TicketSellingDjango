@@ -7,6 +7,18 @@ from django.db.models.signals import post_save
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
 
+
+    first_name = models.CharField(max_length=32, null=True)
+    second_name = models.CharField(max_length=32, null=True)
+    
+    genders = [
+        ("F", "Female"),
+        ("M", "Male"),
+        ("undefined", "undefined"),
+    ]
+    
+    gender = models.CharField(max_length=9, choices=genders, default="undefined")
+    birth_date = models.DateField(auto_now=False, auto_now_add=False, null=True)
     age = models.IntegerField()
     balance = models.FloatField()
     bonus = models.FloatField()
