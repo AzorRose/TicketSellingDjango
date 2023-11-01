@@ -6,7 +6,7 @@ from taggit.managers import TaggableManager
 class Event(models.Model):
     name = models.CharField((""), max_length=128)
     date = models.DateTimeField((""), auto_now=False, auto_now_add=False)
-    #tickets = 
+
     description = models.TextField((""))
     genre = TaggableManager()
     age_category = [
@@ -30,3 +30,20 @@ class Event(models.Model):
         if not self.slug:
             self.slug = unique_slugify(self, self.title)
         super().save(*args, **kwargs)
+
+    class Meta:
+        db_table = "events"
+        
+
+class Ticket(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="ticket", default="")
+    
+    price = models.FloatField(default=0)
+    
+    class Meta:
+        db_table = "tickets"
+    
+    spot = models.CharField(max_length=50, default="")
+    
+    def __str__(self) -> str:
+        return f'{self.event.name} ({self.price})'

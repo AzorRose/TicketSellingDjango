@@ -23,13 +23,9 @@ from apps.events.views import EventView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("signup/", SignUpView.as_view(), name="signup"),
-    path(
-        "signin/",
-        SignInView.as_view(),
-        name="signin",
-    ),
+    path("signin/", SignInView.as_view(), name="signin"),
+    path("profile/", ProfileView.as_view(), name="profile"),
     path("", MainView.as_view(), name="index"),
     path("logout", logout_view.as_view(), name="logout"),
-    path("profile", ProfileView.as_view(), name="profile"),
     path("events/<slug:slug>", EventView.as_view(), name="events"),
 ]

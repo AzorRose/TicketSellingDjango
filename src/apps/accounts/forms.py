@@ -7,33 +7,19 @@ class SigUpForm(forms.Form):
     username = forms.CharField(
         max_length=100,
         required=True,
-        widget=forms.TextInput(
-            attrs={
-                "class": "form-control",
-                "id": "inputUsername",
-                "placeholder": "Имя пользователя",
-            }
-        ),
+        widget=forms.TextInput(attrs={"class": "input", "placeholder": "Имя"}),
     )
 
     password = forms.CharField(
         required=True,
         widget=forms.PasswordInput(
-            attrs={
-                "class": "form-control mt-2",
-                "id": "inputPassword",
-                "placeholder": "Пароль",
-            }
+            attrs={"class": "input", "placeholder": "Придумайте пароль"}
         ),
     )
     repeat_password = forms.CharField(
         required=True,
         widget=forms.PasswordInput(
-            attrs={
-                "class": "form-control mt-2",
-                "id": "ReInputPassword",
-                "placeholder": "Повторите пароль",
-            }
+            attrs={"class": "input", "placeholder": "Повторите пароль"}
         ),
     )
 
@@ -59,18 +45,13 @@ class SignInForm(forms.Form):
         max_length=100,
         required=True,
         widget=forms.TextInput(
-            attrs={
-                "class": "form-control",
-                "id": "inputUsername",
-            }
+            attrs={"class": "input", "placeholder": "alexsey@gmail.com"}
         ),
     )
+
     password = forms.CharField(
         required=True,
         widget=forms.PasswordInput(
-            attrs={
-                "class": "form-control mt-2",
-                "id": "inputPassword",
-            }
+            attrs={"class": "input", "placeholder": "Введите пароль"}
         ),
     )
