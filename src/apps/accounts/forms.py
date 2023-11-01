@@ -7,16 +7,20 @@ class SigUpForm(forms.Form):
     username = forms.CharField(
         max_length=100,
         required=True,
-        widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'Имя'})
+        widget=forms.TextInput(attrs={"class": "input", "placeholder": "Имя"}),
     )
 
     password = forms.CharField(
         required=True,
-        widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'Придумайте пароль'})
+        widget=forms.PasswordInput(
+            attrs={"class": "input", "placeholder": "Придумайте пароль"}
+        ),
     )
     repeat_password = forms.CharField(
         required=True,
-        widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'Повторите пароль'})
+        widget=forms.PasswordInput(
+            attrs={"class": "input", "placeholder": "Повторите пароль"}
+        ),
     )
 
     def clean(self):
@@ -40,10 +44,14 @@ class SignInForm(forms.Form):
     username = forms.CharField(
         max_length=100,
         required=True,
-        widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'alexsey@gmail.com'})
+        widget=forms.TextInput(
+            attrs={"class": "input", "placeholder": "alexsey@gmail.com"}
+        ),
     )
 
     password = forms.CharField(
         required=True,
-        widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'Введите пароль'})
+        widget=forms.PasswordInput(
+            attrs={"class": "input", "placeholder": "Введите пароль"}
+        ),
     )

@@ -1,4 +1,6 @@
 {% load static %}
+
+{% block content%}
 <header id="header">
               <div class="top-line">
                   <div class="container">
@@ -83,7 +85,7 @@
                               </li>
                           </ul>
                       </nav>
-                  <a href="login.html" class="authorization">
+                  <a href={% url 'signin' %} class="authorization">
                       Войти/Регистрация
                   <div class="circle">
                       <img class="auth-img" src="{% static 'main/images/user.png' %}" alt="" >
@@ -92,3 +94,5 @@
               </div>
           </div>
       </header>
+
+{% endblock %}

@@ -27,4 +27,5 @@ urlpatterns = [
     path("profile/", ProfileView.as_view(), name="profile"),
     path("", MainView.as_view(), name="index"),
     path("logout", logout_view.as_view(), name="logout"),
+    path("events/<slug:slug>", EventView.as_view(), name="events"),
 ]

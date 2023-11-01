@@ -6,6 +6,7 @@ from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import IntegrityError
 
 
 # Create your views here.
@@ -29,7 +30,13 @@ class SignUpView(View):
     def post(self, request, *args, **kwargs):
         form = SigUpForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            try:
+                user = form.save()
+            except IntegrityError as e:
+                e = "This username already taken!"
+                return render(
+                    request, "accounts/signup.html", context={"form": form, "e": e}
+                )
             if user is not None:
                 login(request, user)
                 UserProfile.objects.create(user=user, balance=0, bonus=0, age=0)
@@ -77,5 +84,5 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['username'] = self.request.user.username
+        context["username"] = self.request.user.username
         return context
