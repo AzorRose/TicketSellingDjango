@@ -24,7 +24,7 @@ class Event(models.Model):
        
     
     def __str__(self) -> str:
-        return self.name
+        return f"{self.name} {str(self.date.day)}.{str(self.date.month)}.{str(self.date.year)} {self.date.hour}:{self.date.minute}"
     
     def get_absolute_url(self):
         return reverse('events:', kwargs={'slug': self.slug}) 
