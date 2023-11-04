@@ -6,9 +6,11 @@ from .models import Event, Ticket
 class EventAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     search_fields = ["name", "date"]
-    
+
+
 class TicketAdmin(admin.ModelAdmin):
     search_fields = ["event__name", "price"]
+
 
 admin.site.register(Event, EventAdmin)
 admin.site.register(Ticket, TicketAdmin)
