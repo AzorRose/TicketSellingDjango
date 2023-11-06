@@ -39,7 +39,6 @@ class SignUpView(View):
                 )
             if user is not None:
                 login(request, user)
-                UserProfile.objects.create(user=user, balance=0, bonus=0, age=0)
                 return HttpResponseRedirect("/")
         return render(
             request,

@@ -81,14 +81,20 @@ class SigUpForm(forms.Form):
             email=self.cleaned_data['email'],
         )
         
-        user_profile = UserProfile(
+        user_profile = UserProfile.objects.create(
             user=user,
             first_name=self.cleaned_data['first_name'],
             second_name=self.cleaned_data['second_name'],
+            gender=self.cleaned_data['gender'],
             birth_date=self.cleaned_data["birth_date"],
+            age=0,
+            balance=0,
+            bonus=0,
+            buyback_sum=0,
         )
-        user_profile.save()
+
         auth = authenticate(**self.cleaned_data)
+
         return auth
 
 
