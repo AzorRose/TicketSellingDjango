@@ -80,7 +80,7 @@ class SigUpForm(forms.Form):
             last_name=self.cleaned_data['second_name'],
             email=self.cleaned_data['email'],
         )
-
+        
         user_profile = UserProfile(
             user=user,
             first_name=self.cleaned_data['first_name'],
