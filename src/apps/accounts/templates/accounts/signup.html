@@ -37,30 +37,27 @@
                     <h1 class="auth-h1">РЕГИСТРАЦИЯ</h1>
                     <form class="auth-form" method="post" action="{% url 'signup' %}">
                         {% csrf_token %}
-                        <small class="small-text">E-mail</small>
-                        <input type="text" class="input" placeholder="Введите Email">
-                        <small class="small-text">Ваше имя</small>
+                        <small class="small-text">Логин</small>
                         {{ form.username }}
+                        <small class="small-text">E-mail</small>
+                        {{ form.email }}
+                        <small class="small-text">Ваше имя</small>
+                        {{ form.first_name }}
                         <small class="small-text">Ваша фамилия</small>
-                        <input type="text" class="input" placeholder="Иванов">
+                        {{ form.second_name }}
                         <small class="small-text">Пароль</small>
                         {{ form.password }}
                         <small class="small-text">Повторите пароль</small>
                         {{ form.repeat_password }}
                         <small class="small-text">Дата рождения</small>
-                        <input type="date" class="input">
-                        <div class="female-container">
-                            <input type="radio" name="gender" value="male" class="radio_input">
-                            <label class="male">Мужской</label>
-                            <input type="radio" name="gender" value="male" class="radio_input">
-                            <label class="male">Женский</label>
-                        </div>
+                        {{ form.birth_date }}
+                        {{ form.gender }}
                         <button class="auth-btn" id="fst-auth-btn" type="submit">СОЗДАТЬ АККАУНТ</button>
                     </form>
                 </div>
             </section>
             {% include "accounts/footer_fragment.html" %}
-        <script src="{% static 'main/js/header.js' %}"></script>
+        <script src="{% static 'main/js/main.js' %}"></script>
         </body>
       </html>
 {% endblock %}

@@ -511,3 +511,75 @@ footer {
 .btn-sm:hover {
   border: 2px solid #EBEBEB;
 }
+
+#auth-section {
+  margin-bottom: 70px;
+}
+
+#auth {
+  justify-content: center;
+  margin-top: 70px;
+  flex-direction: column;
+  border: 2px solid #EBEBEB;
+  padding: 25px;
+  width: 600px;
+}
+
+.auth-h1 {
+  letter-spacing: 2px;
+  font-size: 32px;
+  margin-bottom: 30px;
+}
+
+.auth-form {
+  flex-direction: column;
+  display: flex;
+}
+
+.small-text {
+  margin-bottom: 5px;
+  color: #424242;
+}
+
+.input {
+  width: 420px;
+  height: 50px;
+  border: 2px solid #EBEBEB;
+  border-radius: 7px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.auth-btn {
+  display: flex;
+  background-color: white;
+  border-radius: 7px;
+  border: 2px solid #EBEBEB;
+  height: 50px;
+  margin-bottom: 20px;
+  transition: 0.2s;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #000;
+}
+
+#fst-auth-btn {
+  margin-top: 25px;
+}
+
+.auth-btn:hover {
+  border: 2px solid #000000af;
+}
+
+.radio_input {
+  margin-right: 10px;
+}
+
+.male {
+  margin-right: 30px;
+}
+
+.female-container {
+  margin-bottom: 20px;
+}

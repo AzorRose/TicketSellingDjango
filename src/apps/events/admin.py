@@ -1,7 +1,16 @@
 from django.contrib import admin
 from .models import Event, Ticket
 
-# Register your models here.
 
-admin.site.register(Event)
-admin.site.register(Ticket)
+# Register your models here.
+class EventAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+    search_fields = ["name", "date"]
+
+
+class TicketAdmin(admin.ModelAdmin):
+    search_fields = ["event__name", "price"]
+
+
+admin.site.register(Event, EventAdmin)
+admin.site.register(Ticket, TicketAdmin)
