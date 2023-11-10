@@ -17,12 +17,45 @@
         <body>
             {% include "accounts/header_fragment.html" %}
             <section id="auth-section">
-                <h1>{{ username }}</h1>
-                <a href="{% url 'logout' %}">Выйти</a>
-
+                <div class="container" id="profile">
+                    <div class="account-info">
+                        <h4>{{ username }}</h4>
+                        <a href="{% url 'logout' %}">
+                            <img class="exit-img" src="{% static 'main/images/exit.png' %}" alt="Выйти" height="15">
+                        </a>
+                    </div>
+                    <div class="test">
+                        <div class="btn-group">
+                            <button class="choice active" id="button1">Личные данные</button>
+                            <button class="choice" id="button2">История заказов</button>
+                            <button class="choice" id="button3">Программа лояльности</button>
+                        </div>
+                        <div id="inputContainer1" class="input-container">
+                            <h5 class="es-heading">ПЕРСОНАЛЬНЫЕ ДАННЫЕ</h5>
+                            <div class="info-form">
+                                <div class="input-form-flex">
+                                    <label class="small-text">Имя</label>
+                                    <input class="input-info" type="text">
+                                </div>
+                                <div class="input-form-flex">
+                                    <label class="small-text">Фамилия</label>
+                                    <input class="input-info" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="inputContainer2" class="input-container">
+                            <input class="input-info" type="text">
+                            <input class="input-info" type="text">
+                        </div>
+                        <div id="inputContainer3" class="input-container">
+                            <input class="input-info" type="text">
+                        </div>
+                    </div>
+                </div>
             </section>
             {% include "accounts/footer_fragment.html" %}
-        <script src="{% static 'main/js/header.js' %}"></script>
+        <script src="{% static 'main/js/main.js' %}"></script>
+        <script src="{% static 'main/js/profile.js' %}"></script>
         </body>
       </html>
 {% endblock %}
