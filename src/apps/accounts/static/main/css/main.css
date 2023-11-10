@@ -38,6 +38,10 @@ h6 {
   font-weight: 700;
 }
 
+label {
+  font-size: 14px;
+}
+
 #header {
   height: 207px;
   position: relative;
@@ -128,6 +132,9 @@ h6 {
   box-sizing: border-box;
   display: block;
   background-color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 #header .middle-line .container {
@@ -505,7 +512,7 @@ footer {
 
 .btn {
   background-color: #fb8f8f;
-  color: #fff
+  color:#fff
 }
 
 .btn-sm:hover {
@@ -582,4 +589,73 @@ footer {
 
 .female-container {
   margin-bottom: 20px;
+}
+
+#input {
+  width: 300px;
+}
+
+#profile {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.account-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.btn-group {
+  margin: 0;
+  margin-bottom: 50px;
+}
+
+.choice {
+  background-color: #fff;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  padding: 5px 15px;
+  width: auto;
+  font-size: 14px;
+}
+
+#inputContainer1 {
+  display: block;
+}
+
+.input-form-flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.choice.active {
+  border-bottom: 2px solid #000;
+}
+
+.input-info {
+  border-width: 1px;
+  border-color: #D9D9D9;
+  height: 40px;
+  width: 300px;
+  padding-left: 10px;
+  margin-right: 30px;
+}
+
+.es-heading {
+  margin-bottom: 30px;
+  font-weight: 400;
+}
+
+.exit-img {
+  vertical-align: baseline;
+  margin-left: 900px;
+}
+
+.info-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
