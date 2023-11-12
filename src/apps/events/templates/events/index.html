@@ -2,7 +2,9 @@
 
 {% block content %}
     <h1>
-        {{event.name}}
+        {% for i in ticket %}
+            {{i.price}}
+        {% endfor %}
     </h1>
 
         {% if event %}

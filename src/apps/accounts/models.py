@@ -43,6 +43,10 @@ class UserProfile(models.Model):
         self.age = today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
         self.save(update_fields=["age"])
 
+    def add_balance(self, num):
+        self.balance += num
+        self.save(update_fields=["balance"])
+
     def get_balance(self):
         return self.balance
     
@@ -61,7 +65,7 @@ class Purchase(models.Model):
     user = models.ForeignKey(
         UserProfile, on_delete=models.SET_DEFAULT, related_name="purchase", default=UserProfile.get_default_user_profile)
 
-    ticket = models.ForeignKey(Ticket, on_delete=models.DO_NOTHING, related_name="+")
+    ticket = models.ForeignKey(Ticket, on_delete=models.DO_NOTHING, related_name="ticket")
 
     def can_buy_ticket(self) -> bool:
         return True if self.user.get_balance() >= self.ticket.price else False
