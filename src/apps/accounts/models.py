@@ -14,7 +14,6 @@ class UserProfile(models.Model):
     second_name = models.CharField(max_length=32, null=True)
     gender = models.CharField(max_length=9)
     birth_date = models.DateField(auto_now=False, auto_now_add=False, null=True)
-    age = models.IntegerField()
     balance = models.FloatField(default=0)
     bonus = models.FloatField(default=0)
     buyback_sum = models.FloatField(default=0)
@@ -29,7 +28,6 @@ class UserProfile(models.Model):
         self.buyback_sum = summary
         self.save(update_fields=["buyback_sum"])
         self.count_bonus()
-        self.count_age()
 
     def count_bonus(self):
         for i in self.bonus_levels:
@@ -38,10 +36,10 @@ class UserProfile(models.Model):
                 break
         self.save(update_fields=["bonus"])
 
-    def count_age(self):
+    @property
+    def age(self):
         today = date.today()
-        self.age = today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
-        self.save(update_fields=["age"])
+        return today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
 
     def add_balance(self, num):
         self.balance += num
