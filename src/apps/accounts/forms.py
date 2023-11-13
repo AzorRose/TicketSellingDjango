@@ -7,9 +7,7 @@ from .models import UserProfile
 class SigUpForm(forms.Form):
     username = forms.CharField(
         required=True,
-        widget=forms.TextInput(
-            attrs={"class": "input", "placeholder": "Логин"}
-        ),
+        widget=forms.TextInput(attrs={"class": "input", "placeholder": "Логин"}),
     )
 
     email = forms.EmailField(
@@ -47,22 +45,18 @@ class SigUpForm(forms.Form):
     birth_date = forms.DateField(
         required=True,
         input_formats=["%Y-%m-%d"],
-        widget=forms.DateInput(
-            attrs={"class": "input", "type": "date"}
-        ),
+        widget=forms.DateInput(attrs={"class": "input", "type": "date"}),
     )
 
     GENDER_CHOICES = [
-        ('male', 'Мужской'),
-        ('female', 'Женский'),
+        ("male", "Мужской"),
+        ("female", "Женский"),
     ]
 
     gender = forms.ChoiceField(
-        label='Пол',
-        widget=forms.RadioSelect(
-            attrs={"class": "radio_input", "type": "radio"}
-        ),
-        choices=GENDER_CHOICES
+        label="Пол",
+        widget=forms.RadioSelect(attrs={"class": "radio_input", "type": "radio"}),
+        choices=GENDER_CHOICES,
     )
 
     def clean(self):
@@ -76,16 +70,16 @@ class SigUpForm(forms.Form):
         user = User.objects.create_user(
             username=self.cleaned_data["username"],
             password=self.cleaned_data["password"],
-            first_name=self.cleaned_data['first_name'],
-            last_name=self.cleaned_data['second_name'],
-            email=self.cleaned_data['email'],
+            first_name=self.cleaned_data["first_name"],
+            last_name=self.cleaned_data["second_name"],
+            email=self.cleaned_data["email"],
         )
-        
+
         user_profile = UserProfile.objects.create(
             user=user,
-            first_name=self.cleaned_data['first_name'],
-            second_name=self.cleaned_data['second_name'],
-            gender=self.cleaned_data['gender'],
+            first_name=self.cleaned_data["first_name"],
+            second_name=self.cleaned_data["second_name"],
+            gender=self.cleaned_data["gender"],
             birth_date=self.cleaned_data["birth_date"],
             balance=0,
             bonus=0,
