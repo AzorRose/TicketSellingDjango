@@ -6,7 +6,7 @@ from django.db.models.signals import post_delete
 from datetime import date
 
 class Event(models.Model):
-    name = models.CharField((""), max_length=128)
+    name = models.CharField(("Название"), max_length=128)
     end_date = models.DateTimeField((""), auto_now=False, auto_now_add=False, db_index=True)
 
     description = models.TextField((""))

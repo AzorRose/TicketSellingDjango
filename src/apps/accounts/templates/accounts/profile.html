@@ -11,7 +11,7 @@
           <meta name="keywords" content="тест,проверка,html">
           <title>Авторизация</title>
           <link rel="stylesheet" href="{% static 'main/lib/bootstrap-5.3.1-dist/css/bootstrap.min.css' %}">
-          <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+          <link rel="stylesheet" href="{% static 'main/css/accounts.css' %}">
           <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"/>
         </head>
         <body>
@@ -19,10 +19,14 @@
             <section id="auth-section">
                 <div class="container" id="profile">
                     <div class="account-info">
-                        <h4>{{ username }}</h4>
-                        <a href="{% url 'logout' %}">
-                            <img class="exit-img" src="{% static 'main/images/exit.png' %}" alt="Выйти" height="15">
-                        </a>
+                        <div class="username-exit-container">
+                            <h4>{{ username }}</h4>
+                            <a class="exit-img" href="{% url 'logout' %}">
+                                <img src="{% static 'main/images/exit.png' %}" alt="Выйти" height="15">
+                            </a>
+                        </div>
+                        <h5 class="balance">Баланс {{ balance }}</h5>
+                        <a href="">Пополнить баланс</a>
                     </div>
                     <div class="test">
                         <div class="btn-group">
@@ -35,20 +39,19 @@
                             <div class="info-form">
                                 <div class="input-form-flex">
                                     <label class="small-text">Имя</label>
-                                    <input class="input-info" type="text">
+                                    <input class="input-info" type="text" value="{{ first_name }}">
                                 </div>
                                 <div class="input-form-flex">
                                     <label class="small-text">Фамилия</label>
-                                    <input class="input-info" type="text">
+                                    <input class="input-info" type="text" value="{{ second_name }}">
                                 </div>
                             </div>
                         </div>
                         <div id="inputContainer2" class="input-container">
-                            <input class="input-info" type="text">
-                            <input class="input-info" type="text">
+
                         </div>
                         <div id="inputContainer3" class="input-container">
-                            <input class="input-info" type="text">
+
                         </div>
                     </div>
                 </div>
