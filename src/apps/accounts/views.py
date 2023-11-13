@@ -10,12 +10,6 @@ from django.db import IntegrityError
 
 
 # Create your views here.
-class MainView(View):
-    def get(self, request, *args, **kwargs):
-        profile = UserProfile.objects.all()
-        return render(request, "accounts/index.html", context={"profile": profile})
-
-
 class SignUpView(View):
     def get(self, request, *args, **kwargs):
         form = SigUpForm()
