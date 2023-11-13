@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Event
+from .models import Event, Ticket
 from apps.accounts.models import UserProfile
 from django.views import View
 
