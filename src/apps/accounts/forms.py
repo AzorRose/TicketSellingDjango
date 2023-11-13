@@ -87,7 +87,6 @@ class SigUpForm(forms.Form):
             second_name=self.cleaned_data['second_name'],
             gender=self.cleaned_data['gender'],
             birth_date=self.cleaned_data["birth_date"],
-            age=0,
             balance=0,
             bonus=0,
             buyback_sum=0,
