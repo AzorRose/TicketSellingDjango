@@ -7,16 +7,10 @@ from datetime import date
 
 
 class Event(models.Model):
-<<<<<<< HEAD
     name = models.CharField((""), max_length=128)
     end_date = models.DateTimeField(
         (""), auto_now=False, auto_now_add=False, db_index=True
     )
-=======
-    name = models.CharField(("Название"), max_length=128)
-    end_date = models.DateTimeField((""), auto_now=False, auto_now_add=False, db_index=True)
->>>>>>> f2ce1fad4e6482fa1acfaccfed18ad1125815d12
-
     description = models.TextField((""))
     genre = TaggableManager()
     age_category = [
