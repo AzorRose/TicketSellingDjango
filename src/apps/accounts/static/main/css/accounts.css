@@ -132,8 +132,7 @@ label {
   box-sizing: border-box;
   display: block;
   background-color: #fff;
-  position: sticky;
-  top: 0;
+  width: 100%;
   z-index: 1000;
 }
 
@@ -156,7 +155,7 @@ label {
   padding: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   display: none;
-  z-index: 10;
+  z-index: 1000;
   cursor: default;
 }
 
@@ -291,6 +290,7 @@ label {
 
 .menu-link {
   transition: transform 0.1s;
+  cursor: pointer;
 }
 
 .menu-link:hover {
