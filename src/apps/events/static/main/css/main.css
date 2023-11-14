@@ -43,7 +43,6 @@ label {
 }
 
 #header {
-  height: 207px;
   position: relative;
 }
 
@@ -132,8 +131,7 @@ label {
   box-sizing: border-box;
   display: block;
   background-color: #fff;
-  position: sticky;
-  top: 0;
+  width: 100%;
   z-index: 1000;
 }
 
@@ -156,7 +154,7 @@ label {
   padding: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   display: none;
-  z-index: 10;
+  z-index: 1000;
   cursor: default;
 }
 
@@ -291,6 +289,7 @@ label {
 
 .menu-link {
   transition: transform 0.1s;
+  cursor: pointer;
 }
 
 .menu-link:hover {
@@ -315,7 +314,6 @@ label {
   background-color: #EBEBEB;
   border-radius: 50%;
   position: relative;
-
 }
 
 .auth-img {
@@ -338,9 +336,12 @@ section {
   padding-right: 40px;
   width: 100%;
   margin-bottom: 45px;
-
-
   position: relative;
+}
+
+.popular {
+    margin-bottom: 20px;
+    margin-top: 10px;
 }
 
 .slider-wrapper {
@@ -399,7 +400,7 @@ section {
 
 .slider-wrapper .image-list .image-item {
   width: 424px;
-  height: 481px;
+  height: 424px;
   object-fit: cover;
   border-radius: 7px;
 }
@@ -480,17 +481,17 @@ section {
 
 .overlay-button {
   position: absolute;
-  top: 485px;
+  top: 409px;
   right: 327px;
   background-color: #fb8f8f;
   color: white;
-  border: none;
   padding: 13px 21px;
   margin: -68px;
   font-size: 14px;
   font-weight: 500;
   border-radius: 7px;
   border: none;
+  text-decoration: none;
 }
 
 .py-5 {
@@ -533,12 +534,15 @@ footer {
 }
 
 #event-container {
-    padding-top: 60px;
-    padding-bottom: 60px;
+    margin-top: 45px;
+    margin-bottom: 20px;
+    align-items: flex-start;
 }
 
 #buy-event {
     margin-top: 20px;
+    padding: 15px;
+    width: 180px;
 }
 
 .event-info {
@@ -547,4 +551,8 @@ footer {
 
 .card-img-top {
     object-fit: cover;
+}
+
+#description {
+    margin-bottom: 30px;
 }
