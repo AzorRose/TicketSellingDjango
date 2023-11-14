@@ -1,12 +1,3 @@
-function showPopup() {
-  const popup = document.querySelector(".popup");
-  popup.style.display = "block";
-}
-
-function hidePopup() {
-  const popup = document.querySelector(".popup");
-  popup.style.display = "none";
-}
 const initSlider = () => {
   const imageList = document.querySelector(".slider-wrapper .image-list");
   const slideButtons = document.querySelectorAll(".slider-wrapper .slide-button");
