@@ -4,7 +4,7 @@
 <header id="header">
       <div class="top-line">
           <div class="container">
-              <div class="selected-city" onmouseover="showPopup()" onmouseout="hidePopup()">
+              <div class="selected-city" onmouseover="showPopup()">
                   <img class="cursor" src="{% static 'main/images/pin.png' %}">
                   <div class="title">Астрахань</div>
                   <img class="icon-down" src="{% static 'main/images/down-arrow.png' %}">
@@ -54,7 +54,7 @@
               <nav class="genres-menu">
                   <ul class="lvl-1">
                       <li class="lvl-1 active exact-active">
-                          <a href="/events">
+                          <a href="{% url 'index' %}#allEvents" class="menu-link" onclick="scrollToMiddle(event)">
                               <span class="menu-link">Все события</span>
                           </a>
                       </li>
