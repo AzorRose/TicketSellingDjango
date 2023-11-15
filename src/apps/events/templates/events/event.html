@@ -39,15 +39,38 @@
                             {{ el.price }} руб.
                         {% endfor %}
                         <br>
-                        <a class="btn btn-sm" id="buy-event">Купить билет</a>
+                        <a onclick="openModal()" class="btn btn-sm" id="buy-event">Купить билет</a>
                     </div>
                 </div>
+                {% if user.is_authenticated %}
+                    <div id="myModal" class="modal authorized">
+                        {% for el in ticket %}
+                            <p>Стоимость билета: {{ el.price }} руб.</p>
+                        {% endfor %}
+                        <p>Ваш баланс: {{ balance }}</p>
+                        <a class="overlay-button">КУПИТЬ</a>
+                        <a onclick="closeModal()" class="modal-button">
+                            <img src="{% static 'main/images/xmark.png' %}" width="15" height="19">
+                        </a>
+                    </div>
+                    <div id="overlay" class="overlay" onclick="closeModal()"></div>
+                {% else %}
+                    <div id="myModal" class="modal none-authorized">
+                        <p>Для покупки нужно авторизоваться</p>
+                        <a href="{% url 'signin' %}" class="auth-btn">Войти</a>
+                        <a onclick="closeModal()" class="modal-button">
+                            <img src="{% static 'main/images/xmark.png' %}" width="15" height="19">
+                        </a>
+                    </div>
+                    <div id="overlay" class="overlay" onclick="closeModal()"></div>
+                {% endif %}
                 <div class="container" id="description">
                     <p>{{ event.description }}</p>
                 </div>
             </section>
             {% include "accounts/footer_fragment.html" %}
         <script src="{% static 'main/js/header.js' %}"></script>
+        <script src="{% static 'main/js/buyEventPopup.js' %}"></script>
         </body>
       </html>
 
