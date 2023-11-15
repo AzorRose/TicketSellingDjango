@@ -26,8 +26,18 @@
                                 <img src="{% static 'main/images/exit.png' %}" alt="Выйти" height="15">
                             </a>
                         </div>
-                        <h5 class="balance">Баланс {{ balance }}</h5>
-                        <a href="">Пополнить баланс</a>
+                        <p class="balance">Баланс {{ balance }}</p>
+                        <a class="open-popup-btn" onclick="openModal()">Пополнить баланс</a>
+                        <div id="balancePopup" class="balance_popup">
+                            <p>Ваш баланс: {{ balance }} руб.</p>
+                            <p>Введите сумму пополнения:</p>
+                            <input class="input-info" type="text"><br>
+                            <a class="overlay-button">ПОПОЛНИТЬ</a>
+                            <a onclick="closeModal()" class="modal-button">
+                                <img src="{% static 'main/images/xmark.png' %}" width="15" height="19">
+                            </a>
+                        </div>
+                        <div id="overlay" class="overlay" onclick="closeModal()"></div>
                     </div>
                     <div class="test">
                         <div class="btn-group">
@@ -58,10 +68,10 @@
                 </div>
             </section>
             {% include "accounts/footer_fragment.html" %}
-        <script src="{% static 'main/js/main.js' %}"></script>
         <script src="{% static 'main/js/header.js' %}"></script>
         <script src="{% static 'main/js/profile.js' %}"></script>
         <script src="{% static 'main/js/sticky.js' %}"></script>
+        <script src="{% static 'main/js/balancePopup.js' %}"></script>
         </body>
       </html>
 {% endblock %}
