@@ -12,13 +12,6 @@ class SigUpForm(forms.Form):
         ),
     )
 
-    email = forms.EmailField(
-        required=True,
-        widget=forms.EmailInput(
-            attrs={"class": "input", "placeholder": "Введите Email"}
-        ),
-    )
-
     first_name = forms.CharField(
         max_length=100,
         required=True,
