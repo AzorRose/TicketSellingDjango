@@ -10,39 +10,67 @@
           <meta name="description" content="Тестовая страница">
           <meta name="keywords" content="тест,проверка,html">
           <title>{{ event.name }}</title>
+          <link rel="icon" type="image/x-icon" href="{% static 'main/icon/favicon.ico' %}">
           <link rel="stylesheet" href="{% static 'main/lib/bootstrap-5.3.1-dist/css/bootstrap.min.css' %}">
           <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
           <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"/>
         </head>
         <body>
             {% include "accounts/header_fragment.html" %}
-            <div class="container" id="event-container">
-                <img src="{{ event.image.url|slice:'12:' }}" alt="{{ event.name }}" height="300">
-                <div class="event-info">
-                    <h3>{{ event.name }}</h3>
-                    <br>
-                    Дата проведения:
-                    {{ event.end_date }}
-                    <br>
-                    Место проведения:
-                    {% for el in ticket %}
-                        {{ el.spot }}
-                    {% endfor %}
-                    <br>
-                    Возрастное ограничение:
-                    {{ event.ages }}
-                    <br>
-                    Стоимость:
-                    {% for el in ticket %}
-                        {{ el.price }}
-                    {% endfor %}
-                    <br>
-                    <a class="btn btn-sm" id="buy-event">Купить билет</a>
+            <section>
+                <div class="container" id="event-container">
+                    <img src="{{ event.image.url|slice:'12:' }}" alt="{{ event.name }}" height="300">
+                    <div class="event-info">
+                        <h3>{{ event.name }}</h3>
+                        <br>
+                        Дата проведения:
+                        {{ event.end_date }}
+                        <br>
+                        Место проведения:
+                        {% for el in ticket %}
+                            {{ el.spot }}
+                        {% endfor %}
+                        <br>
+                        Возрастное ограничение:
+                        {{ event.ages }}
+                        <br>
+                        Стоимость:
+                        {% for el in ticket %}
+                            {{ el.price }} руб.
+                        {% endfor %}
+                        <br>
+                        <a onclick="openModal()" class="btn btn-sm" id="buy-event">Купить билет</a>
+                    </div>
                 </div>
-
-
-            </div>
+                {% if user.is_authenticated %}
+                    <div id="myModal" class="modal authorized">
+                        {% for el in ticket %}
+                            <p>Стоимость билета: {{ el.price }} руб.</p>
+                        {% endfor %}
+                        <p>Ваш баланс: {{ balance }}</p>
+                        <a class="overlay-button">КУПИТЬ</a>
+                        <a onclick="closeModal()" class="modal-button">
+                            <img src="{% static 'main/images/xmark.png' %}" width="15" height="19">
+                        </a>
+                    </div>
+                    <div id="overlay" class="overlay" onclick="closeModal()"></div>
+                {% else %}
+                    <div id="myModal" class="modal none-authorized">
+                        <p>Для покупки нужно авторизоваться</p>
+                        <a href="{% url 'signin' %}" class="auth-btn">Войти</a>
+                        <a onclick="closeModal()" class="modal-button">
+                            <img src="{% static 'main/images/xmark.png' %}" width="15" height="19">
+                        </a>
+                    </div>
+                    <div id="overlay" class="overlay" onclick="closeModal()"></div>
+                {% endif %}
+                <div class="container" id="description">
+                    <p>{{ event.description }}</p>
+                </div>
+            </section>
             {% include "accounts/footer_fragment.html" %}
+        <script src="{% static 'main/js/header.js' %}"></script>
+        <script src="{% static 'main/js/buyEventPopup.js' %}"></script>
         </body>
       </html>
 
