@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Event, Ticket
+from apps.accounts.models import UserProfile
 from django.views import View
 
 
@@ -20,6 +21,6 @@ class EventView(View):
         ticket = Ticket.objects.filter(event=event)
         if event:
             return render(
-                request, "events/index.html", context={"event": event, "ticket": ticket}
+                request, "events/event.html", context={"event": event, "ticket": ticket}
             )
 

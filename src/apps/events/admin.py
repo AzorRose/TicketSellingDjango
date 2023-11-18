@@ -6,6 +6,7 @@ from .models import Event, Ticket
 class EventAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     search_fields = ["name", "date"]
+    readonly_fields = ('people_count', )
 
 
 class TicketAdmin(admin.ModelAdmin):

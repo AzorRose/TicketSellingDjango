@@ -2,6 +2,7 @@ from typing import Any
 from django.db import models
 from django.contrib.auth.models import User
 from apps.events.models import Ticket
+from django.utils import timezone
 from datetime import date
 
 
@@ -71,6 +72,8 @@ class Purchase(models.Model):
     )
 
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name="ticket")
+    
+    creation_time = models.DateTimeField(null=True, blank=True)
 
     def can_buy_ticket(self) -> bool:
         return True if self.user.get_balance() >= self.ticket.price else False
@@ -80,9 +83,13 @@ class Purchase(models.Model):
         self.user.save()
 
     def save(self, *args, **kwargs):
-        if self.can_buy_ticket():
-            self.buy_ticket()
-            super(Purchase, self).save(*args, **kwargs)
-            self.user.count_buyback()
-        else:
-            raise Exception("no money")
+        if not self.id:
+            if self.can_buy_ticket():
+                self.buy_ticket()
+                self.creation_time = timezone.now()
+                super(Purchase, self).save(self.creation_time, *args, **kwargs)
+                self.user.count_buyback()
+                return
+            else:
+                raise Exception("no money")
+        super(Purchase, self).save(*args, **kwargs)

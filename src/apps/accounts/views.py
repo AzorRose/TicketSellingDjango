@@ -74,11 +74,12 @@ class SignInView(View):
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = "accounts/profile.html"
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["username"] = self.request.user.username
         context["first_name"] = self.request.user.profile.first_name
         context["second_name"] = self.request.user.profile.second_name
         context["balance"] = self.request.user.profile.balance
+        
         return context

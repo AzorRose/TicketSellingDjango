@@ -32,7 +32,7 @@ class Event(models.Model):
     slug = models.SlugField(
         verbose_name="url мероприятия", max_length=255, blank=True, unique=True
     )
-
+    people_count = models.IntegerField(default=0)
     def __str__(self) -> str:
         return f"{self.name} {str(self.end_date.day)}.{str(self.end_date.month)}.{str(self.end_date.year)} {self.end_date.hour}:{self.end_date.minute}"
 
