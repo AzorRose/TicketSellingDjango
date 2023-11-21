@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Event, Ticket
 from apps.accounts.models import UserProfile 
-
+from django.views.generic import TemplateView
 from django.views import View
 
 
