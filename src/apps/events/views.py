@@ -23,3 +23,42 @@ class EventView(View):
         if event:
             return render(request, "events/event.html", context={"event": event, "ticket": ticket})
 
+
+class SportView(View):
+    def get(self, request, *args, **kwargs):
+        event = Event.objects.all()
+        ticket = Ticket.objects.all()
+        return render(request, "events/sport.html", context={"event": event, "ticket": ticket})
+
+
+class ConcertsView(View):
+    def get(self, request, *args, **kwargs):
+        event = Event.objects.all()
+        ticket = Ticket.objects.all()
+        return render(request, "events/concerts.html", context={"event": event, "ticket": ticket})
+
+
+class FestivalsView(View):
+    def get(self, request, *args, **kwargs):
+        event = Event.objects.all()
+        ticket = Ticket.objects.all()
+        return render(request, "events/festivals.html", context={"event": event, "ticket": ticket})
+
+
+class KidsView(View):
+    def get(self, request, *args, **kwargs):
+        event = Event.objects.all()
+        ticket = Ticket.objects.all()
+        return render(request, "events/kids.html", context={"event": event, "ticket": ticket})
+
+
+class CoopView(TemplateView):
+    template_name = "events/cooperation.html"
+
+
+class AboutView(TemplateView):
+    template_name = "events/about.html"
+
+
+class BonusView(TemplateView):
+    template_name = "events/bonus.html"
