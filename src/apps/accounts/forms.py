@@ -71,7 +71,6 @@ class SigUpForm(forms.Form):
             password=self.cleaned_data["password"],
             first_name=self.cleaned_data['first_name'],
             last_name=self.cleaned_data['second_name'],
-            email=self.cleaned_data['email'],
         )
         
         user_profile = UserProfile.objects.create(
