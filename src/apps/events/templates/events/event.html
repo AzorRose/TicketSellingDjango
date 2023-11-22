@@ -48,7 +48,7 @@
                         {% for el in ticket %}
                             <p>Стоимость билета: {{ el.price }} руб.</p>
                         {% endfor %}
-                        <p>Ваш баланс: {{ balance }}</p>
+                        <p>Ваш баланс: {{ profile.balance }}</p>
                         <a class="overlay-button">КУПИТЬ</a>
                         <a onclick="closeModal()" class="modal-button">
                             <img src="{% static 'main/images/xmark.png' %}" width="15" height="19">
