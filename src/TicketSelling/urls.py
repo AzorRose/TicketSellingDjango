@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LogoutView as logout_view
-from apps.accounts.views import SignUpView, SignInView, ProfileView
+from apps.accounts.views import SignUpView, SignInView, ProfileView, AddBalanceView
 from apps.events.views import EventView, MainView, SportView, ConcertsView, FestivalsView, KidsView, CoopView, AboutView, BonusView
 
 urlpatterns = [
@@ -35,4 +35,5 @@ urlpatterns = [
     path("cooperation", CoopView.as_view(), name="cooperation"),
     path("about", AboutView.as_view(), name="about"),
     path("bonus", BonusView.as_view(), name="bonus"),
+    path("add_balance", AddBalanceView.as_view(), name="add_balance"),
 ]
