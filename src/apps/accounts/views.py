@@ -82,3 +82,26 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context["second_name"] = self.request.user.profile.second_name
         context["balance"] = self.request.user.profile.balance
         return context
+
+
+class AddBalanceView(View):
+    def post(self, request, *args, **kwargs):
+        # Получаем текущего пользователя
+        user = request.user
+
+        # Проверяем, есть ли у пользователя профиль
+        if hasattr(user, 'profile'):
+            # Получаем объект профиля
+
+            profile = user.profile
+
+            # Получаем сумму из POST-запроса
+            balance_input = request.POST.get('balance_input')
+
+            # Проверяем, что введена сумма и она является числом
+            if balance_input and balance_input.isdigit():
+                # Вызываем метод add_balance с введенной суммой
+                profile.add_balance(int(balance_input))
+
+        # Редиректим пользователя на нужную страницу
+        return redirect('profile')
