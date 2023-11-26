@@ -13,6 +13,7 @@
           <link rel="icon" type="image/x-icon" href="{% static 'main/icon/favicon.ico' %}">
           <link rel="stylesheet" href="{% static 'main/lib/bootstrap-5.3.1-dist/css/bootstrap.min.css' %}">
           <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+          <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш API-ключ&lang=ru_RU"></script>
           <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"/>
         </head>
         <body>
@@ -47,7 +48,7 @@
                         {% for el in ticket %}
                             <p>Стоимость билета: {{ el.price }} руб.</p>
                         {% endfor %}
-                        <p>Ваш баланс: {{ balance }}</p>
+                        <p>Ваш баланс: {{ profile.balance }}</p>
                         <a class="overlay-button">КУПИТЬ</a>
                         <a onclick="closeModal()" class="modal-button">
                             <img src="{% static 'main/images/xmark.png' %}" width="15" height="19">
@@ -67,10 +68,13 @@
                 <div class="container" id="description">
                     <p>{{ event.description }}</p>
                 </div>
+                <div class="container" id="map-container">
+                    <div id="map" class="map"></div>
+                </div>
             </section>
             {% include "accounts/footer_fragment.html" %}
-        <script src="{% static 'main/js/header.js' %}"></script>
         <script src="{% static 'main/js/buyEventPopup.js' %}"></script>
+        <script src="{% static 'main/js/map.js' %}"></script>
         </body>
       </html>
 

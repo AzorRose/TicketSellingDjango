@@ -63,10 +63,6 @@ label {
   display: flex;
 }
 
-.selected-city {
-  cursor: pointer;
-}
-
 .title {
   position: relative;
   cursor: pointer;
@@ -76,16 +72,6 @@ label {
   margin-right: 5px;
   padding: 0;
   transition: 0.3s;
-}
-
-.popup cities__popup {
-  margin: 0 auto;
-  width: 979px;
-  text-align: center;
-}
-
-.selected-city:hover {
-  color: #fb8f8f
 }
 
 .cursor {
@@ -121,6 +107,11 @@ label {
   display: inline-flex;
   flex-shrink: 0;
   margin-left: 42px;
+}
+
+.menu-el {
+    text-decoration: none;
+    color: black;
 }
 
 .about:hover, .bonus:hover, .news:hover, .cooperation:hover, .contacts:hover {

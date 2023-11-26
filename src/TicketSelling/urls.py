@@ -17,8 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LogoutView as logout_view
-from apps.accounts.views import SignUpView, SignInView, ProfileView
-from apps.events.views import EventView, MainView
+from apps.accounts.views import SignUpView, SignInView, ProfileView, AddBalanceView
+from apps.events.views import EventView, MainView, SportView, ConcertsView, FestivalsView, KidsView, CoopView, AboutView, BonusView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -28,4 +28,12 @@ urlpatterns = [
     path("", MainView.as_view(), name="index"),
     path("logout", logout_view.as_view(), name="logout"),
     path("events/<slug:slug>", EventView.as_view(), name="events"),
+    path("sport", SportView.as_view(), name="sport"),
+    path("concerts", ConcertsView.as_view(), name="concerts"),
+    path("festivals", FestivalsView.as_view(), name="festivals"),
+    path("kids", KidsView.as_view(), name="kids"),
+    path("cooperation", CoopView.as_view(), name="cooperation"),
+    path("about", AboutView.as_view(), name="about"),
+    path("bonus", BonusView.as_view(), name="bonus"),
+    path("add_balance", AddBalanceView.as_view(), name="add_balance"),
 ]

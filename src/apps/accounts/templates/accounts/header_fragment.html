@@ -4,30 +4,26 @@
 <header id="header">
       <div class="top-line">
           <div class="container">
-              <div class="selected-city" onmouseover="showPopup()">
+              <div class="selected-city">
                   <img class="cursor" src="{% static 'main/images/pin.png' %}">
                   <div class="title">Астрахань</div>
-                  <img class="icon-down" src="{% static 'main/images/down-arrow.png' %}">
-                  <div class="popup" style="display: none;">
-                      <ul>
-                          <li class="topline-top-city">
-                              <a class="topline-top-city_link" href="">Москва</a>
-                          </li>
-                          <li class="topline-top-city">
-                              <a class="topline-top-city_link" href="">Санкт-Петербург</a>
-                          </li>
-                          <li class="topline-top-city">
-                              <a class="topline-top-city_link" href="">Астрахань</a>
-                          </li>
-                      </ul>
-                  </div>
               </div>
               <nav class="top-menu">
-                  <div class="about">О нас</div>
-                  <div class="bonus">Бонусная система</div>
-                  <div class="news">Новости</div>
-                  <div class="cooperation">Сотрудничество</div>
-                  <div class="contacts">Контакты</div>
+                  <div class="about">
+                      <a class="menu-el" href="{% url 'about' %}">О нас</a>
+                  </div>
+                  <div class="bonus">
+                      <a class="menu-el" href="{% url 'bonus' %}">Бонусная система</a>
+                  </div>
+                  <div class="news">
+                      <a class="menu-el">Новости</a>
+                  </div>
+                  <div class="cooperation">
+                      <a class="menu-el" href="{% url 'cooperation' %}">Сотрудничество</a>
+                  </div>
+                  <div class="contacts">
+                      <a class="menu-el">Контакты</a>
+                  </div>
               </nav>
           </div>
 
@@ -59,27 +55,22 @@
                           </a>
                       </li>
                       <li class="lvl-1">
-                          <a href="/events/theater" class="menu-link">
-                              <span>Театр</span>
-                          </a>
-                      </li>
-                      <li class="lvl-1">
-                          <a href="/events/sport" class="menu-link">
+                          <a href="{% url 'sport' %}" class="menu-link">
                               <span>Спорт</span>
                           </a>
                       </li>
                       <li class="lvl-1">
-                          <a href="/events/concerts" class="menu-link">
+                          <a href="{% url 'concerts' %}" class="menu-link">
                               <span>Концерты</span>
                           </a>
                       </li>
                       <li class="lvl-1">
-                          <a href="/events/festivals" class="menu-link">
+                          <a href="{% url 'festivals' %}" class="menu-link">
                               <span>Фестивали</span>
                           </a>
                       </li>
                       <li class="lvl-1">
-                          <a href="/events/children" class="menu-link">
+                          <a href="{% url 'kids' %}" class="menu-link">
                               <span>Детям</span>
                           </a>
                       </li>

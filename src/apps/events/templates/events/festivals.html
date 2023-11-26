@@ -9,7 +9,7 @@
       <meta name="author" content="Марат Маур">
       <meta name="description" content="Тестовая страница">
       <meta name="keywords" content="тест,проверка,html">
-      <title>TicketWave</title>
+      <title>Фестивали</title>
       <link rel="icon" type="image/x-icon" href="{% static 'main/icon/favicon.ico' %}">
       <link rel="stylesheet" href="{% static 'main/lib/bootstrap-5.3.1-dist/css/bootstrap.min.css' %}">
       <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
@@ -20,34 +20,8 @@
       <div class="app">
           {% include "accounts/header_fragment.html" %}
       <section>
-          <div class="container-slider">
-            <div class="container">
-                <h5 class="popular">ПОПУЛЯРНЫЕ СОБЫТИЯ</h5>
-            </div>
-            <div class="slider-wrapper">
-              <button id="prev-slide" class="slide-button material-symbols-rounded">
-                chevron_left
-              </button>
-              <ul class="image-list">
-                  {% for el in event %}
-                      <div class="image-container">
-                          <img class="image-item" src="{{ el.image.url|slice:'12:' }}" alt="img-1" />
-                          <a class="overlay-button" href="{% url 'events' slug=el.slug %}">Купить Билет</a>
-                      </div>
-                  {% endfor %}
-              </ul>
-              <button id="next-slide" class="slide-button material-symbols-rounded">
-                chevron_right
-              </button>
-            </div>
-            <div class="slider-scrollbar">
-              <div class="scrollbar-track">
-                <div class="scrollbar-thumb"></div>
-              </div>
-            </div>
-          </div>
           <div class="container">
-              <h5 id="allEvents">ВСЕ СОБЫТИЯ</h5>
+              <h5 id="allEvents">ФЕСТИВАЛИ</h5>
           </div>
           <div class="container">
               <div class="album py-5">

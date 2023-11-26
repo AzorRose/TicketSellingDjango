@@ -62,13 +62,8 @@ label {
   display: flex;
 }
 
-.selected-city {
-  cursor: pointer;
-}
-
 .title {
   position: relative;
-  cursor: pointer;
   display: inline-flex;
   flex-shrink: 0;
   margin-left: 5px;
@@ -77,25 +72,10 @@ label {
   transition: 0.3s;
 }
 
-.popup cities__popup {
-  margin: 0 auto;
-  width: 979px;
-  text-align: center;
-}
-
-.selected-city:hover {
-  color: #fb8f8f
-}
-
 .cursor {
   width: 19px;
   height: 18px;
   margin-bottom: 9px;
-}
-
-.icon-down {
-  width: 17px;
-  height: 18px;
 }
 
 .cursor, .icon-down {
@@ -120,6 +100,11 @@ label {
   display: inline-flex;
   flex-shrink: 0;
   margin-left: 42px;
+}
+
+.menu-el {
+    text-decoration: none;
+    color: black;
 }
 
 .about:hover, .bonus:hover, .news:hover, .cooperation:hover, .contacts:hover {
@@ -627,4 +612,19 @@ footer {
   justify-content: center;
   text-decoration: none;
   color: #000;
+}
+
+.map {
+    width: 600px;
+    height: 400px;
+    background-color: #333;
+}
+
+#map-container {
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.ymaps-2-1-79-gototech {
+    display: none!important;
 }

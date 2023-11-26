@@ -29,10 +29,13 @@
                         <p class="balance">Баланс {{ balance }}</p>
                         <a class="open-popup-btn" onclick="openModal()">Пополнить баланс</a>
                         <div id="balancePopup" class="balance_popup">
-                            <p>Ваш баланс: {{ balance }} руб.</p>
-                            <p>Введите сумму пополнения:</p>
-                            <input class="input-info" type="text"><br>
-                            <a class="overlay-button">ПОПОЛНИТЬ</a>
+                            <form method="post" action="{% url 'add_balance' %}">
+                                {% csrf_token %}
+                                <p>Ваш баланс: {{ balance }} руб.</p>
+                                <p>Введите сумму пополнения:</p>
+                                <input class="input-info" type="number" id="balance_input" name="balance_input" required><br>
+                                <button class="overlay-button" type="submit">ПОПОЛНИТЬ</button>
+                            </form>
                             <a onclick="closeModal()" class="modal-button">
                                 <img src="{% static 'main/images/xmark.png' %}" width="15" height="19">
                             </a>
@@ -68,7 +71,6 @@
                 </div>
             </section>
             {% include "accounts/footer_fragment.html" %}
-        <script src="{% static 'main/js/header.js' %}"></script>
         <script src="{% static 'main/js/profile.js' %}"></script>
         <script src="{% static 'main/js/sticky.js' %}"></script>
         <script src="{% static 'main/js/balancePopup.js' %}"></script>

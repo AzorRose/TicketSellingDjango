@@ -1,0 +1,37 @@
+{% load static %}
+
+{% block content %}
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="author" content="Марат Маур">
+      <meta name="description" content="Тестовая страница">
+      <meta name="keywords" content="тест,проверка,html">
+      <title>О нас</title>
+      <link rel="icon" type="image/x-icon" href="{% static 'main/icon/favicon.ico' %}">
+      <link rel="stylesheet" href="{% static 'main/lib/bootstrap-5.3.1-dist/css/bootstrap.min.css' %}">
+      <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"/>
+    </head>
+    <body>
+      <noscript>Включите JavaScript!</noscript>
+      <div class="app">
+          {% include "accounts/header_fragment.html" %}
+      <section>
+          <div class="container">
+              <h5 id="allEvents">О нас</h5>
+          </div>
+          <div class="container">
+            <p>Это что-то с чем-то</p>
+          </div>
+      </section>
+      {% include "accounts/footer_fragment.html" %}
+    </div>
+    <script src="{% static 'main/lib/bootstrap-5.3.1-dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'main/js/main.js' %}"></script>
+    <script src="{% static 'main/js/sticky.js' %}"></script>
+    </body>
+  </html>
+{% endblock %}
