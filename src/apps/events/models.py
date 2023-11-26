@@ -4,6 +4,7 @@ from django.template.defaultfilters import slugify
 from django.dispatch import receiver
 from django.db.models.signals import post_delete
 from datetime import date
+from apps.buildings.models import Building
 
 
 class Event(models.Model):
@@ -33,6 +34,16 @@ class Event(models.Model):
         verbose_name="url мероприятия", max_length=255, blank=True, unique=True
     )
     people_count = models.IntegerField(default=0)
+    
+    place = models.ForeignKey(Building, on_delete=models.CASCADE, related_name="event", null=True)
+    
+    def change_people_count(self, change):
+        if change:
+            self.people_count += 1
+        else:
+            self.people_count -= 1
+        self.save()
+    
     def __str__(self) -> str:
         return f"{self.name} {str(self.end_date.day)}.{str(self.end_date.month)}.{str(self.end_date.year)} {self.end_date.hour}:{self.end_date.minute}"
 
@@ -45,12 +56,17 @@ class Event(models.Model):
         super(Event, self).save(*args, **kwargs)
 
     @property
+    def is_available(self):
+        return not self.is_expired or self.people_count < self.place.capacity_dance_floor
+
+    @property
     def is_expired(self):
         return date.today() > self.end_date
 
     class Meta:
         db_table = "events"
-
+        verbose_name_plural = "События"
+        verbose_name = "событие"
 
 @receiver(post_delete, sender=Event)
 def post_save_image(sender, instance, *args, **kwargs):
@@ -71,3 +87,7 @@ class Ticket(models.Model):
 
     def __str__(self) -> str:
         return f'{self.event.name} ({self.price})'
+
+    class Meta:
+        verbose_name_plural = "Билеты"
+        verbose_name = "билет"
