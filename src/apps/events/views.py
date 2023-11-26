@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from .models import Event, Ticket
+
 from apps.accounts.models import UserProfile 
 from django.views.generic import TemplateView
+
 from django.views import View
 
 
@@ -26,6 +28,7 @@ class EventView(View):
         else:
             profile = None
         if event:
+
             return render(request, "events/event.html", context={"profile": profile, "event": event, "ticket": ticket})
 
 
@@ -65,6 +68,10 @@ class CoopView(TemplateView):
 class AboutView(TemplateView):
     template_name = "events/about.html"
 
+
+            return render(
+                request, "events/event.html", context={"event": event, "ticket": ticket}
+            )
 
 class BonusView(TemplateView):
     template_name = "events/bonus.html"

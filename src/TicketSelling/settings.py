@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     "apps.events",
     "taggit",
+    "apps.buildings",
 ]
 
 MIDDLEWARE = [
