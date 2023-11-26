@@ -37,6 +37,15 @@ class Event(models.Model):
     
     place = models.ForeignKey(Building, on_delete=models.CASCADE, related_name="event", null=True)
     
+    filters = [
+        ("all", "all"),
+        ("sport", "sport"),
+        ("concert", "concert"),
+        ("festival", "festival"),
+        ("kids", "kids"),
+    ]    
+    filter = models.CharField(max_length=50, choices=filters, default="all")
+    
     def change_people_count(self, change):
         if change:
             self.people_count += 1

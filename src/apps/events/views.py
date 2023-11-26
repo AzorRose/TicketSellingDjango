@@ -68,10 +68,5 @@ class CoopView(TemplateView):
 class AboutView(TemplateView):
     template_name = "events/about.html"
 
-
-            return render(
-                request, "events/event.html", context={"event": event, "ticket": ticket}
-            )
-
 class BonusView(TemplateView):
     template_name = "events/bonus.html"
