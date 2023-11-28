@@ -22,6 +22,7 @@ class EventView(View):
         slug_match = request.path[request.path.rfind("/") + 1:]
         event = Event.objects.get(slug=slug_match)
         ticket = Ticket.objects.filter(event=event)
+        building = Building.objects.get(name=event.place)
         # Проверяем, что у пользователя есть профиль
         if hasattr(request.user, 'profile'):
             profile = request.user.profile
@@ -29,8 +30,8 @@ class EventView(View):
             profile = None
         if event:
 
-            return render(request, "events/event.html", context={"profile": profile, "event": event, "ticket": ticket})
-
+            return render(request, "events/event.html", context={"profile": profile, "event": event, "ticket": ticket,
+                                                                 "building": building})
 
 
 class SportView(View):
