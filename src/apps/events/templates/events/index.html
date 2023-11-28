@@ -62,7 +62,7 @@
                                           <img class="small-img" src="{% static 'main/images/calendar.png' %}" height="14">{{ el.end_date}}<br>
                                           {% for i in ticket %}
                                             {% if i.event == el %}
-                                              <img class="small-img" src="{% static 'main/images/pin.png' %}" height="14">{{ i.spot }}<br>
+                                              <img class="small-img" src="{% static 'main/images/pin.png' %}" height="14">{{ i.place }}<br>
                                               <img class="small-img" src="{% static 'main/images/rub_icon.png' %}" height="14">{{ i.price }} руб.
                                             {% endif %}
                                           {% endfor %}
