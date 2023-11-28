@@ -8,7 +8,9 @@ class Building(models.Model):
     
     class Meta:
         db_table = "building"
-    
+
+    def __str__(self):
+        return self.name
 
 class Area(models.Model):
     building = models.ForeignKey(Building, on_delete=models.CASCADE, related_name="area")
