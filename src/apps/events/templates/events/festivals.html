@@ -28,7 +28,7 @@
                   <div class="containers">
                       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                           {% for el in event %}
-                            {% if el.filter == "festival" %}
+                            {% if el.filter == "festivals" %}
                               <div class="col">
                                   <div class="card shadow-sm">
                                       <img class="bd-placeholder-img card-img-top" src="{{ el.image.url|slice:'12:' }}" width="300" height="300" role="img" alt="{{ el.name }}">
