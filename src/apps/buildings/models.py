@@ -4,7 +4,7 @@ from django.db import models
 class Building(models.Model):
     name = models.CharField(max_length=128)
     
-    address = models.CharField(max_length=256, default="")
+    address = models.CharField(max_length=2000, default="")
     
     class Meta:
         db_table = "building"
