@@ -16,7 +16,7 @@ class MainView(View):
 
 
 class EventView(View):
-    def get(self, request, *args, **kwargs):
+    def get(self, request, filter, *args, **kwargs):
         # Получает путь из запроса и возвращает информацию о конкретном событии, которому соответствует этот путь
         slug_match = request.path[request.path.rfind("/") + 1:]
         event = Event.objects.get(slug=slug_match)
