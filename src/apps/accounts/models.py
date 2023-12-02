@@ -76,7 +76,8 @@ class Purchase(models.Model):
     creation_time = models.DateTimeField(null=True, blank=True)
 
     def can_buy_ticket(self) -> bool:
-        return True if self.user.get_balance() >= self.ticket.price - (self.ticket.price * (self.user.bonus / 100)) else False
+        return (self.user.get_balance() >= self.ticket.price - (self.ticket.price * (self.user.bonus / 100))
+                and self.ticket.event.people_count < self.ticket.event.place.capacity_sitting)
 
     def buy_ticket(self):
         self.user.balance -= self.ticket.price - (self.ticket.price * (self.user.bonus / 100))
@@ -92,7 +93,7 @@ class Purchase(models.Model):
                 self.user.count_buyback()
                 return
             else:
-                raise Exception("no money")
+                raise Exception("can`t buy it")
         super(Purchase, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):

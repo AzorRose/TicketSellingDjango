@@ -6,6 +6,9 @@ class Building(models.Model):
     
     address = models.CharField(max_length=256, default="")
     
+    def __str__(self) -> str:
+        return self.name
+    
     class Meta:
         db_table = "building"
     
@@ -21,3 +24,6 @@ class Area(models.Model):
     
     class Meta:
         db_table = "areas"
+        
+    def __str__(self) -> str:
+        return f'{self.building.name} | {self.name}'

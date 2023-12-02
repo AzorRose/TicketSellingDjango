@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from .models import UserProfile
+from django.shortcuts import redirect
 from .forms import SigUpForm, SignInForm
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
