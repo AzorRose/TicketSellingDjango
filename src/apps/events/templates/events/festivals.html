@@ -28,6 +28,7 @@
                   <div class="containers">
                       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                           {% for el in event %}
+                            {% if el.filter == "festivals" %}
                               <div class="col">
                                   <div class="card shadow-sm">
                                       <img class="bd-placeholder-img card-img-top" src="{{ el.image.url|slice:'12:' }}" width="300" height="300" role="img" alt="{{ el.name }}">
@@ -36,7 +37,7 @@
                                           <img class="small-img" src="{% static 'main/images/calendar.png' %}" height="14">{{ el.end_date}}<br>
                                           {% for i in ticket %}
                                             {% if i.event == el %}
-                                              <img class="small-img" src="{% static 'main/images/pin.png' %}" height="14">{{ i.spot }}<br>
+                                              <img class="small-img" src="{% static 'main/images/pin.png' %}" height="14">{{ el.place }}<br>
                                               <img class="small-img" src="{% static 'main/images/rub_icon.png' %}" height="14">{{ i.price }} руб.
                                             {% endif %}
                                           {% endfor %}
@@ -48,6 +49,7 @@
                                       </div>
                                   </div>
                               </div>
+                            {% endif %}
                           {% endfor %}
                       </div>
                   </div>

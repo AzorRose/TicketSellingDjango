@@ -41,8 +41,8 @@ class Event(models.Model):
     filters = [
         ("all", "all"),
         ("sport", "sport"),
-        ("concert", "concert"),
-        ("festival", "festival"),
+        ("concerts", "concerts"),
+        ("festivals", "festivals"),
         ("kids", "kids"),
     ]    
     filter = models.CharField(max_length=50, choices=filters, default="all")

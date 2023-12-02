@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
+from django.shortcuts import redirect
 
 
 # Create your views here.
