@@ -77,7 +77,10 @@ class Purchase(models.Model):
 
     def can_buy_ticket(self) -> bool:
         return (self.user.get_balance() >= self.ticket.price - (self.ticket.price * (self.user.bonus / 100))
-                and self.ticket.event.people_count < self.ticket.event.place.capacity_sitting)
+                and self.ticket.event.place.area.filter(
+                    capacity_sitting__gte=self.ticket.event.people_count
+                    ).exists()
+        )
 
     def buy_ticket(self):
         self.user.balance -= self.ticket.price - (self.ticket.price * (self.user.bonus / 100))
