@@ -6,12 +6,12 @@ from .models import Event, Ticket, Booked_Places
 class EventAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     search_fields = ["name", "date"]
-    readonly_fields = (
+    readonly_fields = [
         "people_count",
         "booked_balcony",
         "booked_sitting",
         "booked_dance_floor",
-    )
+    ]
 
 
 class TicketAdmin(admin.ModelAdmin):
