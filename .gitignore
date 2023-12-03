@@ -135,3 +135,8 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+src/apps/accounts/__pycache__/views.cpython-310.pyc
+src/apps/buildings/__pycache__/models.cpython-310.pyc
+src/apps/events/__pycache__/models.cpython-310.pyc
+src/apps/events/__pycache__/views.cpython-310.pyc
+src/TicketSelling/__pycache__/urls.cpython-310.pyc
