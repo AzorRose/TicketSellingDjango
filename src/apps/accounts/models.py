@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from apps.events.models import Ticket
+from apps.events.models import Ticket, Booked_Places
 from django.utils import timezone
 from datetime import date
 
@@ -75,9 +75,18 @@ class Purchase(models.Model):
     
     creation_time = models.DateTimeField(null=True, blank=True)
 
+    spot_num = models.IntegerField(default=0)
+
     def can_buy_ticket(self) -> bool:
-        return (self.user.get_balance() >= self.ticket.price - (self.ticket.price * (self.user.bonus / 100))
-                and self.ticket.event.people_count < self.ticket.event.place.capacity_sitting)
+        has_place = True if (self.ticket.spot == "sitting" and self.ticket.event.place.capacity_sitting > self.ticket.event.booked_sitting) or \
+        (self.ticket.spot == "balcony" and self.ticket.event.place.capacity_balcony > self.ticket.event.booked_balcony) or \
+        (self.ticket.spot == "dance_floor" and self.ticket.event.place.capacity_dance_floor > self.ticket.event.booked_dance_floor) else False
+
+        has_money = True if self.user.get_balance() >= self.ticket.price - (self.ticket.price * (self.user.bonus / 100)) else False
+        
+        is_available = Booked_Places.objects.get(spot_num = self.spot_num, spot = self.ticket.spot).available
+        
+        return has_money and has_place and is_available
 
     def buy_ticket(self):
         self.user.balance -= self.ticket.price - (self.ticket.price * (self.user.bonus / 100))
@@ -86,10 +95,21 @@ class Purchase(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             if self.can_buy_ticket():
+                #Вычет баланса
                 self.buy_ticket()
+                #Изменение общего количества людей
                 self.ticket.event.change_people_count(True)
+                #Изменение количества людей на конкретный тип места
+                self.ticket.event.change_spot_count(self.ticket.spot, True)
+                #Бронь конкретного места
+                temp = Booked_Places.objects.get(spot_num = self.spot_num, spot = self.ticket.spot)
+                temp.available = False
+                temp.user = self.user
+                temp.save()
+                #Установка времени покупки билета
                 self.creation_time = timezone.now()
                 super(Purchase, self).save(self.creation_time, *args, **kwargs)
+                #Подсчет новой суммы выкупа пользователя для получения скидки 
                 self.user.count_buyback()
                 return
             else:
