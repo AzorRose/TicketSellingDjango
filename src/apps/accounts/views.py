@@ -75,14 +75,14 @@ class SignInView(View):
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = "accounts/profile.html"
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["username"] = self.request.user.username
         context["first_name"] = self.request.user.profile.first_name
         context["second_name"] = self.request.user.profile.second_name
         context["balance"] = self.request.user.profile.balance
-        
+
         return context
 
 
@@ -92,13 +92,13 @@ class AddBalanceView(View):
         user = request.user
 
         # Проверяем, есть ли у пользователя профиль
-        if hasattr(user, 'profile'):
+        if hasattr(user, "profile"):
             # Получаем объект профиля
 
             profile = user.profile
 
             # Получаем сумму из POST-запроса
-            balance_input = request.POST.get('balance_input')
+            balance_input = request.POST.get("balance_input")
 
             # Проверяем, что введена сумма и она является числом
             if balance_input and balance_input.isdigit():
@@ -106,4 +106,4 @@ class AddBalanceView(View):
                 profile.add_balance(int(balance_input))
 
         # Редиректим пользователя на нужную страницу
-        return redirect('profile')
+        return redirect("profile")

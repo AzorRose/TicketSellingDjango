@@ -18,7 +18,17 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LogoutView as logout_view
 from apps.accounts.views import SignUpView, SignInView, ProfileView, AddBalanceView
-from apps.events.views import EventView, MainView, SportView, ConcertsView, FestivalsView, KidsView, CoopView, AboutView, BonusView
+from apps.events.views import (
+    EventView,
+    MainView,
+    SportView,
+    ConcertsView,
+    FestivalsView,
+    KidsView,
+    CoopView,
+    AboutView,
+    BonusView,
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
