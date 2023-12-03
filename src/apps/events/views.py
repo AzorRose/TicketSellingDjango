@@ -1,9 +1,8 @@
 from django.shortcuts import render
 from .models import Event, Ticket
-
+from apps.buildings.models import Building
 from apps.accounts.models import UserProfile 
 from django.views.generic import TemplateView
-
 from django.views import View
 
 
@@ -17,11 +16,12 @@ class MainView(View):
 
 
 class EventView(View):
-    def get(self, request, *args, **kwargs):
+    def get(self, request, filter, *args, **kwargs):
         # Получает путь из запроса и возвращает информацию о конкретном событии, которому соответствует этот путь
         slug_match = request.path[request.path.rfind("/") + 1:]
         event = Event.objects.get(slug=slug_match)
         ticket = Ticket.objects.filter(event=event)
+        building = Building.objects.get(name=event.place)
         # Проверяем, что у пользователя есть профиль
         if hasattr(request.user, 'profile'):
             profile = request.user.profile
@@ -29,8 +29,8 @@ class EventView(View):
             profile = None
         if event:
 
-            return render(request, "events/event.html", context={"profile": profile, "event": event, "ticket": ticket})
-
+            return render(request, "events/event.html", context={"profile": profile, "event": event, "ticket": ticket,
+                                                                 "building": building})
 
 
 class SportView(View):
@@ -67,11 +67,6 @@ class CoopView(TemplateView):
 
 class AboutView(TemplateView):
     template_name = "events/about.html"
-
-
-            return render(
-                request, "events/event.html", context={"event": event, "ticket": ticket}
-            )
 
 class BonusView(TemplateView):
     template_name = "events/bonus.html"

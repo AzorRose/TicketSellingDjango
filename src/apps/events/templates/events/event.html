@@ -13,7 +13,7 @@
           <link rel="icon" type="image/x-icon" href="{% static 'main/icon/favicon.ico' %}">
           <link rel="stylesheet" href="{% static 'main/lib/bootstrap-5.3.1-dist/css/bootstrap.min.css' %}">
           <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
-          <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш API-ключ&lang=ru_RU"></script>
+          <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш API-ключ&&lang=ru_RU&load=Geolink""></script>
           <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"/>
         </head>
         <body>
@@ -28,26 +28,20 @@
                         {{ event.end_date }}
                         <br>
                         Место проведения:
-                        {% for el in ticket %}
-                            {{ el.spot }}
-                        {% endfor %}
+                        {{ event.place }}
                         <br>
                         Возрастное ограничение:
                         {{ event.ages }}
                         <br>
                         Стоимость:
-                        {% for el in ticket %}
-                            {{ el.price }} руб.
-                        {% endfor %}
+                        {{ ticket.price }} руб.
                         <br>
                         <a onclick="openModal()" class="btn btn-sm" id="buy-event">Купить билет</a>
                     </div>
                 </div>
                 {% if user.is_authenticated %}
                     <div id="myModal" class="modal authorized">
-                        {% for el in ticket %}
-                            <p>Стоимость билета: {{ el.price }} руб.</p>
-                        {% endfor %}
+                        <p>Стоимость билета: {{ ticket.price }} руб.</p>
                         <p>Ваш баланс: {{ profile.balance }}</p>
                         <a class="overlay-button">КУПИТЬ</a>
                         <a onclick="closeModal()" class="modal-button">
@@ -69,7 +63,8 @@
                     <p>{{ event.description }}</p>
                 </div>
                 <div class="container" id="map-container">
-                    <div id="map" class="map"></div>
+                    {{ building.address|safe }}
+
                 </div>
             </section>
             {% include "accounts/footer_fragment.html" %}

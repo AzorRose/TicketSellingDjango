@@ -4,7 +4,7 @@ from django.template.defaultfilters import slugify
 from django.dispatch import receiver
 from django.db.models.signals import post_delete
 from datetime import date
-from apps.buildings.models import Building
+from apps.buildings.models import Area
 
 
 class Event(models.Model):
@@ -22,6 +22,7 @@ class Event(models.Model):
         ("16+", "16+"),
         ("18+", "18+"),
     ]
+
     ages = models.CharField(max_length=3, choices=age_category, default="0+")
     image = models.ImageField(
         (""),
@@ -35,8 +36,13 @@ class Event(models.Model):
     )
     people_count = models.IntegerField(default=0)
     
+<<<<<<< HEAD
     place = models.ForeignKey(Building, on_delete=models.CASCADE, related_name="event", null=True)
 
+=======
+    place = models.ForeignKey(Area, on_delete=models.CASCADE, related_name="event", null=True)
+    
+>>>>>>> main
     filters = [
         ("all", "all"),
         ("sport", "sport"),
@@ -45,7 +51,11 @@ class Event(models.Model):
         ("kids", "kids"),
     ]    
     filter = models.CharField(max_length=50, choices=filters, default="all")
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> main
     def change_people_count(self, change):
         if change:
             self.people_count += 1
