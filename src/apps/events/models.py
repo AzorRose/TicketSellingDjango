@@ -36,6 +36,18 @@ class Event(models.Model):
     people_count = models.IntegerField(default=0)
     
     place = models.ForeignKey(Building, on_delete=models.CASCADE, related_name="event", null=True)
+<<<<<<< Updated upstream
+=======
+    
+    filters = [
+        ("all", "all"),
+        ("sport", "sport"),
+        ("concerts", "concerts"),
+        ("festivals", "festivals"),
+        ("kids", "kids"),
+    ]    
+    filter = models.CharField(max_length=50, choices=filters, default="all")
+>>>>>>> Stashed changes
     
     def change_people_count(self, change):
         if change:
