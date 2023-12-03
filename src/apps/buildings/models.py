@@ -8,6 +8,7 @@ class Building(models.Model):
 
     address = models.CharField(max_length=2000, default="")
 
+
     map_adress = models.CharField(max_length=2000, default="")
 
     def __str__(self) -> str:
@@ -18,7 +19,6 @@ class Building(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class Area(models.Model):
     building = models.ForeignKey(

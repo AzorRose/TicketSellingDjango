@@ -111,6 +111,7 @@ class Purchase(models.Model):
 
         return has_money and has_place and is_available
 
+
     def buy_ticket(self):
         self.user.balance -= self.ticket.price - (
             self.ticket.price * (self.user.bonus / 100)
