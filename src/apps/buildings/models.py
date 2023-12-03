@@ -5,15 +5,14 @@ class Building(models.Model):
     name = models.CharField(max_length=128)
     
     address = models.CharField(max_length=2000, default="")
+
+    map_address = models.CharField(max_length=2000, default="")
     
     def __str__(self) -> str:
         return self.name
     
     class Meta:
         db_table = "building"
-
-    def __str__(self):
-        return self.name
 
 class Area(models.Model):
     building = models.ForeignKey(Building, on_delete=models.CASCADE, related_name="area")

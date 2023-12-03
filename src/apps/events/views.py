@@ -9,7 +9,7 @@ from django.views import View
 # Create your views here.
 class MainView(View):
     def get(self, request, *args, **kwargs):
-        event = Event.objects.all()
+        event = Event.objects.order_by('-people_count')
         profile = UserProfile.objects.all()
         ticket = Ticket.objects.all()
         return render(request, "events/index.html", context={"profile": profile, "event": event, "ticket": ticket})
@@ -20,7 +20,7 @@ class EventView(View):
         # Получает путь из запроса и возвращает информацию о конкретном событии, которому соответствует этот путь
         slug_match = request.path[request.path.rfind("/") + 1:]
         event = Event.objects.get(slug=slug_match)
-        ticket = Ticket.objects.filter(event=event)
+        ticket = Ticket.objects.get(event=event)
         building = Building.objects.get(name=event.place)
         # Проверяем, что у пользователя есть профиль
         if hasattr(request.user, 'profile'):

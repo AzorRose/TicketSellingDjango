@@ -43,7 +43,7 @@
                                           {% endfor %}
                                           <div class="d-flex justify-content-between align-items-center">
                                               <div class="btn-group">
-                                                  <a type="button" href="{% url 'events' slug=el.slug %}" class="btn btn-sm">Подробнее</a>
+                                                  <a type="button" href="{% url 'events' filter=el.filter slug=el.slug %}" class="btn btn-sm">Подробнее</a>
                                               </div>
                                           </div>
                                       </div>
