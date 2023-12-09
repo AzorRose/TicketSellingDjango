@@ -156,26 +156,15 @@ label {
   padding-top: 8px;
 }
 
-.topline-top-city_link {
-  text-decoration: none;
-  color: black;
-  transition: 0.2s;
-}
-
-.topline-top-city_link:hover {
-  color: #fb8f8f
-}
-
 .icon-search {
   height: 25px;
   left: 33px;
   pointer-events: none;
   position: relative;
   z-index: 3;
-  transform: translate(0%, 35%);
 }
 
-.search-block input {
+.search-block input[type="text"] {
   height: 43px;
   padding-left: 40px;
   position: relative;
@@ -183,8 +172,7 @@ label {
   width: 519px;
   z-index: 2;
   border-radius: 7px;
-  border-width: 1px;
-  border-color: #D9D9D9;
+  border: solid #D9D9D9 1px;
 }
 
 .search-block input::placeholder {
@@ -192,8 +180,31 @@ label {
 }
 
 .search-block {
-  padding-left: 151px;
+  margin-left: 151px;
   display: flex;
+  position: relative;
+}
+
+.search-button {
+  position: absolute;
+  padding: 0 10px;
+  border: solid #D9D9D9 1px;
+  background-color: #fb8f8f; 
+  color: #fff; 
+  border-radius: 0 7px 7px 0;
+  cursor: pointer;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  height: 100%;
+}
+
+.search-block .search-button:hover {
+  background-color: red; 
+}
+
+.search-block .search-button:focus {
+  outline: none; 
 }
 
 .select-date {
@@ -474,6 +485,8 @@ footer {
 .exit-img {
   vertical-align: baseline;
   margin-left: 900px;
+  text-decoration: none;
+  color: black;
 }
 
 .info-form {

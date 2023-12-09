@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LogoutView as logout_view
 from apps.accounts.views import SignUpView, SignInView, ProfileView, AddBalanceView
-from apps.events.views import EventView, MainView, SportView, ConcertsView, FestivalsView, KidsView, CoopView, AboutView, BonusView
+from apps.events.views import EventView, MainView, SportView, ConcertsView, FestivalsView, KidsView, CoopView, AboutView, BonusView, SearchView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -36,4 +36,5 @@ urlpatterns = [
     path("about", AboutView.as_view(), name="about"),
     path("bonus", BonusView.as_view(), name="bonus"),
     path("add_balance", AddBalanceView.as_view(), name="add_balance"),
+    path("search/", SearchView.as_view(), name='search'),
 ]

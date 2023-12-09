@@ -36,11 +36,40 @@
                         Стоимость:
                         {{ ticket.price }} руб.
                         <br>
+                        Адрес:
+                        {{ building.address }}
+                        <br>
                         <a onclick="openModal()" class="btn btn-sm" id="buy-event">Купить билет</a>
                     </div>
                 </div>
                 {% if user.is_authenticated %}
                     <div id="myModal" class="modal authorized">
+                        <h3>{{ event.name }}</strong></h3>
+                        <time>{{ event.end_date }}</time>
+                        <div class="address-container">
+                            <div>{{ event.place }}</div>
+                            <div>{{ building.address }}</div>
+                        </div>
+                        <div>
+                            <div class="place-container">
+                                <div class="btn-place-group ">
+                                    <button class="choice active" id="button1">Схема зала</button>
+                                    <button class="choice" id="button2">Доступные билеты</button>
+                                </div>
+                                <div id="inputContainer1" class="input-container">
+                                    
+                                    <div class="info-form">
+                                        
+                                        <div class="input-form-flex">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="inputContainer2" class="input-container">
+                                    
+                                </div>
+                            </div>
+                        </div>
                         <p>Стоимость билета: {{ ticket.price }} руб.</p>
                         <p>Ваш баланс: {{ profile.balance }}</p>
                         <a class="overlay-button">КУПИТЬ</a>
@@ -69,7 +98,8 @@
             </section>
             {% include "accounts/footer_fragment.html" %}
         <script src="{% static 'main/js/buyEventPopup.js' %}"></script>
-        <script src="{% static 'main/js/map.js' %}"></script>
+        <script src="{% static 'main/js/place.js' %}"></script>
+        <script src="{% static 'main/js/search.js' %}"></script>
         </body>
       </html>
 

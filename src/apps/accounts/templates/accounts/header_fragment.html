@@ -34,8 +34,11 @@
                   <img src="{% static 'main/images/logo.png' %}" height="40" alt="TicketWave - Ваш билет в мир развлечений.">
               </a>
               <div class="search-block">
+                <form method="get" action="{% url 'search' %}">
                   <img class="icon-search" src="{% static 'main/images/search.png' %}">
-                  <input type="text" autocomplete="false" placeholder="Поиск мероприятия">
+                  <input type="text" autocomplete="false" name="q" placeholder="Поиск мероприятия">
+                  <button type="submit" disabled class="search-button">Найти</button>
+                </form>
               </div>
               <div class="select-date">
                   <div class="select-date-btn">

@@ -4,15 +4,25 @@ from apps.buildings.models import Building
 from apps.accounts.models import UserProfile 
 from django.views.generic import TemplateView
 from django.views import View
+from django.db.models import Q
 
 
 # Create your views here.
 class MainView(View):
     def get(self, request, *args, **kwargs):
-        event = Event.objects.order_by('-people_count')
+        popular_events = Event.objects.order_by('-people_count')
+        event = Event.objects.all()
         profile = UserProfile.objects.all()
         ticket = Ticket.objects.all()
-        return render(request, "events/index.html", context={"profile": profile, "event": event, "ticket": ticket})
+        query = request.GET.get('q')
+        if query:
+            events = Event.objects.filter(
+                Q(name__icontains=query) |  # Поиск по имени
+                Q(description__icontains=query)  # Поиск по описанию (можете добавить другие поля)
+            ).distinct()
+        else:
+            events = Event.objects.all()
+        return render(request, "events/index.html", context={"profile": profile, "popular_events": popular_events, "ticket": ticket, "event": event})
 
 
 class EventView(View):
@@ -31,6 +41,28 @@ class EventView(View):
 
             return render(request, "events/event.html", context={"profile": profile, "event": event, "ticket": ticket,
                                                                  "building": building})
+        
+
+class SearchView(View):
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get('q')
+        
+        events = get_events(query) 
+        
+        for event in events:
+            event.tickets = Ticket.objects.filter(event=event)
+             
+        return render(request, "events/search_results.html", context={'events': events, 'query': query})
+
+def get_events(query):    
+    if query:
+        events = Event.objects.filter(Q(name__icontains=query) | 
+                                    Q(description__icontains=query)
+                                    ).distinct()
+    else:
+        events = Event.objects.all()
+        
+    return events
 
 
 class SportView(View):

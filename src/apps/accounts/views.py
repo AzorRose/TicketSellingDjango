@@ -8,6 +8,7 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
 from django.shortcuts import redirect
+from .models import Purchase
 
 
 # Create your views here.
@@ -78,6 +79,8 @@ class ProfileView(LoginRequiredMixin, TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        purchases = Purchase.objects.filter(user=self.request.user.profile)
+        context["purchases"] = purchases
         context["username"] = self.request.user.username
         context["first_name"] = self.request.user.profile.first_name
         context["second_name"] = self.request.user.profile.second_name
