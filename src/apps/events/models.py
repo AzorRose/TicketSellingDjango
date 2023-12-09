@@ -68,6 +68,7 @@ class Event(models.Model):
 
     def get_absolute_url(self):
         return reverse("events:", kwargs={"slug": self.slug})
+    
     def new_event_places(self, capacity, spot):
         for i in range(capacity):
             place = Booked_Places.objects.create(event=self, spot = spot, spot_num = i+1, available = True)    
@@ -85,8 +86,7 @@ class Event(models.Model):
                 self.new_event_places(self.place.capacity_balcony, "balcony")
             if self.place.has_sitting:
                 self.new_event_places(self.place.capacity_sitting, "sitting")
-            if self.place.has_dance_floor:
-                self.new_event_places(self.place.capacity_dance_floor, "dance_floor")
+
     @property
     def is_available(self):
         return not self.is_expired or self.people_count < self.place.capacity_dance_floor + self.place.capacity_balcony + self.place.capacity_sitting
@@ -142,6 +142,7 @@ class Booked_Places(models.Model):
     
     spot = models.CharField(max_length=50, choices=spots, null=True, blank=True)
     
+    spot_row = models.IntegerField(default=0)
     spot_num = models.IntegerField(default=0)
     
     available = models.BooleanField(default=True)

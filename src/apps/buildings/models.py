@@ -22,7 +22,7 @@ class Building(models.Model):
 
 class Area(models.Model):
     building = models.ForeignKey(
-        Building, on_delete=models.CASCADE, related_name="area"
+        Building, on_delete=models.CASCADE, related_name="area" 
     )
 
     name = models.CharField(max_length=50)

@@ -10,10 +10,10 @@ class UserProfile(models.Model):
         User, null=True, on_delete=models.CASCADE, related_name="profile"
     )
 
-    first_name = models.CharField(max_length=32, null=True)
-    second_name = models.CharField(max_length=32, null=True)
-    gender = models.CharField(max_length=9)
-    birth_date = models.DateField(auto_now=False, auto_now_add=False, null=True)
+    first_name = models.CharField(max_length=32, blank=True)
+    second_name = models.CharField(max_length=32, blank=True)
+    gender = models.CharField(max_length=9, blank=True)
+    birth_date = models.DateField(auto_now=False, auto_now_add=False, null=True, blank=True)
     balance = models.FloatField(default=0)
     bonus = models.FloatField(default=0)
     buyback_sum = models.FloatField(default=0)
@@ -74,7 +74,7 @@ class Purchase(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name="ticket")
 
     creation_time = models.DateTimeField(null=True, blank=True)
-
+ 
     spot_num = models.IntegerField(default=0)
 
     def can_buy_ticket(self) -> bool:

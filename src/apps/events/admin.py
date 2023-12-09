@@ -10,7 +10,7 @@ class EventAdmin(admin.ModelAdmin):
         "people_count",
         "booked_balcony",
         "booked_sitting",
-        "booked_dance_floor",
+        "booked_dance_floor", 
     ]
 
 
