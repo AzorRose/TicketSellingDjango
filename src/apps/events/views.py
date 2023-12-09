@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Event, Ticket
-from apps.buildings.models import Building
+from apps.buildings.models import Area
 from apps.accounts.models import UserProfile
 from django.views.generic import TemplateView
 from django.views import View
@@ -25,7 +25,7 @@ class EventView(View):
         slug_match = request.path[request.path.rfind("/") + 1 :]
         event = Event.objects.get(slug=slug_match)
         ticket = Ticket.objects.get(event=event)
-        building = Building.objects.get(name=event.place)
+        area = Area.objects.get(name = event.place.name)
         # Проверяем, что у пользователя есть профиль
         if hasattr(request.user, "profile"):
             profile = request.user.profile
@@ -39,7 +39,7 @@ class EventView(View):
                     "profile": profile,
                     "event": event,
                     "ticket": ticket,
-                    "building": building,
+                    "area": area,
                 },
             )
 
