@@ -135,7 +135,8 @@ class Purchase(models.Model):
                 temp.save()
                 # Установка времени покупки билета
                 self.creation_time = timezone.now()
-                super(Purchase, self).save(self.creation_time, *args, **kwargs)
+                print(self.creation_time, *args, **kwargs)
+                super(Purchase, self).save(*args, **kwargs)
                 # Подсчет новой суммы выкупа пользователя для получения скидки
                 self.user.count_buyback()
                 return
