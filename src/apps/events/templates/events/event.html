@@ -13,6 +13,7 @@
           <link rel="icon" type="image/x-icon" href="{% static 'main/icon/favicon.ico' %}">
           <link rel="stylesheet" href="{% static 'main/lib/bootstrap-5.3.1-dist/css/bootstrap.min.css' %}">
           <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+          <link rel="stylesheet" href="{% static 'main/schemas/Frame.svg' %}">
           <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш API-ключ&&lang=ru_RU&load=Geolink""></script>
           <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"/>
         </head>
@@ -59,20 +60,24 @@
                                 <div id="inputContainer1" class="input-container">
                                     
                                     <div class="info-form">
-                                        
-                                        <div class="input-form-flex">
-                                            
+                                        <div class="zoom-btns">
+                                            <button class="zoom-in" id="zoom-in">+</button>
+                                            <button class="zoom-out" id="zoom-out">-</button>
                                         </div>
+                                        {{ svg|safe }}
+                                        
+                                    </div>
+                                    <div class="footer-place-container">
+                                        <a class="add-to-cart-btn">В корзину</a>
                                     </div>
                                 </div>
+                            
                                 <div id="inputContainer2" class="input-container">
                                     
                                 </div>
                             </div>
                         </div>
-                        <p>Стоимость билета: {{ ticket.price }} руб.</p>
-                        <p>Ваш баланс: {{ profile.balance }}</p>
-                        <a class="overlay-button">КУПИТЬ</a>
+                        
                         <a onclick="closeModal()" class="modal-button">
                             <img src="{% static 'main/images/xmark.png' %}" width="15" height="19">
                         </a>
@@ -100,6 +105,7 @@
         <script src="{% static 'main/js/buyEventPopup.js' %}"></script>
         <script src="{% static 'main/js/place.js' %}"></script>
         <script src="{% static 'main/js/search.js' %}"></script>
+        <script src="{% static 'main/js/zoom_svg.js' %}"></script>
         </body>
       </html>
 

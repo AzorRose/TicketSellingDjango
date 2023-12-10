@@ -5,6 +5,7 @@ from apps.accounts.models import UserProfile
 from django.views.generic import TemplateView
 from django.views import View
 from django.db.models import Q
+import re
 
 
 # Create your views here.
@@ -32,6 +33,8 @@ class EventView(View):
         event = Event.objects.get(slug=slug_match)
         ticket = Ticket.objects.get(event=event)
         building = Building.objects.get(name=event.place)
+        with open("apps/events/static/main/schemas/Frame.svg") as f:
+            svg = f.read()
         # Проверяем, что у пользователя есть профиль
         if hasattr(request.user, 'profile'):
             profile = request.user.profile
@@ -40,7 +43,7 @@ class EventView(View):
         if event:
 
             return render(request, "events/event.html", context={"profile": profile, "event": event, "ticket": ticket,
-                                                                 "building": building})
+                                                                 "building": building, "svg": svg})
         
 
 class SearchView(View):

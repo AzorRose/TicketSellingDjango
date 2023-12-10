@@ -79,12 +79,13 @@ class ProfileView(LoginRequiredMixin, TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        purchases = Purchase.objects.filter(user=self.request.user.profile)
+        user = self.request.user
+        purchases = Purchase.objects.filter(user=user.profile)
         context["purchases"] = purchases
-        context["username"] = self.request.user.username
-        context["first_name"] = self.request.user.profile.first_name
-        context["second_name"] = self.request.user.profile.second_name
-        context["balance"] = self.request.user.profile.balance
+        context["username"] = user.username
+        context["first_name"] = user.profile.first_name
+        context["second_name"] = user.profile.second_name
+        context["balance"] = user.profile.balance
         
         return context
 
