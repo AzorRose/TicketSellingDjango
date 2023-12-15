@@ -9,7 +9,7 @@
           <meta name="author" content="Марат Маур">
           <meta name="description" content="Тестовая страница">
           <meta name="keywords" content="тест,проверка,html">
-          <title>Авторизация</title>
+          <title>Профиль</title>
           <link rel="icon" type="image/x-icon" href="{% static 'main/icon/favicon.ico' %}">
           <link rel="stylesheet" href="{% static 'main/lib/bootstrap-5.3.1-dist/css/bootstrap.min.css' %}">
           <link rel="stylesheet" href="{% static 'main/css/accounts.css' %}">
@@ -22,11 +22,11 @@
                     <div class="account-info">
                         <div class="username-exit-container">
                             <h4>{{ username }}</h4>
-                            <a class="exit-img" href="{% url 'logout' %}">
+                            <a class="exit-img" href="{% url 'logout' %}">Выйти
                                 <img src="{% static 'main/images/exit.png' %}" alt="Выйти" height="15">
                             </a>
                         </div>
-                        <p class="balance">Баланс {{ balance }}</p>
+                        <p class="balance">Баланс {{ balance }} руб.</p>
                         <a class="open-popup-btn" onclick="openModal()">Пополнить баланс</a>
                         <div id="balancePopup" class="balance_popup">
                             <form method="post" action="{% url 'add_balance' %}">
@@ -49,7 +49,7 @@
                             <button class="choice" id="button3">Программа лояльности</button>
                         </div>
                         <div id="inputContainer1" class="input-container">
-                            <h5 class="es-heading">ПЕРСОНАЛЬНЫЕ ДАННЫЕ</h5>
+                            <h5 class="es-heading">ДАННЫЕ О ПОЛЬЗОВАТЕЛЕ</h5>
                             <div class="info-form">
                                 <div class="input-form-flex">
                                     <label class="small-text">Имя</label>
@@ -62,7 +62,13 @@
                             </div>
                         </div>
                         <div id="inputContainer2" class="input-container">
-
+                            <ul>
+                                {% for purchase in purchases %}
+                                    {% if purchase.completed %}
+                                        <li>Покупка от {{purchase.creation_time}}<br>Билет: {{ purchase.ticket.event.name }}<br>Дата проведения: {{ purchase.ticket.event.end_date }}<br>Адрес: {{ purchase.ticket.event.place }}, {{ purchase.ticket.event.place.address }}<br>Место: {{ purchase.ticket.spot }}<br>Стоимость: {{ purchase.ticket.price }} руб.</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
                         </div>
                         <div id="inputContainer3" class="input-container">
 
@@ -74,6 +80,7 @@
         <script src="{% static 'main/js/profile.js' %}"></script>
         <script src="{% static 'main/js/sticky.js' %}"></script>
         <script src="{% static 'main/js/balancePopup.js' %}"></script>
+        <script src="{% static 'main/js/search.js' %}"></script>
         </body>
       </html>
 {% endblock %}

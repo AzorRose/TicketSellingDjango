@@ -13,6 +13,7 @@
           <link rel="icon" type="image/x-icon" href="{% static 'main/icon/favicon.ico' %}">
           <link rel="stylesheet" href="{% static 'main/lib/bootstrap-5.3.1-dist/css/bootstrap.min.css' %}">
           <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+          <link rel="stylesheet" href="{% static 'main/schemas/Frame.svg' %}">
           <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш API-ключ&&lang=ru_RU&load=Geolink""></script>
           <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"/>
         </head>
@@ -36,14 +37,48 @@
                         Стоимость:
                         {{ ticket.price }} руб.
                         <br>
+                        Адрес:
+                        {{ building.address }}
+                        <br>
                         <a onclick="openModal()" class="btn btn-sm" id="buy-event">Купить билет</a>
                     </div>
                 </div>
                 {% if user.is_authenticated %}
                     <div id="myModal" class="modal authorized">
-                        <p>Стоимость билета: {{ ticket.price }} руб.</p>
-                        <p>Ваш баланс: {{ profile.balance }}</p>
-                        <a class="overlay-button">КУПИТЬ</a>
+                        <h3>{{ event.name }}</strong></h3>
+                        <time>{{ event.end_date }}</time>
+                        <div class="address-container">
+                            <div>{{ event.place }}</div>
+                            <div>{{ building.address }}</div>
+                        </div>
+                        <div>
+                            <div class="place-container">
+                                <div class="btn-place-group ">
+                                    <button class="choice active" id="button1">Схема зала</button>
+                                    <button class="choice" id="button2">Доступные билеты</button>
+                                </div>
+                                <div id="inputContainer1" class="input-container">
+                                    
+                                    <div class="info-form">
+                                        <div class="zoom-btns">
+                                            <button class="zoom-in" id="zoom-in">+</button>
+                                            <button class="zoom-out" id="zoom-out">-</button>
+                                        </div>
+                                        {{ svg|safe }}
+                                        
+                                    </div>
+                                    <div id="footer-place-container" class="footer-place-container">
+                                        <p id="tooltip"></p>
+                                        <a class="add-to-cart-btn">В корзину</a>
+                                    </div>
+                                </div>
+                            
+                                <div id="inputContainer2" class="input-container">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
                         <a onclick="closeModal()" class="modal-button">
                             <img src="{% static 'main/images/xmark.png' %}" width="15" height="19">
                         </a>
@@ -63,13 +98,15 @@
                     <p>{{ event.description }}</p>
                 </div>
                 <div class="container" id="map-container">
-                    {{ building.map_address|safe }}
+                    {{ building.map_adress|safe }}
 
                 </div>
             </section>
             {% include "accounts/footer_fragment.html" %}
         <script src="{% static 'main/js/buyEventPopup.js' %}"></script>
-        <script src="{% static 'main/js/map.js' %}"></script>
+        <script src="{% static 'main/js/place.js' %}"></script>
+        <script src="{% static 'main/js/search.js' %}"></script>
+        <script src="{% static 'main/js/zoom_svg.js' %}"></script>
         </body>
       </html>
 

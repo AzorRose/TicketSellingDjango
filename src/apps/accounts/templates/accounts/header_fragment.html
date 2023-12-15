@@ -2,96 +2,99 @@
 
 {% block content%}
 <header id="header">
-      <div class="top-line">
-          <div class="container">
-              <div class="selected-city">
-                  <img class="cursor" src="{% static 'main/images/pin.png' %}">
-                  <div class="title">Астрахань</div>
-              </div>
-              <nav class="top-menu">
-                  <div class="about">
-                      <a class="menu-el" href="{% url 'about' %}">О нас</a>
-                  </div>
-                  <div class="bonus">
-                      <a class="menu-el" href="{% url 'bonus' %}">Бонусная система</a>
-                  </div>
-                  <div class="news">
-                      <a class="menu-el">Новости</a>
-                  </div>
-                  <div class="cooperation">
-                      <a class="menu-el" href="{% url 'cooperation' %}">Сотрудничество</a>
-                  </div>
-                  <div class="contacts">
-                      <a class="menu-el">Контакты</a>
-                  </div>
-              </nav>
-          </div>
-
-      </div>
-      <div class="middle-line">
-          <div class="container">
-              <a class="logo" href="{% url 'index' %}">
-                  <img src="{% static 'main/images/logo.png' %}" height="40" alt="TicketWave - Ваш билет в мир развлечений.">
-              </a>
-              <div class="search-block">
-                  <img class="icon-search" src="{% static 'main/images/search.png' %}">
-                  <input type="text" autocomplete="false" placeholder="Поиск мероприятия">
-              </div>
-              <div class="select-date">
-                  <div class="select-date-btn">
-                      <img class="calendar-img" src="{% static 'main/images/calendar.png' %}" height="20">
-                      <p class="select-date-text">Выбрать дату мероприятия</p>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="bottom-line">
-          <div class="container">
-              <nav class="genres-menu">
-                  <ul class="lvl-1">
-                      <li class="lvl-1 active exact-active">
-                          <a href="{% url 'index' %}#allEvents" class="menu-link" onclick="scrollToMiddle(event)">
-                              <span class="menu-link">Все события</span>
-                          </a>
-                      </li>
-                      <li class="lvl-1">
-                          <a href="{% url 'sport' %}" class="menu-link">
-                              <span>Спорт</span>
-                          </a>
-                      </li>
-                      <li class="lvl-1">
-                          <a href="{% url 'concerts' %}" class="menu-link">
-                              <span>Концерты</span>
-                          </a>
-                      </li>
-                      <li class="lvl-1">
-                          <a href="{% url 'festivals' %}" class="menu-link">
-                              <span>Фестивали</span>
-                          </a>
-                      </li>
-                      <li class="lvl-1">
-                          <a href="{% url 'kids' %}" class="menu-link">
-                              <span>Детям</span>
-                          </a>
-                      </li>
-                  </ul>
-              </nav>
-              {% if user.is_authenticated %}
-              <a href="{% url 'profile' %}" class="authorization">
-                  Профиль
-                  <div class="circle">
-                      <img class="auth-img" src="{% static 'main/images/user.png' %}" alt="">
-                  </div>
-              </a>
-              {% else %}
-              <a href="{% url 'signin' %}" class="authorization">
-                  Авторизация
-                  <div class="circle">
-                      <img class="auth-img" src="{% static 'main/images/user.png' %}" alt="" >
-                  </div>
-              </a>
-              {% endif %}
-          </div>
-      </div>
+    <div class="top-line">
+        <div class="container">
+            <div class="selected-city">
+                <img class="cursor" src="{% static 'main/images/pin.png' %}">
+                <div class="title">Астрахань</div>
+            </div>
+            <nav class="top-menu">
+                <div class="about">
+                    <a class="menu-el" href="{% url 'about' %}">О нас</a>
+                </div>
+                <div class="bonus">
+                    <a class="menu-el" href="{% url 'bonus' %}">Бонусная система</a>
+                </div>
+                <div class="news">
+                    <a class="menu-el">Новости</a>
+                </div>
+                <div class="cooperation">
+                    <a class="menu-el" href="{% url 'cooperation' %}">Сотрудничество</a>
+                </div>
+                <div class="contacts">
+                    <a class="menu-el">Контакты</a>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="sticky-container">
+        <div class="middle-line">
+            <div class="container">
+                <a class="logo" href="{% url 'index' %}">
+                    <img src="{% static 'main/images/logo.png' %}" height="40" alt="TicketWave - Ваш билет в мир развлечений.">
+                </a>
+                <div class="search-block">
+                    <form method="get" action="{% url 'search' %}">
+                    <img class="icon-search" src="{% static 'main/images/search.png' %}">
+                    <input type="text" autocomplete="false" name="q" placeholder="Поиск мероприятия">
+                    <button type="submit" disabled class="search-button">Найти</button>
+                    </form>
+                </div>
+                <div class="select-date">
+                    <div class="select-date-btn">
+                        <img class="calendar-img" src="{% static 'main/images/calendar.png' %}" height="20">
+                        <p class="select-date-text">Выбрать дату мероприятия</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-line">
+            <div class="container">
+                <nav class="genres-menu">
+                    <ul class="lvl-1">
+                        <li class="lvl-1 active exact-active">
+                            <a href="{% url 'index' %}#allEvents" class="menu-link" onclick="scrollToMiddle(event)">
+                                <span class="menu-link">Все события</span>
+                            </a>
+                        </li>
+                        <li class="lvl-1">
+                            <a href="{% url 'sport' %}" class="menu-link">
+                                <span>Спорт</span>
+                            </a>
+                        </li>
+                        <li class="lvl-1">
+                            <a href="{% url 'concerts' %}" class="menu-link">
+                                <span>Концерты</span>
+                            </a>
+                        </li>
+                        <li class="lvl-1">
+                            <a href="{% url 'festivals' %}" class="menu-link">
+                                <span>Фестивали</span>
+                            </a>
+                        </li>
+                        <li class="lvl-1">
+                            <a href="{% url 'kids' %}" class="menu-link">
+                                <span>Детям</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="authorization">
+                    Профиль
+                </a>
+                {% else %}
+                <a href="{% url 'signin' %}" class="authorization">
+                    Авторизация
+                </a>
+                {% endif %}
+                <a href="{% url 'cart' %}" id="cart-btn" class="circle">
+                    <img class="auth-img" src="{% static 'main/images/shopping-cart.png' %}" alt="">
+                </a>
+                
+            </div>
+        </div>
+    </div>
+        
 </header>
 {% endblock %}

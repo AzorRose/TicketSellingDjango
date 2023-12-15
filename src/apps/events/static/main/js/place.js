@@ -1,7 +1,6 @@
 // Получаем элементы кнопок, полей ввода и контейнера вывода
 var button1 = document.getElementById("button1");
 var button2 = document.getElementById("button2");
-var button3 = document.getElementById("button3");
 var output = document.getElementById("output");
 var buttons = document.querySelectorAll(".choice");
 var inputContainers = document.querySelectorAll(".input-container");
@@ -49,14 +48,3 @@ button2.addEventListener("click", function () {
     });
     inputContainers[1].style.display = "block";
 });
-
-button3.addEventListener("click", function () {
-    // Скрываем все контейнеры и показываем только нужный
-    inputContainers.forEach(function (container) {
-        container.style.display = "none";
-    });
-    inputContainers[2].style.display = "block";
-});
-
-
-  

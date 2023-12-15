@@ -1,5 +1,5 @@
 window.addEventListener("scroll", function() {
-    var middleLine = document.querySelector(".middle-line");
+    var middleLine = document.querySelector(".sticky-container");
     var scrollPosition = window.scrollY;
 
     if (scrollPosition > 0) {
