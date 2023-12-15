@@ -40,10 +40,11 @@ let tooltip = document.getElementById('tooltip');
 seats.forEach(seat => {
 
     let defaultColor = seat.style.fill;
+    const dataSeat = seat.getAttribute('dataseat');
+    const dataRow = seat.getAttribute('datarow');
 
     seat.addEventListener('click', () => {
-        const dataSeat = seat.getAttribute('dataseat');
-        const dataRow = seat.getAttribute('datarow');
+        
         if(seat.style.fill === defaultColor) {
         seat.style.fill = 'red';
         var data = {
@@ -65,11 +66,7 @@ seats.forEach(seat => {
             
             // Отправка запроса с использованием Fetch API
             fetch(url, options)
-            .then(response => response.json()) // Распарсить ответ в JSON
-            .then(data => {
-            // Обработка ответа от сервера
-            console.log('Success:', data);
-            })
+            
             .catch(error => {
             // Обработка ошибок
             console.error('Error:', error);
