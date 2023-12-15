@@ -161,7 +161,8 @@ class Purchase(models.Model):
         super(Purchase, self).save(*args, **kwargs)
     
     def delete(self, *args, **kwargs):
-        self.ticket.event.change_people_count(False)
+        if self.completed:
+            self.ticket.event.change_people_count(False)
         super(Purchase, self).delete(*args, **kwargs)
 
     class Meta:
