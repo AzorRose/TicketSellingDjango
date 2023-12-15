@@ -35,3 +35,10 @@
 Авторизация через соц сеть
 Топ мероприятий по количеству проданных билетов
 
+
+
+Pillow
+django-crispy-forms
+django-taggit
+django psycopg2
+
