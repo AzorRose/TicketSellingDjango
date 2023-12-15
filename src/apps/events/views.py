@@ -5,9 +5,10 @@ from apps.accounts.models import UserProfile
 from django.views.generic import TemplateView
 from django.views import View
 from django.db.models import Q
-import re
 from django.http import JsonResponse
 from apps.events.models import Booked_Places
+from django.http import HttpResponse
+import ast
 
 
 # Create your views here.
@@ -44,9 +45,13 @@ class EventView(View):
         else:
             profile = None
         if event:
-
             return render(request, "events/event.html", context={"profile": profile, "event": event, "ticket": ticket,
                                                                  "area": area, "building": building, "svg": svg})
+    def post(self, request, *args, **kwargs):
+        row = ast.literal_eval(request.body.decode('utf-8'))
+        print(f'Ряд: {row["key1"]}')
+        print(f'Место: {row["key2"]}')
+        return HttpResponse("Ok")
         
 def get_booked_places(request):
     booked_places = list(Booked_Places.objects.values('spot_row', 'spot_num', 'available'))
@@ -89,7 +94,6 @@ class ConcertsView(View):
         return render(
             request, "events/concerts.html", context={"event": event, "ticket": ticket}
         )
-
 
 class FestivalsView(View):
     def get(self, request, *args, **kwargs):

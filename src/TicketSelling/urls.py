@@ -16,10 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .receiver import your_django_endpoint
 from django.contrib.auth.views import LogoutView as logout_view
 from apps.accounts.views import SignUpView, SignInView, ProfileView, AddBalanceView, ShoppingCartView
 from apps.events.views import EventView, MainView, SportView, ConcertsView, FestivalsView, KidsView, CoopView, AboutView, BonusView, SearchView, get_booked_places
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -28,7 +28,7 @@ urlpatterns = [
     path("profile/", ProfileView.as_view(), name="profile"),
     path("", MainView.as_view(), name="index"),
     path("logout", logout_view.as_view(), name="logout"),
-    path("<str:filter>/<slug:slug>", EventView.as_view(), name="events"),
+    path("<str:filter>/<slug:slug>", csrf_exempt(EventView.as_view()), name="events"),
     path("sport", SportView.as_view(), name="sport"),
     path("concerts", ConcertsView.as_view(), name="concerts"),
     path("festivals", FestivalsView.as_view(), name="festivals"),
