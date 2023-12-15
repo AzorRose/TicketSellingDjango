@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from .models import Event, Ticket
-from apps.buildings.models import Area
+from apps.buildings.models import Area, Building
 from apps.accounts.models import UserProfile
 from django.views.generic import TemplateView
 from django.views import View
 from django.db.models import Q
 import re
+from django.http import JsonResponse
+from apps.events.models import Booked_Places
 
 
 # Create your views here.
@@ -15,7 +17,15 @@ class MainView(View):
         event = Event.objects.all()
         profile = UserProfile.objects.all()
         ticket = Ticket.objects.all()
-        return render(request, "events/index.html", context={"profile": profile, "popular_events": popular_events, "event": event, "ticket": ticket})
+        query = request.GET.get('q')
+        if query:
+            events = Event.objects.filter(
+                Q(name__icontains=query) |  # Поиск по имени
+                Q(description__icontains=query)  # Поиск по описанию (можете добавить другие поля)
+            ).distinct()
+        else:
+            events = Event.objects.all()
+        return render(request, "events/index.html", context={"profile": profile, "popular_events": popular_events, "ticket": ticket, "event": event})
 
 
 class EventView(View):
@@ -25,6 +35,7 @@ class EventView(View):
         event = Event.objects.get(slug=slug_match)
         ticket = Ticket.objects.get(event=event)
         area = Area.objects.get(name = event.place.name)
+        building = Building.objects.get(name=event.place)
         with open("apps/events/static/main/schemas/Frame.svg") as f:
             svg = f.read()
         # Проверяем, что у пользователя есть профиль
@@ -35,8 +46,32 @@ class EventView(View):
         if event:
 
             return render(request, "events/event.html", context={"profile": profile, "event": event, "ticket": ticket,
-                                                                 "area": area, "svg": svg})
+                                                                 "area": area, "building": building, "svg": svg})
+        
+def get_booked_places(request):
+    booked_places = list(Booked_Places.objects.values('spot_row', 'spot_num', 'available'))
+    return JsonResponse({'booked_places': booked_places}, safe=False)
 
+class SearchView(View):
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get('q')
+        
+        events = get_events(query) 
+        
+        for event in events:
+            event.tickets = Ticket.objects.filter(event=event)
+             
+        return render(request, "events/search_results.html", context={'events': events, 'query': query})
+
+def get_events(query):    
+    if query:
+        events = Event.objects.filter(Q(name__icontains=query) | 
+                                    Q(description__icontains=query)
+                                    ).distinct()
+    else:
+        events = Event.objects.all()
+        
+    return events
 
 class SportView(View):
     def get(self, request, *args, **kwargs):

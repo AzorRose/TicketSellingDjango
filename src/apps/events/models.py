@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from django.db.models.signals import post_delete
 from datetime import date
 from apps.buildings.models import Area
+from django.urls import reverse
 
 class Event(models.Model):
     name = models.CharField((""), max_length=128)

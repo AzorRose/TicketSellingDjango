@@ -99,7 +99,9 @@ class UserProfile(models.Model):
         verbose_name = "профиль пользователя"
 
     def get_empty_user_profile():
-        return UserProfile.objects.get(user=User.objects.get(username="empty"))
+        #return UserProfile.objects.get(user=User.objects.get(username="empty"))
+        pass
+        
 
 
 class Purchase(models.Model):

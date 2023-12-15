@@ -64,8 +64,9 @@
                         <div id="inputContainer2" class="input-container">
                             <ul>
                                 {% for purchase in purchases %}
-                                    <li>Покупка от {{purchase.creation_time}}<br>Билет: {{ purchase.ticket.event.name }}<br>Дата проведения: {{ purchase.ticket.event.end_date }}<br>Адрес: {{ purchase.ticket.event.place }}, {{ purchase.ticket.event.place.address }}<br>Место: {{ purchase.ticket.spot }}<br>Стоимость: {{ purchase.ticket.price }} руб.</li>
-                                    
+                                    {% if purchase.completed %}
+                                        <li>Покупка от {{purchase.creation_time}}<br>Билет: {{ purchase.ticket.event.name }}<br>Дата проведения: {{ purchase.ticket.event.end_date }}<br>Адрес: {{ purchase.ticket.event.place }}, {{ purchase.ticket.event.place.address }}<br>Место: {{ purchase.ticket.spot }}<br>Стоимость: {{ purchase.ticket.price }} руб.</li>
+                                    {% endif %}
                                 {% endfor %}
                             </ul>
                         </div>

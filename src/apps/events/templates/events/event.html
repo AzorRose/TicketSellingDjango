@@ -67,7 +67,8 @@
                                         {{ svg|safe }}
                                         
                                     </div>
-                                    <div class="footer-place-container">
+                                    <div id="footer-place-container" class="footer-place-container">
+                                        <p id="tooltip"></p>
                                         <a class="add-to-cart-btn">В корзину</a>
                                     </div>
                                 </div>
@@ -97,7 +98,7 @@
                     <p>{{ event.description }}</p>
                 </div>
                 <div class="container" id="map-container">
-                    {{ building.map_address|safe }}
+                    {{ building.map_adress|safe }}
 
                 </div>
             </section>

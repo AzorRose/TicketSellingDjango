@@ -82,6 +82,8 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
         user = self.request.user
         purchases = Purchase.objects.filter(user=user.profile)
+        #basket = user.profile.get_basket
+        #context["basket"] = basket
         context["purchases"] = purchases
         context["username"] = user.username
         context["first_name"] = user.profile.first_name
@@ -112,3 +114,16 @@ class AddBalanceView(View):
 
         # Редиректим пользователя на нужную страницу
         return redirect("profile")
+    
+
+class ShoppingCartView(View):
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        if hasattr(user, "profile"):
+            # Получаем объект профиля
+            profile = user.profile
+            basket = profile.get_basket
+        return render(
+            request, "accounts/shopping_cart.html", context={"basket" : basket}
+        )    
+

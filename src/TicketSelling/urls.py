@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from .receiver import your_django_endpoint
 from django.contrib.auth.views import LogoutView as logout_view
-from apps.accounts.views import SignUpView, SignInView, ProfileView, AddBalanceView
-from apps.events.views import EventView, MainView, SportView, ConcertsView, FestivalsView, KidsView, CoopView, AboutView, BonusView, SearchView
+from apps.accounts.views import SignUpView, SignInView, ProfileView, AddBalanceView, ShoppingCartView
+from apps.events.views import EventView, MainView, SportView, ConcertsView, FestivalsView, KidsView, CoopView, AboutView, BonusView, SearchView, get_booked_places
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -37,4 +38,6 @@ urlpatterns = [
     path("bonus", BonusView.as_view(), name="bonus"),
     path("add_balance", AddBalanceView.as_view(), name="add_balance"),
     path("search/", SearchView.as_view(), name='search'),
+    path("cart/", ShoppingCartView.as_view(), name='cart'),
+    path('api/get_booked_places/', get_booked_places, name='get_booked_places'),
 ]

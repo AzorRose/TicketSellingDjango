@@ -57,3 +57,6 @@ button3.addEventListener("click", function () {
     });
     inputContainers[2].style.display = "block";
 });
+
+
+  

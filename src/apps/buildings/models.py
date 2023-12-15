@@ -37,4 +37,4 @@ class Area(models.Model):
         db_table = "areas"
 
     def __str__(self) -> str:
-        return f"{self.building.name} | {self.name}"
+        return f"{self.building.name}"

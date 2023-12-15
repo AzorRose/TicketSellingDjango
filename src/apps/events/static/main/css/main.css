@@ -111,6 +111,11 @@ label {
   text-decoration: underline;
 }
 
+.sticky-container {
+  width: 100%;
+  z-index: 1000;
+}
+
 .middle-line {
   height: 93px;
   box-sizing: border-box;
@@ -127,20 +132,6 @@ label {
 
 .logo {
   cursor: pointer;
-}
-
-.popup {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 250px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  display: none;
-  z-index: 1000;
-  cursor: default;
 }
 
 .topline-top-city {
@@ -243,6 +234,7 @@ label {
 }
 
 .bottom-line {
+  display: block;
   background-color: #272727;
   height: 72px;
 }
@@ -311,6 +303,44 @@ label {
   background-color: #EBEBEB;
   border-radius: 50%;
   position: relative;
+  cursor: pointer;
+}
+
+.cart-popup {
+  display: none;
+  width: 336px;
+  height: 345px;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  padding: 15px;
+  position: absolute;
+  top: 73px; 
+  right: -160px;
+  transform: translateX(-50%);
+  z-index: 10; 
+}
+
+.cart-popup-header, .cart-popup-footer {
+  display: flex;
+  justify-content: center;
+}
+
+
+.buy-btn {
+  text-decoration: none;
+  background-color: #fb8f8f;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 7px;
+  position: fixed;
+  bottom: 10px;
+  cursor: pointer;
+  transition: 1s;
+}
+
+.buy-btn:hover {
+  background-color: red;
 }
 
 .auth-img {
@@ -758,4 +788,10 @@ rect:hover {
 
 .seat {
   cursor: pointer;
+}
+
+#tooltip {
+  display: none;
+  position: relative;
+  margin: 10px;
 }
