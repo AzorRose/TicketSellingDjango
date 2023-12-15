@@ -42,33 +42,10 @@ seats.forEach(seat => {
     let defaultColor = seat.style.fill;
 
     seat.addEventListener('click', () => {
-        if(seat.style.fill === defaultColor) {
-        seat.style.fill = 'red';
-        } else {
-        seat.style.fill = defaultColor;
-        }
-    });
-
-    seat.addEventListener('mouseover', function(event) {
         const dataSeat = seat.getAttribute('dataseat');
         const dataRow = seat.getAttribute('datarow');
-        const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
-        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-
-        // Check and adjust tooltip position if necessary
-        if (event.clientX + tooltip.offsetWidth > viewportWidth) {
-            tooltip.style.left = `${viewportWidth - tooltip.offsetWidth - 10}px`;
-        }
-
-        if (event.clientY + tooltip.offsetHeight > viewportHeight) {
-            tooltip.style.top = `${viewportHeight - tooltip.offsetHeight - 10}px`;
-        }
-
-        seat.style.filter = 'drop-shadow(0 0 3px #666)';
-        tooltip.innerHTML = `<p></p>Стол: ${dataSeat}, Место: ${dataRow}</p>`;
-        
-        tooltip.style.display = 'block';
-        
+        if(seat.style.fill === defaultColor) {
+        seat.style.fill = 'red';
         var data = {
             key1: dataRow,
             key2: dataSeat
@@ -98,6 +75,31 @@ seats.forEach(seat => {
             console.error('Error:', error);
             });
 
+        } else {
+        seat.style.fill = defaultColor;
+        }
+    });
+
+    seat.addEventListener('mouseover', function(event) {
+        const dataSeat = seat.getAttribute('dataseat');
+        const dataRow = seat.getAttribute('datarow');
+        const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+        // Check and adjust tooltip position if necessary
+        if (event.clientX + tooltip.offsetWidth > viewportWidth) {
+            tooltip.style.left = `${viewportWidth - tooltip.offsetWidth - 10}px`;
+        }
+
+        if (event.clientY + tooltip.offsetHeight > viewportHeight) {
+            tooltip.style.top = `${viewportHeight - tooltip.offsetHeight - 10}px`;
+        }
+
+        seat.style.filter = 'drop-shadow(0 0 3px #666)';
+        tooltip.innerHTML = `<p></p>Стол: ${dataSeat}, Место: ${dataRow}</p>`;
+        
+        tooltip.style.display = 'block';
+        
     });
    
     
@@ -143,12 +145,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Добавляем промис в массив
         var promise = checkSeatStatus(seat, dataSeat, dataRow);
-
-        // Обработчик клика
-        seat.addEventListener('click', handleClick);
-
-        // Обработчик наведения
-        seat.addEventListener('mouseover', handleHover);
 
         // Добавляем промис в массив
         promises.push(promise);
