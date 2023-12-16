@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from apps.events.models import Booked_Places
 from django.http import HttpResponse
-import ast
+from ast import literal_eval
 
 
 # Create your views here.
@@ -48,7 +48,7 @@ class EventView(View):
             return render(request, "events/event.html", context={"profile": profile, "event": event, "ticket": ticket,
                                                                  "area": area, "building": building, "svg": svg})
     def post(self, request, *args, **kwargs):
-        row = ast.literal_eval(request.body.decode('utf-8'))
+        row = literal_eval(request.body.decode('utf-8'))
         print(f'Ряд: {row["key1"]}')
         print(f'Место: {row["key2"]}')
         return HttpResponse("Ok")
