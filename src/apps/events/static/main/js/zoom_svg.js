@@ -107,56 +107,70 @@ seats.forEach(seat => {
 });
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Получаем все элементы с классом "seat"
-    var seats = document.querySelectorAll('.seat');
+document.addEventListener("DOMContentLoaded", async function () {
+    var seats = Array.from(document.querySelectorAll('.seat'));
+    var bookedPlacesCache = null;
 
-    // Создаем функцию для выполнения fetch
-    function checkSeatStatus(seat, dataSeat, dataRow) {
-        
-        return fetch('/api/get_booked_places/')
-            .then(response => response.json())
-            .then(data => {
-                if (data.booked_places.some(place => place.spot_num == dataSeat && place.spot_row == dataRow && place.available == true)) {
-                    seat.style.fill = '#EEECEC';
-                    seat.addEventListener('mouseover', () => {
-                        seat.style.filter = 'none';
-                        tooltip.style.display = 'none';
-                    });
-                    seat.addEventListener('click', e => {
-                        seat.style.fill = '#EEECEC';
-                    });
-                }
-            })
-            .catch(error => console.error('Error:', error));
+    async function getBookedPlaces() {
+        try {
+            const response = await fetch('/api/get_booked_places/');
+            const data = await response.json();
+            bookedPlacesCache = data.booked_places;
+            // Store in localStorage for caching
+            localStorage.setItem('bookedPlacesCache', JSON.stringify(bookedPlacesCache));
+            return bookedPlacesCache;
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
 
-    // Создаем массив промисов для всех fetch операций
-    var promises = [];
+    async function checkSeatStatus(seat, dataSeat, dataRow) {
+        if (bookedPlacesCache === null) {
+            // If the cache is not available, fetch booked places
+            await getBookedPlaces();
+        }
 
-    // Проходим по каждому элементу
-    seats.forEach(function (seat) {
-        // Получаем значения атрибутов dataseat и datarow
-        var dataSeat = seat.getAttribute('dataseat');
-        var dataRow = seat.getAttribute('datarow');
+        if (bookedPlacesCache.some(place => place.spot_num == dataSeat && place.spot_row == dataRow && place.available == true)) {
+            seat.style.fill = '#EEECEC';
+            seat.addEventListener('mouseover', () => {
+                seat.style.filter = 'none';
+                tooltip.style.display = 'none';
+            });
+            seat.addEventListener('click', () => {
+                seat.style.fill = '#EEECEC';
+            });
+        }
+    }
 
-        // Добавляем промис в массив
-        var promise = checkSeatStatus(seat, dataSeat, dataRow);
+    try {
+        const startTime = performance.now();
 
-        // Добавляем промис в массив
-        promises.push(promise);
-    });
+        // Try to retrieve data from localStorage first
+        const cachedData = localStorage.getItem('bookedPlacesCache');
+        if (cachedData) {
+            bookedPlacesCache = JSON.parse(cachedData);
+        } else {
+            await getBookedPlaces();
+        }
 
-    // Ждем, пока все промисы завершатся
-    Promise.all(promises)
-        .then(() => {
-            // Все fetch операции завершены
-            console.log('All fetch operations completed');
+        // Batch requests for all seats
+        const promises = seats.map(seat => {
+            const dataSeat = seat.getAttribute('dataseat');
+            const dataRow = seat.getAttribute('datarow');
+            return checkSeatStatus(seat, dataSeat, dataRow);
         });
+
+        // Wait for all promises to resolve
+        await Promise.all(promises);
+
+        const endTime = performance.now();
+        const elapsedTime = endTime - startTime;
+
+        console.log('All fetch operations completed in', elapsedTime, 'milliseconds');
+    } catch (error) {
+        console.error('Error:', error);
+    }
 });
-
-
-
 
 let startX, startY;
 
