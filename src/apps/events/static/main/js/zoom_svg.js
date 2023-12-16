@@ -40,16 +40,13 @@ let tooltip = document.getElementById('tooltip');
 seats.forEach(seat => {
 
     let defaultColor = seat.style.fill;
+    const dataSeat = seat.getAttribute('dataseat');
+    const dataRow = seat.getAttribute('datarow');
 
     seat.addEventListener('click', () => {
+        
         if(seat.style.fill === defaultColor) {
         seat.style.fill = 'red';
-        } else {
-        seat.style.fill = defaultColor;
-        }
-        const dataSeat = seat.getAttribute('dataseat');
-        const dataRow = seat.getAttribute('datarow');
-
         var data = {
             key1: dataRow,
             key2: dataSeat
@@ -69,17 +66,17 @@ seats.forEach(seat => {
             
             // Отправка запроса с использованием Fetch API
             fetch(url, options)
+            
             .catch(error => {
             // Обработка ошибок
             console.error('Error:', error);
             });
-    });
 
-    seat.addEventListener('mouseover', function(event) {
+        } else {
+        seat.style.fill = defaultColor;
+        }
         const dataSeat = seat.getAttribute('dataseat');
         const dataRow = seat.getAttribute('datarow');
-        const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
-        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
 
         // Check and adjust tooltip position if necessary
         if (event.clientX + tooltip.offsetWidth > viewportWidth) {
@@ -94,7 +91,7 @@ seats.forEach(seat => {
         tooltip.innerHTML = `<p></p>Стол: ${dataSeat}, Место: ${dataRow}</p>`;
         
         tooltip.style.display = 'block';
-
+        
     });
    
     
@@ -140,12 +137,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Добавляем промис в массив
         var promise = checkSeatStatus(seat, dataSeat, dataRow);
-
-        // Обработчик клика
-        seat.addEventListener('click', handleClick);
-
-        // Обработчик наведения
-        seat.addEventListener('mouseover', handleHover);
 
         // Добавляем промис в массив
         promises.push(promise);
