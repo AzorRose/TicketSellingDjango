@@ -40,11 +40,12 @@ let tooltip = document.getElementById('tooltip');
 seats.forEach(seat => {
 
     let defaultColor = seat.style.fill;
-    const dataSeat = seat.getAttribute('dataseat');
-    const dataRow = seat.getAttribute('datarow');
 
     seat.addEventListener('click', () => {
         
+        const dataSeat = seat.getAttribute('dataseat');
+        const dataRow = seat.getAttribute('datarow');
+
         if(seat.style.fill === defaultColor) {
         seat.style.fill = 'red';
         var data = {
@@ -75,8 +76,6 @@ seats.forEach(seat => {
         } else {
         seat.style.fill = defaultColor;
         }
-        const dataSeat = seat.getAttribute('dataseat');
-        const dataRow = seat.getAttribute('datarow');
 
         // Check and adjust tooltip position if necessary
         if (event.clientX + tooltip.offsetWidth > viewportWidth) {
