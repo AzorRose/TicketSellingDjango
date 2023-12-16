@@ -47,6 +47,32 @@ seats.forEach(seat => {
         } else {
         seat.style.fill = defaultColor;
         }
+        const dataSeat = seat.getAttribute('dataseat');
+        const dataRow = seat.getAttribute('datarow');
+
+        var data = {
+            key1: dataRow,
+            key2: dataSeat
+            };
+            
+            // Опции запроса
+            var options = {
+            method: 'POST', // Метод запроса
+            headers: {
+            'Content-Type': 'application/json' // Тип содержимого (JSON, например)
+            },
+            body: JSON.stringify(data) // Преобразование объекта в JSON и установка в тело запроса
+            };
+            
+            // URL вашего Django-обработчика
+            var url = 'http://127.0.0.1:8000/concerts/chudnevets-1';
+            
+            // Отправка запроса с использованием Fetch API
+            fetch(url, options)
+            .catch(error => {
+            // Обработка ошибок
+            console.error('Error:', error);
+            });
     });
 
     seat.addEventListener('mouseover', function(event) {
@@ -68,35 +94,6 @@ seats.forEach(seat => {
         tooltip.innerHTML = `<p></p>Стол: ${dataSeat}, Место: ${dataRow}</p>`;
         
         tooltip.style.display = 'block';
-        
-        var data = {
-            key1: dataRow,
-            key2: dataSeat
-            };
-            
-            // Опции запроса
-            var options = {
-            method: 'POST', // Метод запроса
-            headers: {
-            'Content-Type': 'application/json' // Тип содержимого (JSON, например)
-            },
-            body: JSON.stringify(data) // Преобразование объекта в JSON и установка в тело запроса
-            };
-            
-            // URL вашего Django-обработчика
-            var url = 'http://127.0.0.1:8000/concerts/chudnevets-1';
-            
-            // Отправка запроса с использованием Fetch API
-            fetch(url, options)
-            .then(response => response.json()) // Распарсить ответ в JSON
-            .then(data => {
-            // Обработка ответа от сервера
-            console.log('Success:', data);
-            })
-            .catch(error => {
-            // Обработка ошибок
-            console.error('Error:', error);
-            });
 
     });
    
