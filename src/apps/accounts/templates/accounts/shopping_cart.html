@@ -23,7 +23,9 @@
               </div>
               <div class="container">
                 {% for item in basket %}
-                  {{ item.ticket.event.name }} {{ item.ticket.price }} {{ item.spot_num }}
+                  Название: {{ item.ticket.event.name }}<br>
+                  Цена: {{ item.ticket.price }}<br>
+                  Номер места: {{ item.spot_num }}
                 {% endfor %}
               </div>
 

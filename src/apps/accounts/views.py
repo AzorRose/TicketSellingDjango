@@ -120,7 +120,6 @@ class ShoppingCartView(View):
     def get(self, request, *args, **kwargs):
         user = request.user
         if hasattr(user, "profile"):
-            # Получаем объект профиля
             profile = user.profile
             basket = profile.get_basket
         return render(
