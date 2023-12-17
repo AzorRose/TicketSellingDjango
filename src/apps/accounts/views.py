@@ -119,11 +119,9 @@ class AddBalanceView(View):
 class ShoppingCartView(View):
     def get(self, request, *args, **kwargs):
         user = request.user
-        print("user", user)
         if hasattr(user, "profile"):
             profile = user.profile
             basket = profile.get_basket
-            print("Basket:", basket)
         return render(
             request, "accounts/shopping_cart.html", context={"basket" : basket}
         )    
