@@ -782,7 +782,7 @@ rect:hover {
   cursor: pointer;
 }
 
-.add-to-cart-btn:hover {
+.add-to-cart-btn:active {
   background-color: red;
 }
 

@@ -36,6 +36,7 @@ document.getElementById('zoom-out').addEventListener('click', () => {
 let seats = document.querySelectorAll('.seat');
 let seatInfoDiv = document.getElementById('footer-place-container');
 let tooltip = document.getElementById('tooltip');
+let selectedSeats = {};
 
 seats.forEach(seat => {
 
@@ -47,33 +48,11 @@ seats.forEach(seat => {
         
         if(seat.style.fill === defaultColor) {
         seat.style.fill = 'red';
-        var data = {
-            key1: dataRow,
-            key2: dataSeat
-            };
-            
-            // Опции запроса
-            var options = {
-            method: 'POST', // Метод запроса
-            headers: {
-            'Content-Type': 'application/json' // Тип содержимого (JSON, например)
-            },
-            body: JSON.stringify(data) // Преобразование объекта в JSON и установка в тело запроса
-            };
-            
-            // URL вашего Django-обработчика
-            var url = 'http://127.0.0.1:8000/concerts/chudnevets-1';
-            
-            // Отправка запроса с использованием Fetch API
-            fetch(url, options)
-            
-            .catch(error => {
-            // Обработка ошибок
-            console.error('Error:', error);
-            });
-
-        } else {
-        seat.style.fill = defaultColor;
+        selectedSeats[`${dataRow}-${dataSeat}`] = { row: dataRow, seat: dataSeat };
+        }
+        else {
+            delete selectedSeats[`${dataRow}-${dataSeat}`];
+            seat.style.fill = defaultColor;
         }
     });
 
@@ -104,6 +83,45 @@ seats.forEach(seat => {
         seat.style.filter = 'none';
         tooltip.style.display = 'none';
     });
+});
+
+async function checkSeatAvailability(selectedSeats) {
+    // Добавляем выбранные места в данные запроса
+    var data = {
+        selectedSeats: selectedSeats
+    };
+
+    // Options for the fetch request
+    var options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    };
+
+    var url = 'http://127.0.0.1:8000/concerts/tusovochnyj-sindrom';
+
+    try {
+        // Using async/await for better readability
+        const response = await fetch(url, options);
+        const responseData = await response.json();
+
+        // Process the response data, e.g., update UI
+        console.log('Success:', responseData);
+    } catch (error) {
+        // Handle errors
+        console.error('Error:', error);
+    }
+}
+
+// Найти кнопку по её id
+var addToCartButton = document.getElementById('add-to-cart-btn');
+
+// Добавить слушатель события для клика по кнопке
+addToCartButton.addEventListener('click', function () {
+    // Вызвать асинхронную функцию для проверки доступности мест
+    checkSeatAvailability(selectedSeats);
 });
 
 

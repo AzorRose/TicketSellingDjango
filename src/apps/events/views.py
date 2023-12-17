@@ -1,7 +1,9 @@
+from django.utils import timezone
+import json
 from django.shortcuts import render
 from .models import Event, Ticket
 from apps.buildings.models import Area, Building
-from apps.accounts.models import UserProfile
+from apps.accounts.models import UserProfile, Purchase
 from django.views.generic import TemplateView
 from django.views import View
 from django.db.models import Q
@@ -47,11 +49,40 @@ class EventView(View):
         if event:
             return render(request, "events/event.html", context={"profile": profile, "event": event, "ticket": ticket,
                                                                  "area": area, "building": building, "svg": svg})
+        
     def post(self, request, *args, **kwargs):
-        row = ast.literal_eval(request.body.decode('utf-8'))
-        print(f'Ряд: {row["key1"]}')
-        print(f'Место: {row["key2"]}')
-        return HttpResponse("Ok")
+        slug_match = request.path[request.path.rfind("/") + 1 :]
+        event = Event.objects.get(slug=slug_match)
+        ticket = Ticket.objects.get(event=event)
+        profile = request.user.profile
+        data = json.loads(request.body.decode('utf-8'))
+        selected_seats = data.get('selectedSeats', {})
+
+        try:
+            # Пройдемся по данным о выбранных местах и создадим покупку для каждого места
+            for key, value in selected_seats.items():
+                spot_row = value.get('row')
+                spot_num = value.get('seat')
+                
+                # Попробуем получить объект Booked_Places по данным о месте
+                booked_place = Booked_Places.objects.get(spot_row=spot_row, spot_num=spot_num)
+                
+                if booked_place.available:
+                    # Если место доступно, создадим покупку
+                    new_purchase = Purchase(user=profile, ticket=ticket, spot_num=spot_num)
+                    new_purchase.save()
+                    new_purchase.add_to_basket()
+                    
+            response_data = {'available': booked_place.available}
+            return JsonResponse(response_data)
+        except Booked_Places.DoesNotExist:
+            # Если место не найдено, вернем False
+            response_data = {'available': False}
+            return JsonResponse(response_data)
+
+
+        
+
         
 def get_booked_places(request):
     booked_places = list(Booked_Places.objects.values('spot_row', 'spot_num', 'available'))
