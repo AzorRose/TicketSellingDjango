@@ -115,6 +115,7 @@ async function checkSeatAvailability(selectedSeats) {
     }
 }
 
+
 // Найти кнопку по её id
 var addToCartButton = document.getElementById('add-to-cart-btn');
 
@@ -123,7 +124,6 @@ addToCartButton.addEventListener('click', function () {
     // Вызвать асинхронную функцию для проверки доступности мест
     checkSeatAvailability(selectedSeats);
 });
-
 
 document.addEventListener("DOMContentLoaded", async function () {
     var seats = Array.from(document.querySelectorAll('.seat'));

@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from apps.events.models import Booked_Places
 from django.http import HttpResponse
-import ast
+from ast import literal_eval
 
 
 # Create your views here.
@@ -79,9 +79,6 @@ class EventView(View):
             # Если место не найдено, вернем False
             response_data = {'available': False}
             return JsonResponse(response_data)
-
-
-        
 
         
 def get_booked_places(request):
