@@ -23,7 +23,7 @@ def places_json(svg_path):
             result["items"][key1] = {}
         if key2 not in result["items"][key1]:
             result["items"][key1][key2] = {}
-        result["items"][key1][key2][key3] = { "user" : None, "available" : True}
+        result["items"][key1][key2][key3] = { "user" : None, "available" : True, "ticket": None}
 
     return result
 

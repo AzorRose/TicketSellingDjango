@@ -9,6 +9,7 @@ from apps.buildings.models import Area
 from django.urls import reverse
 from django.db.models import JSONField
 from utils import places_json
+from django.contrib.postgres.fields import ArrayField
 
 class Event(models.Model):
     name = models.CharField((""), max_length=128)
@@ -74,27 +75,16 @@ class Event(models.Model):
 
     def get_absolute_url(self):
         return reverse("events:", kwargs={"slug": self.slug})
-    
-    def new_event_places(self, capacity, spot):
-        for i in range(capacity):
-            place = Booked_Places.objects.create(event=self, spot = spot, spot_num = i+1, available = True)    
-            place.save()
 
-    def save(self):
-        redact = False
+
+    def save(self, *args, **kwargs):
         if not self.id:
-            redact = True
             file_path = os.path.join('.\\apps\events\static\main\schemas\Frame.svg')
             self.booked_places = places_json(file_path)
 
         if not self.slug:
             self.slug = slugify(self.name)
-        super(Event, self).save()
-        if redact:
-            if self.place.has_balcony:
-                self.new_event_places(self.place.capacity_balcony, "balcony")
-            if self.place.has_sitting:
-                self.new_event_places(self.place.capacity_sitting, "sitting")
+        super(Event, self).save(*args, **kwargs)
 
     @property
     def is_available(self):
@@ -123,13 +113,25 @@ class Ticket(models.Model):
     price = models.FloatField(default=0)
     
     spots = [
-        ("sitting", "sitting"),
+        ("seat", "seat"),
         ("balcony", "balcony"),
         ("dance_floor", "dance_floor"),
     ]    
     
     spot = models.CharField(max_length=50, choices=spots, null=True, blank=True)
 
+    rows = ArrayField(base_field=models.IntegerField(), default=[])
+    
+    def save(self, *args, **kwargs):
+        if not self.id:
+            super(Ticket, self).save()
+            for i in self.rows: 
+                temp = self.event.booked_places["items"][self.spot][str(i)]
+                for j in temp:
+                    print(j)
+                    temp[j]["ticket"] = self.id
+            self.event.save(update_fields=["booked_places"])
+        super(Ticket, self).save()
     class Meta:
         db_table = "tickets"
 

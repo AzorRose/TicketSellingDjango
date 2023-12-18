@@ -1,3 +1,4 @@
 {
-    "workbench.editor.highlightModifiedTabs": true
+    "workbench.editor.highlightModifiedTabs": true,
+    "python.REPL.enableREPLSmartSend": false
 }

@@ -51,7 +51,6 @@ class EventView(View):
     def post(self, request, *args, **kwargs):
         slug_match = request.path[request.path.rfind("/") + 1 :]
         event = Event.objects.get(slug=slug_match)
-        ticket = Ticket.objects.get(event=event)
         profile = request.user.profile
         data = json.loads(request.body.decode('utf-8'))
         selected_seats = data.get('selectedSeats', {})
@@ -60,24 +59,37 @@ class EventView(View):
                 
                 spot_row = value.get('row')
                 spot_num = value.get('seat')
-                print("dsl")
+                spot_type = value.get("type")
                 # Попробуем получить объект Booked_Places по данным о месте
-                booked_places = event.booked_place
+                booked_places = event.booked_places
                             
-                print(booked_places)
+                place = booked_places["items"][spot_type][spot_row][spot_num]
+                ticket = Ticket.objects.get(id=place["ticket"])
                 
-                #if booked_place.available:
-                    # Если место доступно, создадим покупку
-                   # new_purchase = Purchase(user=profile, ticket=ticket, spot_num=spot_num)
-                   # new_purchase.save()
+                if place["available"]:
+                    #Если место доступно, создадим покупку
+                   new_purchase = Purchase(user=profile, ticket=ticket, spot_num=spot_num, spot_row=spot_row)
+                   new_purchase.save()
                     
         return HttpResponse("OK")
 #            response_data = {'available': booked_place.available}
  #           return JsonResponse(response_data)
         
 def get_booked_places(request):
-    booked_places = list(Booked_Places.objects.values('spot_row', 'spot_num', 'available'))
-    return JsonResponse({'booked_places': booked_places}, safe=False)
+    slug_match = request.path[request.path.rfind("/") + 1 :]
+    event = Event.objects.get(slug=slug_match)
+    booked_places = event.booked_places["items"]
+    outter = []
+    for i in booked_places["seat"]:
+        temp = []
+        temp.append(i.key)
+        for s in i:
+            temp.append(s.key)
+            for t in s:
+                temp.append(t["available"])
+        outter.append(temp)
+    #booked_places = list(Booked_Places.objects.values('spot_row', 'spot_num', 'available'))
+    return JsonResponse({'booked_places': outter}, safe=False)
 
 class SearchView(View):
     def get(self, request, *args, **kwargs):

@@ -116,6 +116,8 @@ class Purchase(models.Model):
     completed = models.BooleanField(default=False)
 
     spot_num = models.IntegerField(default=0)
+    
+    spot_row = models.IntegerField(default=0)
 
     def add_to_basket(self):
         if self.have_place() and self.id not in self.user.get_basket:
@@ -126,7 +128,7 @@ class Purchase(models.Model):
         has_place = (
             True
             if (
-                self.ticket.spot == "sitting"
+                self.ticket.spot == "seat"
                 and self.ticket.event.place.capacity_sitting
                 > self.ticket.event.booked_sitting
             )
@@ -143,10 +145,10 @@ class Purchase(models.Model):
             else False
         )
 
-        is_available = Booked_Places.objects.get(
-            spot_num=self.spot_num, spot=self.ticket.spot
-        ).available
-
+        ticket = self.ticket
+        event = ticket.event
+        is_available = True if event.booked_places[ticket.spot][self.spot_row][self.spot_num]["available"] else False
+        
         return has_place and is_available
 
     def make_completed(self):

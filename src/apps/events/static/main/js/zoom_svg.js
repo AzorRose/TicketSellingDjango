@@ -41,6 +41,7 @@ let selectedSeats = {};
 seats.forEach(seat => {
 
     let defaultColor = seat.style.fill;
+    const type = seat.getAttribute("class")
     const dataSeat = seat.getAttribute('dataseat');
     const dataRow = seat.getAttribute('datarow');
 
@@ -48,10 +49,10 @@ seats.forEach(seat => {
         
         if(seat.style.fill === defaultColor) {
         seat.style.fill = 'red';
-        selectedSeats[`${dataRow}-${dataSeat}`] = { row: dataRow, seat: dataSeat };
+        selectedSeats[`${type}-${dataRow}-${dataSeat}`] = { type: type, row: dataRow, seat: dataSeat };
         }
         else {
-            delete selectedSeats[`${dataRow}-${dataSeat}`];
+            delete selectedSeats[`${type}-${dataRow}-${dataSeat}`];
             seat.style.fill = defaultColor;
         }
     });
@@ -100,7 +101,7 @@ async function checkSeatAvailability(selectedSeats) {
         body: JSON.stringify(data)
     };
 
-    var url = 'http://127.0.0.1:8000/concerts/chudnevets-1';
+    var url = 'http://127.0.0.1:8000/concerts/chudnevets-4';
 
     try {
         // Using async/await for better readability
