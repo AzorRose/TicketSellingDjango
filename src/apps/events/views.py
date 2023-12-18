@@ -65,7 +65,7 @@ class EventView(View):
                             
                 place = booked_places["items"][spot_type][spot_row][spot_num]
                 ticket = Ticket.objects.get(id=place["ticket"])
-                
+                print(place["available"])
                 if place["available"]:
                     #Если место доступно, создадим покупку
                    new_purchase = Purchase(user=profile, ticket=ticket, spot_num=spot_num, spot_row=spot_row)

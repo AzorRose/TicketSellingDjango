@@ -63,7 +63,7 @@ class UserProfile(models.Model):
     def buy(self):
         if self.have_money:
             for i in self.get_basket:
-                if i.have_place:
+                if i.have_place():
                     # Подтвердить покупку
                     i.make_completed()
                     # Изменение общего количества людей
@@ -71,12 +71,7 @@ class UserProfile(models.Model):
                     # Изменение количества людей на конкретный тип места
                     i.ticket.event.change_spot_count(i.ticket.spot, True)
                     # Бронь конкретного места
-                    temp = Booked_Places.objects.get(
-                            spot_num=i.spot_num, spot=i.ticket.spot
-                        )
-                    temp.available = False
-                    temp.user = self
-                    temp.save()
+                    i.ticket.event.booked_places["items"][i.ticket.spot][i.spot_row][i.spot_num]["available"] = False                  
                     # Установка времени покупки билета
                     i.creation_time = timezone.now()
                     super(Purchase, i).save()
@@ -130,7 +125,7 @@ class Purchase(models.Model):
             if (
                 self.ticket.spot == "seat"
                 and self.ticket.event.place.capacity_sitting
-                > self.ticket.event.booked_sitting
+                > self.ticket.event.booked_seat
             )
             or (
                 self.ticket.spot == "balcony"
@@ -147,7 +142,7 @@ class Purchase(models.Model):
 
         ticket = self.ticket
         event = ticket.event
-        is_available = True if event.booked_places[ticket.spot][self.spot_row][self.spot_num]["available"] else False
+        is_available = True if event.booked_places["items"][ticket.spot][self.spot_row][self.spot_num]["available"] else False
         
         return has_place and is_available
 

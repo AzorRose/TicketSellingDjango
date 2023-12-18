@@ -110,7 +110,7 @@ class AddBalanceView(View):
             # Проверяем, что введена сумма и она является числом
             if balance_input and balance_input.isdigit():
                 # Вызываем метод add_balance с введенной суммой
-                profile.add_balance(int(balance_input))
+                profile.buy()#add_balance(int(balance_input))
 
         # Редиректим пользователя на нужную страницу
         return redirect("profile")

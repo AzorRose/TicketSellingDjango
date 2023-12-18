@@ -9,7 +9,7 @@ class EventAdmin(admin.ModelAdmin):
     readonly_fields = [
         "people_count",
         "booked_balcony",
-        "booked_sitting",
+        "booked_seat",
         "booked_dance_floor", 
     ]
 

@@ -41,7 +41,7 @@ class Event(models.Model):
     people_count = models.IntegerField(default=0)
         
     booked_balcony = models.IntegerField(default=0)
-    booked_sitting = models.IntegerField(default=0)
+    booked_seat = models.IntegerField(default=0)
     booked_dance_floor = models.IntegerField(default=0)
     
     place = models.ForeignKey(Area, on_delete=models.CASCADE, related_name="event", null=True)
