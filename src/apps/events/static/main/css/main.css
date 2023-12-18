@@ -795,23 +795,3 @@ rect:hover {
   position: relative;
   margin: 10px;
 }
-
-.buy-container {
-  margin: 0 auto;
-  width: 1200px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 10px;
-}
-
-#buy-cart {
-  text-decoration: none;
-  background-color: #fb8f8f;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 7px;
-  position: relative;
-  cursor: pointer;
-  transition: 1s;
-}
