@@ -141,3 +141,18 @@ class ShoppingCartView(View):
             request, "accounts/shopping_cart.html", context={"basket" : basket}
         )    
 
+class BuyEventView(View):
+    def post(self, request, *args, **kwargs):
+        # Получаем текущего пользователя
+        user = request.user
+
+        # Проверяем, есть ли у пользователя профиль
+        if hasattr(user, "profile"):
+            # Получаем объект профиля
+
+            profile = user.profile
+
+            profile.buy()
+
+        # Редиректим пользователя на нужную страницу
+        return redirect("profile")
