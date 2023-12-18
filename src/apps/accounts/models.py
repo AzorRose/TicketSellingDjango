@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from apps.events.models import Ticket, Booked_Places
+from apps.events.models import Ticket
 from django.utils import timezone
 from datetime import date
 from django.contrib.postgres.fields import ArrayField
@@ -100,10 +100,7 @@ class UserProfile(models.Model):
 
     def get_empty_user_profile():
         return UserProfile.objects.get(user=User.objects.get(username="empty"))
-        
-        
-
-
+    
 class Purchase(models.Model):
     user = models.ForeignKey(
         UserProfile,
@@ -115,13 +112,13 @@ class Purchase(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name="ticket")
 
     creation_time = models.DateTimeField(null=True, blank=True)
- 
-    spot_num = models.IntegerField(default=0)
 
     completed = models.BooleanField(default=False)
 
+    spot_num = models.IntegerField(default=0)
+
     def add_to_basket(self):
-        if self.have_place():
+        if self.have_place() and self.id not in self.user.get_basket:
             self.user.basket.append(self.id)
             self.user.save(update_fields=["basket"])
 

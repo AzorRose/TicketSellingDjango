@@ -8,9 +8,7 @@ from django.views.generic import TemplateView
 from django.views import View
 from django.db.models import Q
 from django.http import JsonResponse
-from apps.events.models import Booked_Places
 from django.http import HttpResponse
-from ast import literal_eval
 
 
 # Create your views here.
@@ -57,29 +55,25 @@ class EventView(View):
         profile = request.user.profile
         data = json.loads(request.body.decode('utf-8'))
         selected_seats = data.get('selectedSeats', {})
-
-        try:
-            # Пройдемся по данным о выбранных местах и создадим покупку для каждого места
-            for key, value in selected_seats.items():
+         # Пройдемся по данным о выбранных местах и создадим покупку для каждого места
+        for key, value in selected_seats.items():
+                
                 spot_row = value.get('row')
                 spot_num = value.get('seat')
-                
+                print("dsl")
                 # Попробуем получить объект Booked_Places по данным о месте
-                booked_place = Booked_Places.objects.get(spot_row=spot_row, spot_num=spot_num)
+                booked_places = event.booked_place
+                            
+                print(booked_places)
                 
-                if booked_place.available:
+                #if booked_place.available:
                     # Если место доступно, создадим покупку
-                    new_purchase = Purchase(user=profile, ticket=ticket, spot_num=spot_num)
-                    new_purchase.save()
-                    new_purchase.add_to_basket()
+                   # new_purchase = Purchase(user=profile, ticket=ticket, spot_num=spot_num)
+                   # new_purchase.save()
                     
-            response_data = {'available': booked_place.available}
-            return JsonResponse(response_data)
-        except Booked_Places.DoesNotExist:
-            # Если место не найдено, вернем False
-            response_data = {'available': False}
-            return JsonResponse(response_data)
-
+        return HttpResponse("OK")
+#            response_data = {'available': booked_place.available}
+ #           return JsonResponse(response_data)
         
 def get_booked_places(request):
     booked_places = list(Booked_Places.objects.values('spot_row', 'spot_num', 'available'))

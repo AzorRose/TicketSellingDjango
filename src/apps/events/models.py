@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from taggit.managers import TaggableManager
 from django.template.defaultfilters import slugify
@@ -6,6 +7,8 @@ from django.db.models.signals import post_delete
 from datetime import date
 from apps.buildings.models import Area
 from django.urls import reverse
+from django.db.models import JSONField
+from utils import places_json
 
 class Event(models.Model):
     name = models.CharField((""), max_length=128)
@@ -41,6 +44,8 @@ class Event(models.Model):
     booked_dance_floor = models.IntegerField(default=0)
     
     place = models.ForeignKey(Area, on_delete=models.CASCADE, related_name="event", null=True)
+    
+    booked_places = JSONField(null = True, blank = True)
     
     filters = [
         ("all", "all"),
@@ -79,6 +84,9 @@ class Event(models.Model):
         redact = False
         if not self.id:
             redact = True
+            file_path = os.path.join('.\\apps\events\static\main\schemas\Frame.svg')
+            self.booked_places = places_json(file_path)
+
         if not self.slug:
             self.slug = slugify(self.name)
         super(Event, self).save()
@@ -131,26 +139,5 @@ class Ticket(models.Model):
     class Meta:
         verbose_name_plural = "Билеты"
         verbose_name = "билет"
-        
-class Booked_Places(models.Model):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="available")
-    
-    spots = [
-        ("sitting", "sitting"),
-        ("balcony", "balcony"),
-        ("dance_floor", "dance_floor"),
-    ]    
-    
-    spot = models.CharField(max_length=50, choices=spots, null=True, blank=True)
-    
-    spot_row = models.IntegerField(default=0)
-    spot_num = models.IntegerField(default=0)
-    
-    available = models.BooleanField(default=True)
-    
-    def __str__(self) -> str:
-        return f"{self.event} ({self.spot} | {self.spot_num}) available: {self.available}"
-
-
     
     

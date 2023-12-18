@@ -100,7 +100,7 @@ async function checkSeatAvailability(selectedSeats) {
         body: JSON.stringify(data)
     };
 
-    var url = 'http://127.0.0.1:8000/concerts/tusovochnyj-sindrom';
+    var url = 'http://127.0.0.1:8000/concerts/chudnevets-1';
 
     try {
         // Using async/await for better readability
