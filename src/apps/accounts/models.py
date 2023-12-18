@@ -71,7 +71,8 @@ class UserProfile(models.Model):
                     # Изменение количества людей на конкретный тип места
                     i.ticket.event.change_spot_count(i.ticket.spot, True)
                     # Бронь конкретного места
-                    i.ticket.event.booked_places["items"][i.ticket.spot][i.spot_row][i.spot_num]["available"] = False                  
+                    i.ticket.event.booked_places["items"][i.ticket.spot][str(i.spot_row)][str(i.spot_num)]["available"] = False
+                    i.ticket.event.save()                  
                     # Установка времени покупки билета
                     i.creation_time = timezone.now()
                     super(Purchase, i).save()
@@ -142,8 +143,8 @@ class Purchase(models.Model):
 
         ticket = self.ticket
         event = ticket.event
-        is_available = True if event.booked_places["items"][ticket.spot][self.spot_row][self.spot_num]["available"] else False
-        
+        is_available = True if event.booked_places["items"][ticket.spot][str(self.spot_row)][str(self.spot_num)]["available"] else False
+
         return has_place and is_available
 
     def make_completed(self):

@@ -146,7 +146,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     async function checkSeatStatus(seat, dataSeat, dataRow) {
         if (bookedPlacesCache === null) {
             // If the cache is not available, fetch booked places
+            
             await getBookedPlaces();
+            
         }
 
         if (bookedPlacesCache.some(place => place.spot_num == dataSeat && place.spot_row == dataRow && place.available == true)) {

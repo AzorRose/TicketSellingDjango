@@ -22,13 +22,25 @@
                 <h5 id="allEvents">Корзина</h5>
               </div>
               <div class="container">
-                {% for item in basket %}
-                  Название: {{ item.ticket.event.name }}<br>
-                  Цена: {{ item.ticket.price }}<br>
-                  Номер места: {{ item.spot_num }}
-                {% endfor %}
-              </div>
+                {% if basket %}
+                  {% for item in basket %}
+                    Название: {{ item.ticket.event.name }}<br>
+                    Цена: {{ item.ticket.price }}<br>
+                    Стол: {{ item.spot_row }} <br>
+                    Номер места: {{ item.spot_num }} <br>
 
+                  {% endfor %}
+                  <div class="buy-container">
+                    <form method="post" action="{% url 'buy_event' %}">
+                      {% csrf_token %}
+                      <button type="submit" class="buy-btn" id="buy-cart">Купить</button>
+                    </form>
+                  </div>
+                {% else %}
+                  Корзина пуста 
+                {% endif %}
+              </div>
+              <br>
             </section>
             {% include "accounts/footer_fragment.html" %}
         <script src="{% static 'main/js/profile.js' %}"></script>

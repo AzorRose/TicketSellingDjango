@@ -110,11 +110,26 @@ class AddBalanceView(View):
             # Проверяем, что введена сумма и она является числом
             if balance_input and balance_input.isdigit():
                 # Вызываем метод add_balance с введенной суммой
-                profile.buy()#add_balance(int(balance_input))
+                profile.add_balance(int(balance_input))
 
         # Редиректим пользователя на нужную страницу
         return redirect("profile")
     
+class BuyEventView(View):
+    def post(self, request, *args, **kwargs):
+        # Получаем текущего пользователя
+        user = request.user
+
+        # Проверяем, есть ли у пользователя профиль
+        if hasattr(user, "profile"):
+            # Получаем объект профиля
+
+            profile = user.profile
+
+            profile.buy()
+
+        # Редиректим пользователя на нужную страницу
+        return redirect("profile")
 
 class ShoppingCartView(View):
     def get(self, request, *args, **kwargs):

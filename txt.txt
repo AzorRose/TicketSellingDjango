@@ -41,5 +41,3 @@ Pillow
 django-crispy-forms
 django-taggit
 django psycopg2
-
-Починить эндпоинт во вьюхе ивента. До конца внедрить json поле ивента

@@ -65,7 +65,6 @@ class EventView(View):
                             
                 place = booked_places["items"][spot_type][spot_row][spot_num]
                 ticket = Ticket.objects.get(id=place["ticket"])
-                print(place["available"])
                 if place["available"]:
                     #Если место доступно, создадим покупку
                    new_purchase = Purchase(user=profile, ticket=ticket, spot_num=spot_num, spot_row=spot_row)
@@ -77,17 +76,18 @@ class EventView(View):
         
 def get_booked_places(request):
     slug_match = request.path[request.path.rfind("/") + 1 :]
-    event = Event.objects.get(slug=slug_match)
+    event = Event.objects.get(slug="chudnevets-4")
     booked_places = event.booked_places["items"]
     outter = []
     for i in booked_places["seat"]:
-        temp = []
-        temp.append(i.key)
+        temp = {}
+        temp["spot_row"] = i.key
         for s in i:
-            temp.append(s.key)
+            temp["spot_num"] = s.key
             for t in s:
-                temp.append(t["available"])
+                temp["available"] = t["available"]
         outter.append(temp)
+    print(outter)
     #booked_places = list(Booked_Places.objects.values('spot_row', 'spot_num', 'available'))
     return JsonResponse({'booked_places': outter}, safe=False)
 
