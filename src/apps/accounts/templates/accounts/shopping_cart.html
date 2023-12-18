@@ -28,7 +28,12 @@
                   Номер места: {{ item.spot_num }}
                 {% endfor %}
               </div>
-
+              <div class="buy-container">
+                <form method="post" action="{% url 'buy_event' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="buy-btn" id="buy-cart">Купить</button>
+                </form>
+              </div>
             </section>
             {% include "accounts/footer_fragment.html" %}
         <script src="{% static 'main/js/profile.js' %}"></script>

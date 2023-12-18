@@ -88,7 +88,6 @@ def get_booked_places(request):
             for t in s:
                 temp.append(t["available"])
         outter.append(temp)
-    #booked_places = list(Booked_Places.objects.values('spot_row', 'spot_num', 'available'))
     return JsonResponse({'booked_places': outter}, safe=False)
 
 class SearchView(View):
