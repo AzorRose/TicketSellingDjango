@@ -69,7 +69,6 @@ seats.forEach(seat => {
         
     });
    
-    
     seat.addEventListener('mouseout', () => {
         seat.style.filter = 'none';
         tooltip.style.display = 'none';
@@ -82,7 +81,6 @@ async function checkSeatAvailability(selectedSeats) {
         selectedSeats: selectedSeats
     };
 
-    // Options for the fetch request
     var options = {
         method: 'POST',
         headers: {
@@ -102,12 +100,10 @@ async function checkSeatAvailability(selectedSeats) {
     }
 }
 
-// Найти кнопку по её id
 var addToCartButton = document.getElementById('add-to-cart-btn');
 
-// Добавить слушатель события для клика по кнопке
 addToCartButton.addEventListener('click', function () {
-    // Вызвать асинхронную функцию для проверки доступности мест
+    // проверка доступности мест
     checkSeatAvailability(selectedSeats);
 });
 
@@ -120,15 +116,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         try {
             const response = await fetch(`/api/get_booked_places/${eventFilter}/${eventSlug}`);
             if (!response.ok) {
-                console.error('Network response was not ok');
                 return;
             }
             
             const data = await response.json();
-            
-            if (!data || !data.booked_places) {
-                throw new Error('Invalid data received from server');
-            }
     
             bookedPlacesCache = data.booked_places;
     
@@ -167,7 +158,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         const startTime = performance.now();
         await getBookedPlaces();
 
-        // Try to retrieve data from localStorage first
         const cachedData = localStorage.getItem('bookedPlacesCache');
         if (cachedData) {
             bookedPlacesCache = JSON.parse(cachedData);

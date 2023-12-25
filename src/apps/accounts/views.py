@@ -79,11 +79,8 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         user = self.request.user
         purchases = Purchase.objects.filter(user=user.profile)
-        #basket = user.profile.get_basket
-        #context["basket"] = basket
         context["purchases"] = purchases
         context["username"] = user.username
         context["first_name"] = user.profile.first_name
@@ -95,41 +92,15 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
 class AddBalanceView(View):
     def post(self, request, *args, **kwargs):
-        # Получаем текущего пользователя
         user = request.user
-
-        # Проверяем, есть ли у пользователя профиль
         if hasattr(user, "profile"):
-            # Получаем объект профиля
-
             profile = user.profile
-
-            # Получаем сумму из POST-запроса
             balance_input = request.POST.get("balance_input")
-
-            # Проверяем, что введена сумма и она является числом
             if balance_input and balance_input.isdigit():
-                # Вызываем метод add_balance с введенной суммой
                 profile.add_balance(int(balance_input))
 
-        # Редиректим пользователя на нужную страницу
         return redirect("profile")
     
-class BuyEventView(View):
-    def post(self, request, *args, **kwargs):
-        # Получаем текущего пользователя
-        user = request.user
-
-        # Проверяем, есть ли у пользователя профиль
-        if hasattr(user, "profile"):
-            # Получаем объект профиля
-
-            profile = user.profile
-
-            profile.buy()
-
-        # Редиректим пользователя на нужную страницу
-        return redirect("profile")
 
 class ShoppingCartView(View):
     def get(self, request, *args, **kwargs):
@@ -138,22 +109,17 @@ class ShoppingCartView(View):
             profile = user.profile
             basket = profile.get_basket
             basket_sum = profile.basket_sum
+
         return render(
             request, "accounts/shopping_cart.html", context={"basket" : basket, "basket_sum": basket_sum}
         )    
 
 class BuyEventView(View):
     def post(self, request, *args, **kwargs):
-        # Получаем текущего пользователя
         user = request.user
-
-        # Проверяем, есть ли у пользователя профиль
         if hasattr(user, "profile"):
             # Получаем объект профиля
-
             profile = user.profile
-
             profile.buy()
 
-        # Редиректим пользователя на нужную страницу
         return redirect("profile")

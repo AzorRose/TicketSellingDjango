@@ -10,8 +10,6 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 
 
-
-# Create your views here.
 class MainView(View):
     def get(self, request, *args, **kwargs):
         popular_events = Event.objects.order_by('-people_count')
@@ -22,7 +20,7 @@ class MainView(View):
         if query:
             events = Event.objects.filter(
                 Q(name__icontains=query) |  # Поиск по имени
-                Q(description__icontains=query)  # Поиск по описанию (можете добавить другие поля)
+                Q(description__icontains=query)  # Поиск по описанию 
             ).distinct()
         else:
             events = Event.objects.all()
@@ -38,7 +36,6 @@ class EventView(View):
         area = Area.objects.get(name = event.place.name)
         with open("apps/events/static/main/schemas/Frame.svg") as f:
             svg = f.read()
-        # Проверяем, что у пользователя есть профиль
         if hasattr(request.user, "profile"):
             profile = request.user.profile
         else:
@@ -78,12 +75,11 @@ def get_booked_places(request, filter, slug):
         return JsonResponse({"error": "Slug not provided"}, status=400)
     event = get_object_or_404(Event, slug=slug)
     
-    # Извлекаем только массив с местами    
+    # массив с местами    
     seats = event.booked_places
     
     transformed_data = []
 
-    # Iterate through the dictionary to extract seat information
     for spot_row, row_data in seats["items"]['seat'].items():
         for spot_num, seat_data in row_data.items():
             transformed_seat = {
@@ -92,8 +88,6 @@ def get_booked_places(request, filter, slug):
                 "available": seat_data['available']
             }
             transformed_data.append(transformed_seat)
-
-    # Convert the transformed data list into a dictionary with the key "booked_places"
 
     return JsonResponse({"booked_places": transformed_data}, safe=False)
 
