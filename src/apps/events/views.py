@@ -1,14 +1,14 @@
-from django.utils import timezone
 import json
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from .models import Event, Ticket
-from apps.buildings.models import Area, Building
+from apps.buildings.models import Area
 from apps.accounts.models import UserProfile, Purchase
 from django.views.generic import TemplateView
 from django.views import View
 from django.db.models import Q
 from django.http import JsonResponse
 from django.http import HttpResponse
+
 
 
 # Create your views here.
@@ -36,7 +36,6 @@ class EventView(View):
         event = Event.objects.get(slug=slug_match)
         ticket = Ticket.objects.get(event=event)
         area = Area.objects.get(name = event.place.name)
-        building = Building.objects.get(name=event.place)
         with open("apps/events/static/main/schemas/Frame.svg") as f:
             svg = f.read()
         # Проверяем, что у пользователя есть профиль
@@ -46,7 +45,7 @@ class EventView(View):
             profile = None
         if event:
             return render(request, "events/event.html", context={"profile": profile, "event": event, "ticket": ticket,
-                                                                 "area": area, "building": building, "svg": svg})
+                                                                 "area": area, "svg": svg, "slug": slug_match, "filter": filter})
         
     def post(self, request, *args, **kwargs):
         slug_match = request.path[request.path.rfind("/") + 1 :]
@@ -73,21 +72,32 @@ class EventView(View):
         return HttpResponse("OK")
 #            response_data = {'available': booked_place.available}
  #           return JsonResponse(response_data)
-        
-def get_booked_places(request):
-    slug_match = request.path[request.path.rfind("/") + 1 :]
-    event = Event.objects.get(slug="chudnevets-4")
-    booked_places = event.booked_places["items"]
-    outter = []
-    for i in booked_places["seat"]:
-        temp = {}
-        temp["spot_row"] = i.key
-        for s in i:
-            temp["spot_num"] = s.key
-            for t in s:
-                temp["available"] = t["available"]
-        outter.append(temp)
-    return JsonResponse({'booked_places': outter}, safe=False)
+
+def get_booked_places(request, filter, slug):
+    if not slug:
+        return JsonResponse({"error": "Slug not provided"}, status=400)
+    event = get_object_or_404(Event, slug=slug)
+    
+    # Извлекаем только массив с местами    
+    seats = event.booked_places
+    
+    transformed_data = []
+
+    # Iterate through the dictionary to extract seat information
+    for spot_row, row_data in seats["items"]['seat'].items():
+        for spot_num, seat_data in row_data.items():
+            transformed_seat = {
+                "spot_row": int(spot_row),
+                "spot_num": int(spot_num),
+                "available": seat_data['available']
+            }
+            transformed_data.append(transformed_seat)
+
+    # Convert the transformed data list into a dictionary with the key "booked_places"
+
+    return JsonResponse({"booked_places": transformed_data}, safe=False)
+
+
 
 class SearchView(View):
     def get(self, request, *args, **kwargs):

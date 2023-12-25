@@ -39,6 +39,6 @@ urlpatterns = [
     path("add_balance", AddBalanceView.as_view(), name="add_balance"),
     path("search/", SearchView.as_view(), name='search'),
     path("cart/", ShoppingCartView.as_view(), name='cart'),
-    path('api/get_booked_places/', get_booked_places, name='get_booked_places'),
+    path('api/get_booked_places/<str:filter>/<slug:slug>', get_booked_places, name='get_booked_places'),
     path("buy_event", BuyEventView.as_view(), name="buy_event"),
 ]

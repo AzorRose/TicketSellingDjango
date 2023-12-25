@@ -30,14 +30,18 @@
                     Номер места: {{ item.spot_num }} <br>
 
                   {% endfor %}
-                  <div class="buy-container">
-                    <form method="post" action="{% url 'buy_event' %}">
-                      {% csrf_token %}
-                      <button type="submit" class="buy-btn" id="buy-cart">Купить</button>
-                    </form>
-                  </div>
+                
                 {% else %}
                   Корзина пуста 
+                {% endif %}
+              </div>
+              <div class="buy-container">
+                {% if basket %}
+                  <p class="basket_sum">Общая сумма: {{ basket_sum }} руб.</p>
+                  <form method="post" action="{% url 'buy_event' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="buy-btn" id="buy-cart">Купить</button>
+                  </form>
                 {% endif %}
               </div>
               <br>

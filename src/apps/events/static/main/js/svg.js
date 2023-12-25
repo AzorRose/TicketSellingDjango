@@ -1,6 +1,7 @@
 // Получаем элемент SVG 
 let svg = document.querySelector('.info-form svg');
-
+var eventFilter = document.getElementById("event-section").getAttribute("data-filter");
+var eventSlug = document.getElementById("event-section").getAttribute("data-slug");
 // Текущий масштаб
 let scale = 1;
 
@@ -60,18 +61,7 @@ seats.forEach(seat => {
     seat.addEventListener('mouseover', function(event) {
         const dataSeat = seat.getAttribute('dataseat');
         const dataRow = seat.getAttribute('datarow');
-        const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
-        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-
-        // Check and adjust tooltip position if necessary
-        if (event.clientX + tooltip.offsetWidth > viewportWidth) {
-            tooltip.style.left = `${viewportWidth - tooltip.offsetWidth - 10}px`;
-        }
-
-        if (event.clientY + tooltip.offsetHeight > viewportHeight) {
-            tooltip.style.top = `${viewportHeight - tooltip.offsetHeight - 10}px`;
-        }
-
+        
         seat.style.filter = 'drop-shadow(0 0 3px #666)';
         tooltip.innerHTML = `<p></p>Стол: ${dataSeat}, Место: ${dataRow}</p>`;
         
@@ -101,21 +91,16 @@ async function checkSeatAvailability(selectedSeats) {
         body: JSON.stringify(data)
     };
 
-    var url = 'http://127.0.0.1:8000/concerts/chudnevets-4';
+    var url = `http://127.0.0.1:8000/${eventFilter}/${eventSlug}`;
 
     try {
-        // Using async/await for better readability
         const response = await fetch(url, options);
         const responseData = await response.json();
 
-        // Process the response data, e.g., update UI
-        console.log('Success:', responseData);
     } catch (error) {
-        // Handle errors
         console.error('Error:', error);
     }
 }
-
 
 // Найти кнопку по её id
 var addToCartButton = document.getElementById('add-to-cart-btn');
@@ -126,32 +111,47 @@ addToCartButton.addEventListener('click', function () {
     checkSeatAvailability(selectedSeats);
 });
 
+
 document.addEventListener("DOMContentLoaded", async function () {
     var seats = Array.from(document.querySelectorAll('.seat'));
     var bookedPlacesCache = null;
 
     async function getBookedPlaces() {
         try {
-            const response = await fetch('/api/get_booked_places/');
+            const response = await fetch(`/api/get_booked_places/${eventFilter}/${eventSlug}`);
+            if (!response.ok) {
+                console.error('Network response was not ok');
+                return;
+            }
+            
             const data = await response.json();
+            
+            if (!data || !data.booked_places) {
+                throw new Error('Invalid data received from server');
+            }
+    
             bookedPlacesCache = data.booked_places;
-            // Store in localStorage for caching
+    
             localStorage.setItem('bookedPlacesCache', JSON.stringify(bookedPlacesCache));
             return bookedPlacesCache;
         } catch (error) {
             console.error('Error:', error);
         }
     }
-
+    
     async function checkSeatStatus(seat, dataSeat, dataRow) {
-        if (bookedPlacesCache === null) {
-            // If the cache is not available, fetch booked places
-            
+        if (!bookedPlacesCache) {
             await getBookedPlaces();
-            
         }
+       
+        const placesArray = Array.isArray(bookedPlacesCache)
+            ? bookedPlacesCache
+            : (bookedPlacesCache && typeof bookedPlacesCache === 'object')
+            ? Object.values(bookedPlacesCache)
+            : [];
 
-        if (bookedPlacesCache.some(place => place.spot_num == dataSeat && place.spot_row == dataRow && place.available == true)) {
+
+        if (placesArray.some(place => place.spot_num == dataSeat && place.spot_row == dataRow && place.available == false)) {
             seat.style.fill = '#EEECEC';
             seat.addEventListener('mouseover', () => {
                 seat.style.filter = 'none';
@@ -165,6 +165,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     try {
         const startTime = performance.now();
+        await getBookedPlaces();
 
         // Try to retrieve data from localStorage first
         const cachedData = localStorage.getItem('bookedPlacesCache');
@@ -174,14 +175,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             await getBookedPlaces();
         }
 
-        // Batch requests for all seats
         const promises = seats.map(seat => {
             const dataSeat = seat.getAttribute('dataseat');
             const dataRow = seat.getAttribute('datarow');
             return checkSeatStatus(seat, dataSeat, dataRow);
         });
 
-        // Wait for all promises to resolve
         await Promise.all(promises);
 
         const endTime = performance.now();

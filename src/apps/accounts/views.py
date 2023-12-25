@@ -137,8 +137,9 @@ class ShoppingCartView(View):
         if hasattr(user, "profile"):
             profile = user.profile
             basket = profile.get_basket
+            basket_sum = profile.basket_sum
         return render(
-            request, "accounts/shopping_cart.html", context={"basket" : basket}
+            request, "accounts/shopping_cart.html", context={"basket" : basket, "basket_sum": basket_sum}
         )    
 
 class BuyEventView(View):

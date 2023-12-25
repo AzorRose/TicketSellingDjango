@@ -4,6 +4,7 @@ var button2 = document.getElementById("button2");
 var output = document.getElementById("output");
 var buttons = document.querySelectorAll(".choice");
 var inputContainers = document.querySelectorAll(".input-container");
+var button3 = document.getElementById("seat-spot");
 
 // Добавляем обработчики событий для каждой кнопки
 buttons.forEach(function (button, index) {
@@ -47,4 +48,18 @@ button2.addEventListener("click", function () {
         container.style.display = "none";
     });
     inputContainers[1].style.display = "block";
+});
+
+button3.addEventListener("click", function () {
+    // Скрываем все контейнеры и показываем только нужный
+    inputContainers.forEach(function (container) {
+        container.style.display = "none";
+    });
+    inputContainers[0].style.display = "block";
+
+    // Снимаем класс "active" со всех кнопок и добавляем к нужной
+    buttons.forEach(function (btn) {
+        btn.classList.remove("active");
+    });
+    buttons[0].classList.add("active");
 });

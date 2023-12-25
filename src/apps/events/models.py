@@ -113,9 +113,9 @@ class Ticket(models.Model):
     price = models.FloatField(default=0)
     
     spots = [
-        ("seat", "seat"),
-        ("balcony", "balcony"),
-        ("dance_floor", "dance_floor"),
+        ("seat", "Столики"),
+        ("balcony", "Балкон"),
+        ("dance_floor", "Танцпол"),
     ]    
     
     spot = models.CharField(max_length=50, choices=spots, null=True, blank=True)
