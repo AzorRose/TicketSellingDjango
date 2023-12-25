@@ -91,6 +91,19 @@ class Event(models.Model):
         return not self.is_expired or self.people_count < self.place.capacity_dance_floor + self.place.capacity_balcony + self.place.capacity_sitting
 
     @property
+    def has_available_seat(self):
+        return self.booked_seat < self.place.capacity_sitting
+    
+    @property
+    def has_available_balcony(self):
+        return self.booked_balcony < self.place.capacity_balcony
+    
+    @property
+    def has_available_dance_floor(self):
+        return self.booked_dance_floor < self.place.capacity_dance_floor
+    
+
+    @property
     def is_expired(self):
         return date.today() > self.end_date
 
@@ -113,7 +126,7 @@ class Ticket(models.Model):
     price = models.FloatField(default=0)
     
     spots = [
-        ("seat", "Столики"),
+        ("seat", "Столик"),
         ("balcony", "Балкон"),
         ("dance_floor", "Танцпол"),
     ]    

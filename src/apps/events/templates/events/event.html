@@ -41,7 +41,12 @@
                         Адрес:
                         {{ area.building.address }}
                         <br>
-                        <a onclick="openModal()" class="btn btn-sm" id="buy-event">Купить билет</a>
+                        {% if event.has_available_seat %}
+                            <a onclick="openModal()" class="btn btn-sm" id="buy-event">Купить билет</a>
+                        {% else %}
+                            <h5 class="no-places">Нет доступных мест</h5>
+                        {% endif %}
+
                     </div>
                 </div>
                 {% if user.is_authenticated %}
