@@ -23,6 +23,7 @@ body {
   flex-direction: column;
   margin: 0 auto;
   justify-content: center;
+  width: 100%;
 }
 
 h3 {
@@ -808,4 +809,8 @@ rect:hover {
   margin: 0 auto;
   cursor: pointer;
   margin-top: 20px;
+}
+
+.catalog {
+  min-height: 305px;
 }

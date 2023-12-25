@@ -66,9 +66,8 @@ class EventView(View):
                    new_purchase = Purchase(user=profile, ticket=ticket, spot_num=spot_num, spot_row=spot_row)
                    new_purchase.save()
                     
-        return HttpResponse("OK")
-#            response_data = {'available': booked_place.available}
- #           return JsonResponse(response_data)
+        response_data = {'message': 'OK'}
+        return JsonResponse(response_data)
 
 def get_booked_places(request, filter, slug):
     if not slug:
