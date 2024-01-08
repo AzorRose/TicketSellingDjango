@@ -40,12 +40,7 @@
                     <button type="submit" disabled class="search-button">Найти</button>
                     </form>
                 </div>
-                <div class="select-date">
-                    <div class="select-date-btn">
-                        <img class="calendar-img" src="{% static 'main/images/calendar.png' %}" height="20">
-                        <p class="select-date-text">Выбрать дату мероприятия</p>
-                    </div>
-                </div>
+                
             </div>
         </div>
         <div class="bottom-line">
@@ -53,8 +48,8 @@
                 <nav class="genres-menu">
                     <ul class="lvl-1">
                         <li class="lvl-1 active exact-active">
-                            <a href="{% url 'index' %}#allEvents" class="menu-link" onclick="scrollToMiddle(event)">
-                                <span class="menu-link">Все события</span>
+                            <a href="{% url 'index' %}" class="menu-link" onclick="scrollToMiddle(event)">
+                                <span class="menu-link">Главная</span>
                             </a>
                         </li>
                         <li class="lvl-1">

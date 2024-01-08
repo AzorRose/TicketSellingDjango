@@ -17,8 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LogoutView as logout_view
-from apps.accounts.views import SignUpView, SignInView, ProfileView, AddBalanceView, ShoppingCartView, BuyEventView
-from apps.events.views import EventView, MainView, SportView, ConcertsView, FestivalsView, KidsView, CoopView, AboutView, BonusView, SearchView, get_booked_places
+from apps.accounts.views import RemoveFromCartView, SignUpView, SignInView, ProfileView, AddBalanceView, ShoppingCartView, BuyEventView
+from apps.events.views import EventView, MainView, SportView, ConcertsView, FestivalsView, KidsView, CoopView, AboutView, BonusView, SearchView, add_to_cart_view, get_booked_places
 from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
@@ -41,4 +41,6 @@ urlpatterns = [
     path("cart/", ShoppingCartView.as_view(), name='cart'),
     path('api/get_booked_places/<str:filter>/<slug:slug>', get_booked_places, name='get_booked_places'),
     path("buy_event", BuyEventView.as_view(), name="buy_event"),
+    path('purchase_delete/<int:purchase_id>/', RemoveFromCartView.as_view(), name='purchase_delete'),
+    path('add_to_cart/<int:ticket_id>/', add_to_cart_view, name='add_to_cart'),
 ]

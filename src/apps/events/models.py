@@ -133,7 +133,7 @@ class Ticket(models.Model):
     
     spot = models.CharField(max_length=50, choices=spots, null=True, blank=True)
 
-    rows = ArrayField(base_field=models.IntegerField(), default=[])
+    rows = ArrayField(base_field=models.IntegerField(), default=[], null=True, blank=True)
     
     def save(self, *args, **kwargs):
         if not self.id:

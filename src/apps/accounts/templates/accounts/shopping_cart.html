@@ -14,6 +14,7 @@
           <link rel="stylesheet" href="{% static 'main/lib/bootstrap-5.3.1-dist/css/bootstrap.min.css' %}">
           <link rel="stylesheet" href="{% static 'main/css/accounts.css' %}">
           <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"/>
+          <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         </head>
         <body>
             {% include "accounts/header_fragment.html" %}
@@ -21,14 +22,29 @@
               <div class="container">
                 <h5 id="allEvents">Корзина</h5>
               </div>
-              <div class="container">
+              <div class="container" id="shopping-cart">
                 {% if basket %}
                   {% for item in basket %}
-                    Название: {{ item.ticket.event.name }}<br>
-                    Цена: {{ item.ticket.price }}<br>
-                    Стол: {{ item.spot_row }} <br>
-                    Номер места: {{ item.spot_num }} <br>
-
+                    <div class="cart-item">
+                      <div class="item-img-container">
+                        <img class="item-img" src="{{ item.ticket.event.image.url|slice:'12:' }}" width="115" height="115" role="img" alt="{{ item.ticket.event.name }}">
+                      </div>
+                      <div class="item-info">
+                        <strong><a class="item-name" href="{% url 'events' filter=item.ticket.event.filter slug=item.ticket.event.slug %}">{{ item.ticket.event.name }}</a></strong><br>
+                        Адрес: {{ item.ticket.event.place.building.address }}, {{ item.ticket.event.place }}<br>
+                        Тип места: {{ item.ticket.get_spot_display }}<br>
+                        {% if item.ticket.get_spot_display == "Столик" %}               
+                          Стол: {{ item.spot_row }}, Номер места: {{ item.spot_num }} <br>
+                        {% endif %}
+                        Стоимость: {{ item.ticket.price }} руб.<br>
+                      </div>
+                      <div class="delete-item-container">
+                        <form method="post" action="{% url 'purchase_delete' purchase_id=item.id %}">
+                          {% csrf_token %}
+                          <button type="submit" class="delete-item">Удалить</button>
+                        </form>
+                      </div>
+                    </div>
                   {% endfor %}
                 
                 {% else %}
@@ -47,6 +63,27 @@
               <br>
             </section>
             {% include "accounts/footer_fragment.html" %}
+        <script>
+          $(document).ready(function() {
+            $('.delete-link').on('click', function(e) {
+                e.preventDefault();
+                var deleteUrl = $(this).attr('href');
+                $.ajax({
+                    type: 'POST',
+                    url: deleteUrl,
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                    },
+                    success: function(response) {
+                        $(e.target).closest('div').remove();
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+          });
+        </script>
         <script src="{% static 'main/js/sticky.js' %}"></script>
         <script src="{% static 'main/js/balancePopup.js' %}"></script>
         <script src="{% static 'main/js/search.js' %}"></script>

@@ -1,9 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy
 from django.views import View
 from django.shortcuts import redirect
+from django.views.generic.edit import DeleteView
+from apps.events.models import Ticket
 from .forms import SigUpForm, SignInForm
 from django.contrib.auth import login, authenticate
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseNotAllowed, HttpResponseRedirect, JsonResponse
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
@@ -105,13 +108,14 @@ class AddBalanceView(View):
 class ShoppingCartView(View):
     def get(self, request, *args, **kwargs):
         user = request.user
+        ticket = Ticket.objects.all()
         if hasattr(user, "profile"):
             profile = user.profile
             basket = profile.get_basket
             basket_sum = profile.basket_sum
 
         return render(
-            request, "accounts/shopping_cart.html", context={"basket" : basket, "basket_sum": basket_sum}
+            request, "accounts/shopping_cart.html", context={"basket" : basket, "basket_sum": basket_sum, "ticket": ticket}
         )    
 
 class BuyEventView(View):
@@ -123,3 +127,14 @@ class BuyEventView(View):
             profile.buy()
 
         return redirect("profile")
+
+class RemoveFromCartView(View):
+    def post(self, request, purchase_id, *args, **kwargs):
+        try:
+            purchase = Purchase.objects.get(id=purchase_id)
+            purchase.delete()
+        except Purchase.DoesNotExist:
+            # Обработка случая, когда покупка не найдена
+            pass
+        return redirect("cart")
+    

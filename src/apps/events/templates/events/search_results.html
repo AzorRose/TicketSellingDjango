@@ -40,10 +40,12 @@
                                     <div class="card-body">
                                         <h5>{{ el.name }}</h5>
                                         <img class="small-img" src="{% static 'main/images/calendar.png' %}" height="14">{{ el.end_date}}<br>
-                                        {% for i in el.tickets %}
-                                            <img class="small-img" src="{% static 'main/images/pin.png' %}" height="14">{{ el.place }}<br>
-                                            <img class="small-img" src="{% static 'main/images/rub_icon.png' %}" height="14">{{ i.price }} руб.
-                                        {% endfor %}
+                                        <img class="small-img" src="{% static 'main/images/pin.png' %}" height="14">{{ el.place }}<br>
+                                        {% if num_tickets > 1 %}
+                                            <img class="small-img" src="{% static 'main/images/rub_icon.png' %}" height="14">От {{ min_price }} руб.
+                                        {% else %}
+                                            <img class="small-img" src="{% static 'main/images/rub_icon.png' %}" height="14">{{ min_price }} руб.
+                                        {% endif %} 
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="btn-group">
                                                 <a type="button" href="{% url 'events' filter=el.filter slug=el.slug %}" class="btn btn-sm">Подробнее</a>

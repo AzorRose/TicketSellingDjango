@@ -161,9 +161,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         const cachedData = localStorage.getItem('bookedPlacesCache');
         if (cachedData) {
             bookedPlacesCache = JSON.parse(cachedData);
-            console.log(cachedData);
-        } else {
-            await getBookedPlaces();
         }
 
         const promises = seats.map(seat => {

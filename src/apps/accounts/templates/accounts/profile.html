@@ -54,6 +54,7 @@
                                 <div class="input-form-flex">
                                     <label class="small-text">Имя</label>
                                     <input class="input-info" type="text" value="{{ first_name }}">
+                                    
                                 </div>
                                 <div class="input-form-flex">
                                     <label class="small-text">Фамилия</label>
@@ -65,13 +66,22 @@
                             <ul>
                                 {% for purchase in purchases %}
                                     {% if purchase.completed %}
-                                        <li>Покупка от {{purchase.creation_time}}<br>Билет: {{ purchase.ticket.event.name }}<br>Дата проведения: {{ purchase.ticket.event.end_date }}<br>Адрес: {{ purchase.ticket.event.place }}, {{ purchase.ticket.event.place.address }}<br>Ряд: {{purchase.spot_row}} <br>Место: {{ purchase.spot_num }}<br>Стоимость: {{ purchase.ticket.price }} руб.</li>
+                                        <li class="bought-ticket">Покупка от {{purchase.creation_time}}<br>
+                                            Билет: {{ purchase.ticket.event.name }}<br>
+                                            Дата проведения: {{ purchase.ticket.event.end_date }}<br>
+                                            Адрес: {{ purchase.ticket.event.place.building.address }}, {{ purchase.ticket.event.place.building.name }}<br>
+                                            Зал: {{ purchase.ticket.event.place.name }}<br>
+                                            Тип места: {{purchase.ticket.get_spot_display}}<br>
+                                            Ряд: {{purchase.spot_row}} Место: {{ purchase.spot_num }}<br>
+                                            Стоимость: {{ purchase.ticket.price }} руб.</li>
                                     {% endif %}
                                 {% endfor %}
                             </ul>
                         </div>
                         <div id="inputContainer3" class="input-container">
-
+                            Сумма выкупа: {{ buyback_sum }} руб.<br>
+                            Бонус: {{ bonus }}%
+        
                         </div>
                     </div>
                 </div>

@@ -22,7 +22,7 @@
             {% include "accounts/header_fragment.html" %}
             <section id="event-section" data-filter={{ filter }} data-slug="{{ slug }}">
                 <div class="container" id="event-container">
-                    <img src="{{ event.image.url|slice:'12:' }}" alt="{{ event.name }}" height="300">
+                    <img src="{{ event.image.url|slice:'12:' }}" alt="{{ event.name }}" height="300" width="300">
                     <div class="event-info">
                         <h3>{{ event.name }}</h3>
                         <br>
@@ -30,13 +30,17 @@
                         {{ event.end_date }}
                         <br>
                         Место проведения:
-                        {{ event.place }}
+                        {{ event.place }}, {{ area.name }}
                         <br>
                         Возрастное ограничение:
                         {{ event.ages }}
                         <br>
                         Стоимость:
-                        {{ ticket.price }} руб.
+                        {% if num_tickets > 1 %}
+                            от {{ min_price }} руб.
+                        {% else %}
+                            {{ min_price }} руб.
+                        {% endif %}
                         <br>
                         Адрес:
                         {{ area.building.address }}
@@ -46,7 +50,6 @@
                         {% else %}
                             <h5 class="no-places">Нет доступных мест</h5>
                         {% endif %}
-
                     </div>
                 </div>
                 {% if user.is_authenticated %}
@@ -64,7 +67,6 @@
                                     <button class="choice" id="button2">Доступные билеты</button>
                                 </div>
                                 <div id="schema" class="input-container">
-                                    
                                     <div class="info-form">
                                         <div class="zoom-btns">
                                             <button class="zoom-in" id="zoom-in">+</button>
@@ -77,19 +79,34 @@
                                         <button class="add-to-cart-btn" id="add-to-cart-btn">В корзину</button>
                                     </div>
                                 </div>
-                            
                                 <div id="available-seats" class="input-container">
-                                    {% for spot_value, spot_display in ticket.spots %}
-                                        {% if ticket.spot == spot_value %}
-                                            {% if spot_value == "seat" %}
-                                                <div id="seat-spot" class="spot">{{ spot_display }}</div>
-                                            {% else %}
-                                                <div class="spot">{{ spot_display }}</div>
+                                    {% for t in ticket %}
+                                        {% for spot_value, spot_display in t.spots %}
+                                            {% if t.spot == spot_value %}
+                                                {% if spot_value == "seat" %}
+                                                    <div id="seat-spot" class="spot">{{ spot_display }}</div>
+                                                {% else %}
+                                                    <div onclick="openDancefloorPopup()" class="spot">{{ spot_display }}</div>  
+                                                    <div id="dancefloor-popup" class="dancefloor-popup">
+                                                        <div><h5>Купить билет</h5></div>
+                                                        <div>
+                                                            <p>Танцпол</p>
+                                                            {% for t in ticket %}
+                                                                {% if t.spot == "dance_floor" %}
+                                                                    <p>Стоимость: {{ t.price }} руб.</p>
+                                                                    <button class="add-to-cart-btn" data-ticket-id="{{ t.id }}">В корзину</button>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </div>     
+                                                    </div>
+                                                    <div id="dancefloor-overlay" class="overlay" onclick="closeDancefloorPopup()"></div>                                        
+                                                {% endif %}
                                             {% endif %}
-                                        {% endif %}
+                                        {% endfor %}
                                     {% endfor %}
-
+                                    
                                 </div>
+                            
                             </div>
                         </div>
                         
@@ -97,7 +114,9 @@
                             <img src="{% static 'main/images/xmark.png' %}" width="15" height="19">
                         </a>
                     </div>
+                    
                     <div id="overlay" class="overlay" onclick="closeModal()"></div>
+                    
                 {% else %}
                     <div id="myModal" class="modal none-authorized">
                         <p>Для покупки нужно авторизоваться</p>
@@ -117,6 +136,26 @@
                 </div>
             </section>
             {% include "accounts/footer_fragment.html" %}
+        <script>
+            $(document).ready(function() {
+                $('.add-to-cart-btn').on('click', function() {
+                    var ticketId = $(this).data('ticket-id');
+            
+                    $.ajax({
+                        type: 'POST',
+                        url: '/add_to_cart/' + ticketId + '/',
+                        data: {
+                            csrfmiddlewaretoken: '{{ csrf_token }}',
+                        },
+                        success: function(response) {
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+                });
+            });      
+        </script>            
         <script src="{% static 'main/js/buyEventPopup.js' %}"></script>
         <script src="{% static 'main/js/place.js' %}"></script>
         <script src="{% static 'main/js/search.js' %}"></script>

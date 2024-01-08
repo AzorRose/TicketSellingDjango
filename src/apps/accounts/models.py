@@ -48,8 +48,16 @@ class UserProfile(models.Model):
         )
     
     @property
-    def get_basket(self) -> list:
-        return [Purchase.objects.get(id = id) for id in self.basket]
+    def get_basket(self):
+        basket_ids = self.basket
+        basket = []
+
+        purchases = Purchase.objects.filter(id__in=basket_ids)
+
+        for purchase in purchases:
+            basket.append(purchase)
+
+        return basket
     
     @property
     def basket_sum(self) -> float:

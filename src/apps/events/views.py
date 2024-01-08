@@ -5,9 +5,10 @@ from apps.buildings.models import Area
 from apps.accounts.models import UserProfile, Purchase
 from django.views.generic import TemplateView
 from django.views import View
-from django.db.models import Q
+from django.db.models import Q, Min
 from django.http import JsonResponse
 from django.http import HttpResponse
+from django.views.decorators.http import require_POST
 
 
 class MainView(View):
@@ -16,6 +17,9 @@ class MainView(View):
         event = Event.objects.all()
         profile = UserProfile.objects.all()
         ticket = Ticket.objects.all()
+        for e in event:
+            e.num_tickets = Ticket.objects.filter(event=e).count()
+            e.min_price = Ticket.objects.filter(event=e).aggregate(Min('price'))['price__min']
         query = request.GET.get('q')
         if query:
             events = Event.objects.filter(
@@ -32,8 +36,10 @@ class EventView(View):
         # Получает путь из запроса и возвращает информацию о конкретном событии, которому соответствует этот путь
         slug_match = request.path[request.path.rfind("/") + 1 :]
         event = Event.objects.get(slug=slug_match)
-        ticket = Ticket.objects.get(event=event)
+        ticket = Ticket.objects.filter(event=event)
         area = Area.objects.get(name = event.place.name)
+        num_tickets = ticket.count()
+        min_price = ticket.aggregate(Min('price'))['price__min']
         with open("apps/events/static/main/schemas/Frame.svg") as f:
             svg = f.read()
         if hasattr(request.user, "profile"):
@@ -42,7 +48,7 @@ class EventView(View):
             profile = None
         if event:
             return render(request, "events/event.html", context={"profile": profile, "event": event, "ticket": ticket,
-                                                                 "area": area, "svg": svg, "slug": slug_match, "filter": filter})
+                                                                 "area": area, "svg": svg, "slug": slug_match, "filter": filter, "num_tickets": num_tickets, "min_price": min_price})
         
     def post(self, request, *args, **kwargs):
         slug_match = request.path[request.path.rfind("/") + 1 :]
@@ -100,8 +106,11 @@ class SearchView(View):
         
         for event in events:
             event.tickets = Ticket.objects.filter(event=event)
+            ticket = event.tickets
+            num_tickets = ticket.count()
+            min_price = ticket.aggregate(Min('price'))['price__min']
              
-        return render(request, "events/search_results.html", context={'events': events, 'query': query})
+        return render(request, "events/search_results.html", context={'events': events, 'query': query, "num_tickets": num_tickets, "min_price": min_price})
 
 def get_events(query):    
     if query:
@@ -158,3 +167,18 @@ class AboutView(TemplateView):
 
 class BonusView(TemplateView):
     template_name = "events/bonus.html"
+
+@require_POST
+def add_to_cart_view(request, ticket_id):
+    try:
+        ticket = Ticket.objects.get(id=ticket_id)
+        profile = request.user.profile  # Предполагается, что у пользователя есть профиль
+
+        # Создание покупки и добавление в корзину
+        new_purchase = Purchase(user=profile, ticket=ticket)
+        new_purchase.save()
+
+        return JsonResponse({'message': 'Билет добавлен в корзину.'})
+
+    except Ticket.DoesNotExist:
+        return JsonResponse({'message': 'Билет не найден.'}, status=404)

@@ -642,3 +642,66 @@ footer {
   margin-top: 20px;
   margin-right: auto;
 }
+
+.bought-ticket {
+  border: 1px solid #fd6a6a;
+  border-radius: 7px;
+  padding: 10px;
+}
+
+#danger-message {
+  display: flex;
+  justify-content: center;
+}
+
+.alert-danger {
+  display: flex;
+  justify-content: center;
+  width: 600px;
+}
+
+.cart-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 1200px;
+  margin-top: 15px;
+}
+
+
+.item-info {
+  width: 70%;
+}
+
+.delete-item-container {
+  position: relative;
+  display: flex;
+  width: 30%;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.delete-item {
+  background-color: #fb8f8f;
+  padding: 6px 10px;
+  border: 1px solid grey;
+  border-radius: 7px;
+  transition: 0.5s;
+}
+
+.delete-item:hover {
+  background-color: red;
+  color: #fff;
+}
+
+.item-img-container {
+  padding-right: 30px;
+}
+
+.item-name {
+  font-size: 20px;
+}
+
+#shopping-cart {
+  flex-direction: column;
+}
