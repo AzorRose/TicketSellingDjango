@@ -89,6 +89,8 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context["first_name"] = user.profile.first_name
         context["second_name"] = user.profile.second_name
         context["balance"] = user.profile.balance
+        context["bonus"] = user.profile.bonus
+        context["buyback_sum"] = user.profile.buyback_sum
         
         return context
 

@@ -151,6 +151,10 @@ class Purchase(models.Model):
 
         ticket = self.ticket
         event = ticket.event
+
+        if ticket.spot == "dance_floor":
+            return has_place
+
         is_available = True if event.booked_places["items"][ticket.spot][str(self.spot_row)][str(self.spot_num)]["available"] else False
 
         return has_place and is_available

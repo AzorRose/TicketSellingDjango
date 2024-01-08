@@ -647,6 +647,7 @@ footer {
   border: 1px solid #fd6a6a;
   border-radius: 7px;
   padding: 10px;
+  margin-bottom: 20px;
 }
 
 #danger-message {
