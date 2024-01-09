@@ -78,9 +78,10 @@ class UserProfile(models.Model):
                     i.ticket.event.change_people_count(True)
                     # Изменение количества людей на конкретный тип места
                     i.ticket.event.change_spot_count(i.ticket.spot, True)
-                    # Бронь конкретного места
-                    i.ticket.event.booked_places["items"][i.ticket.spot][str(i.spot_row)][str(i.spot_num)]["available"] = False
-                    i.ticket.event.save()                  
+                    if i.ticket.spot == "seat":
+                        # Бронь конкретного места
+                        i.ticket.event.booked_places["items"][i.ticket.spot][str(i.spot_row)][str(i.spot_num)]["available"] = False
+                        i.ticket.event.save()                  
                     # Установка времени покупки билета
                     i.creation_time = timezone.now()
                     super(Purchase, i).save()

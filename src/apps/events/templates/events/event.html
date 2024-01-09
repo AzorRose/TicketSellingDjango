@@ -67,39 +67,47 @@
                                     <button class="choice" id="button2">Доступные билеты</button>
                                 </div>
                                 <div id="schema" class="input-container">
-                                    <div class="info-form">
-                                        <div class="zoom-btns">
-                                            <button class="zoom-in" id="zoom-in">+</button>
-                                            <button class="zoom-out" id="zoom-out">-</button>
+                                    {% if event.has_available_seat %}
+                                        <div class="info-form">
+                                            <div class="zoom-btns">
+                                                <button class="zoom-in" id="zoom-in">+</button>
+                                                <button class="zoom-out" id="zoom-out">-</button>
+                                            </div>
+                                            {{ svg|safe }}
                                         </div>
-                                        {{ svg|safe }}
-                                    </div>
-                                    <div id="footer-place-container" class="footer-place-container">
-                                        <p id="tooltip"></p>
-                                        <button class="add-to-cart-btn" id="add-to-cart-btn">В корзину</button>
-                                    </div>
+                                        <div id="footer-place-container" class="footer-place-container">
+                                            <p id="tooltip"></p>
+                                            <button class="add-to-cart-button" id="add-to-cart-button">В корзину</button>
+                                        </div>
+                                    {% else %}
+                                        <h3>Распродано</h3>
+                                    {% endif %}
                                 </div>
                                 <div id="available-seats" class="input-container">
                                     {% for t in ticket %}
                                         {% for spot_value, spot_display in t.spots %}
                                             {% if t.spot == spot_value %}
                                                 {% if spot_value == "seat" %}
-                                                    <div id="seat-spot" class="spot">{{ spot_display }}</div>
+                                                    {% if event.has_available_seat %}
+                                                        <div id="seat-spot" class="spot">{{ spot_display }}</div>
+                                                    {% endif %}
                                                 {% else %}
-                                                    <div onclick="openDancefloorPopup()" class="spot">{{ spot_display }}</div>  
-                                                    <div id="dancefloor-popup" class="dancefloor-popup">
-                                                        <div><h5>Купить билет</h5></div>
-                                                        <div>
-                                                            <p>Танцпол</p>
-                                                            {% for t in ticket %}
-                                                                {% if t.spot == "dance_floor" %}
-                                                                    <p>Стоимость: {{ t.price }} руб.</p>
-                                                                    <button class="add-to-cart-btn" data-ticket-id="{{ t.id }}">В корзину</button>
-                                                                {% endif %}
-                                                            {% endfor %}
-                                                        </div>     
-                                                    </div>
-                                                    <div id="dancefloor-overlay" class="overlay" onclick="closeDancefloorPopup()"></div>                                        
+                                                    {% if event.has_available_dance_floor %}
+                                                        <div onclick="openDancefloorPopup()" class="spot">{{ spot_display }}</div>  
+                                                        <div id="dancefloor-popup" class="dancefloor-popup">
+                                                            <div><h5>Купить билет</h5></div>
+                                                            <div>
+                                                                <p>Танцпол</p>
+                                                                {% for t in ticket %}
+                                                                    {% if t.spot == "dance_floor" %}
+                                                                        <p>Стоимость: {{ t.price }} руб.</p>
+                                                                        <button class="add-to-cart-btn" data-ticket-id="{{ t.id }}">В корзину</button>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </div>     
+                                                        </div>
+                                                        <div id="dancefloor-overlay" class="overlay" onclick="closeDancefloorPopup()"></div>
+                                                    {% endif %}                                        
                                                 {% endif %}
                                             {% endif %}
                                         {% endfor %}

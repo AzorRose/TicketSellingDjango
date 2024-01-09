@@ -100,7 +100,7 @@ async function checkSeatAvailability(selectedSeats) {
     }
 }
 
-var addToCartButton = document.getElementById('add-to-cart-btn');
+var addToCartButton = document.getElementById('add-to-cart-button');
 
 addToCartButton.addEventListener('click', function () {
     // проверка доступности мест

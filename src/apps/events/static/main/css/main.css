@@ -771,7 +771,7 @@ rect:hover {
   margin-top: 15px;
 }
 
-.add-to-cart-btn {
+.add-to-cart-btn, .add-to-cart-button {
   padding: 10px 20px;
   margin-left: auto;
   position: relative;
@@ -784,7 +784,7 @@ rect:hover {
   cursor: pointer;
 }
 
-.add-to-cart-btn:hover {
+.add-to-cart-btn:hover, .add-to-cart-button {
   background-color: red;
 }
 
